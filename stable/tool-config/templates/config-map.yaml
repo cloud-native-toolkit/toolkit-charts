@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "tool-config.config-name" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "tool-config.name" . }}
+    app.kubernetes.io/version: {{ .Chart.Version }}
+    app.kubernetes.io/part-of: {{ .Values.app }}
+    app.kubernetes.io/component: {{ .Values.component }}
+    chart: {{ include "tool-config.chart" . }}
+    release: {{ .Release.Name }}
+    group: {{ .Values.group }}
+  annotations:
+    description: {{ printf "Config map to hold the url for %s in the environment so that other components can access it" (include "tool-config.name" .) }}
+data:
+  {{ include "tool-config.NAME" . }}_URL: {{ .Values.url | quote }}
