@@ -1,0 +1,14 @@
+{{- if .Values.service.create }}
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Service
+metadata:
+    name: {{ .Release.Name }}
+    namespace: {{ .Release.Namespace }}
+spec:
+    plan: {{ required "A service plan must be provided " .Values.service.plan | quote }}
+    serviceClass: {{ required "A service class must be provided" .Values.service.class | quote }}
+    {{- if .Values.service.region }}
+    context:
+      region: {{ .Values.service.region }}
+    {{- end }}
+{{- end }}

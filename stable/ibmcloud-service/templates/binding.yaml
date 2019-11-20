@@ -1,0 +1,16 @@
+{{- if .Values.binding.namespaces }}
+{{ $bindingName := required "The binding name is required" .Values.binding.name }}
+{{ $serviceName := .Release.Name }}
+{{ $serviceNamespace := .Release.Namespace }}
+{{- range .Values.binding.namespaces }}
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Binding
+metadata:
+    name: {{ $bindingName }}
+    namespace: {{ . }}
+spec:
+    serviceName: {{ $serviceName | quote}}
+    serviceNamespace: {{ $serviceNamespace | quote }}
+---
+{{- end }}
+{{- end }}
