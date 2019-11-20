@@ -19,7 +19,7 @@ cd "${ROOT_DIR}"
 
 git checkout gh-pages
 
-cp "${TMP_DIR}/*" "${CHART_DIR}"
+cp ${TMP_DIR}/* "${CHART_DIR}"
 
 helm repo index "${CHART_DIR}" --url "https://ibm-garage-cloud.github.io/catalyst-charts/stable/" --merge "${CHART_DIR}/index.yaml"
 cp "${CHART_DIR}/index.yaml" "${ROOT_DIR}"
