@@ -9,6 +9,11 @@ spec:
     serviceClass: {{ required "A service class must be provided" .Values.service.class | quote }}
     {{- if .Values.service.region }}
     context:
+      {{- if .Values.service.region }}
       region: {{ .Values.service.region }}
+      {{- end }}
+      {{- if .Values.service.location }}
+      resourcelocation: {{ .Values.service.location }}
+      {{- end }}
     {{- end }}
 {{- end }}

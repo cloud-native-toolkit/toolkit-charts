@@ -2,6 +2,8 @@ service:
   create: true
   plan: ""
   class: ""
+  location: ""
+  region: ""
 
 binding:
   name: ""
