@@ -3,10 +3,10 @@ entries:
   ibmcloud:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-11-19T23:58:43.495432-06:00
+    created: 2019-11-21T00:22:04.21246-06:00
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
-    digest: c13e782216687babf510c9fd8f509447e5b2edfb5f2aa183691e872e71136f85
+    digest: 40e70f505f9a73df528bb9f03c9065cfd358c62a10071987f9bc42799a3273c3
     name: ibmcloud
     urls:
     - https://ibm-garage-cloud.github.io/catalyst-charts/stable/ibmcloud-0.1.0.tgz
@@ -14,9 +14,9 @@ entries:
   ibmcloud-service:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-11-19T23:58:43.495685-06:00
+    created: 2019-11-21T00:22:04.212878-06:00
     description: A Helm chart for Kubernetes
-    digest: fc5b98ad2e95c093a9b466319272e9e67a055a69d91645b289c5ab7c5ba1efcc
+    digest: 331c54a8cd10ebda5b5b942ec0a77405a286059bc7347160bda3981bd310ebfa
     name: ibmcloud-service
     urls:
     - https://ibm-garage-cloud.github.io/catalyst-charts/stable/ibmcloud-service-0.1.0.tgz
@@ -24,12 +24,12 @@ entries:
   tool-config:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-11-19T23:58:43.496632-06:00
+    created: 2019-11-21T00:22:04.213437-06:00
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
-    digest: 7121cd515d4a71bc13fc5b66348dc81e758e5876fa269b926d937cbc28607389
+    digest: c0a0634eda77570978279c390b3a555e9c01c6b7f3dbbb863aa2e8c9064deb73
     name: tool-config
     urls:
     - https://ibm-garage-cloud.github.io/catalyst-charts/stable/tool-config-0.1.0.tgz
     version: 0.1.0
-generated: 2019-11-19T23:58:43.494686-06:00
+generated: 2019-11-21T00:22:04.211272-06:00
