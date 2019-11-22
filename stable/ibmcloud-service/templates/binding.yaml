@@ -8,6 +8,8 @@ kind: Binding
 metadata:
     name: {{ $bindingName }}
     namespace: {{ . }}
+    labels:
+      service: {{ .Release.Name }}
 spec:
     serviceName: {{ $serviceName | quote}}
     serviceNamespace: {{ $serviceNamespace | quote }}

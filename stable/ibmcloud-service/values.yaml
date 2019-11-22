@@ -4,6 +4,7 @@ service:
   class: ""
   location: ""
   region: ""
+  resourcegroup: ""
 
 binding:
   name: ""
