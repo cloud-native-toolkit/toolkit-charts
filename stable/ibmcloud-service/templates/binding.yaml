@@ -9,7 +9,7 @@ metadata:
     name: {{ $bindingName }}
     namespace: {{ . }}
     labels:
-      service: {{ .Release.Name }}
+      service: {{ $serviceName | quote}}
 spec:
     serviceName: {{ $serviceName | quote}}
     serviceNamespace: {{ $serviceNamespace | quote }}
