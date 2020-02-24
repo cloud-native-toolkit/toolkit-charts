@@ -1,3 +1,4 @@
+{{- $toolPrefix := include "tool-config.NAME" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,7 +11,11 @@ metadata:
     chart: {{ include "tool-config.chart" . }}
     release: {{ .Release.Name }}
     group: {{ .Values.group }}
+    grouping: {{ .Values.grouping }}
   annotations:
     description: {{ printf "Config map to hold the url for %s in the environment so that other components can access it" (include "tool-config.name" .) }}
 data:
-  {{ include "tool-config.NAME" . }}_URL: {{ .Values.url | quote }}
+  {{ $toolPrefix }}_URL: {{ .Values.url | quote }}
+  {{- range $key, $val := .Values.otherConfig }}
+  {{ printf "%s_%s" $toolPrefix (upper $key) }}: {{ $val | quote }}
+  {{- end }}
