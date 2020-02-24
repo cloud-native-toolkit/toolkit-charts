@@ -3,7 +3,17 @@ entries:
   ibmcloud:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-02-24T16:00:27.143465-06:00"
+    created: "2020-02-24T16:16:59.830535-06:00"
+    description: A Helm chart for to create a ConfigMap and Secret containing information
+      about the IBM Cloud environment
+    digest: 2d82bbb8c0bd62a1f74afa6ef421fba1467120546e395ec1105d9e03bc45d797
+    name: ibmcloud
+    urls:
+    - https://ibm-garage-cloud.github.io/toolkit-charts/stable/ibmcloud-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2020-02-24T16:16:59.830177-06:00"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 4e527855521a70ffb153c9e9db2bf06b6fa1ca8ce050e19f776395769307083b
@@ -14,7 +24,7 @@ entries:
   ibmcloud-service:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-02-24T16:00:27.14405-06:00"
+    created: "2020-02-24T16:16:59.831049-06:00"
     description: A Helm chart for Kubernetes
     digest: 0003c85fd2e5f3d0aa182eed48b466a3b98b90b3d38f5ea58cbf55efaae19492
     name: ibmcloud-service
@@ -23,7 +33,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-02-24T16:00:27.14377-06:00"
+    created: "2020-02-24T16:16:59.830793-06:00"
     description: A Helm chart for Kubernetes
     digest: 331c54a8cd10ebda5b5b942ec0a77405a286059bc7347160bda3981bd310ebfa
     name: ibmcloud-service
@@ -33,7 +43,7 @@ entries:
   tool-config:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-02-24T16:00:27.144335-06:00"
+    created: "2020-02-24T16:16:59.831374-06:00"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 3d82a339f8af1cc41c90d7ced2a233d182fd1992257d89792cb4df5938f00e77
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/tool-config-0.1.0.tgz
     version: 0.1.0
-generated: "2020-02-24T16:00:27.142905-06:00"
+generated: "2020-02-24T16:16:59.828439-06:00"
