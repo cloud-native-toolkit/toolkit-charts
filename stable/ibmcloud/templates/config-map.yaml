@@ -9,6 +9,7 @@ metadata:
     chart: {{ include "ibmcloud.chart" . }}
     release: {{ .Release.Name }}
     group: {{ .Values.group }}
+    grouping: {{ .Values.grouping }}
   annotations:
     description: "ConfigMap to hold the ibmcloud configuration values used to access the cluster environment (so that processes within the cluster can operate on the cluster)"
 data:
