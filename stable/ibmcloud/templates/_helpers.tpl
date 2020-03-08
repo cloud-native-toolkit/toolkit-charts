@@ -69,3 +69,11 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 {{- end -}}
 
+{{- define "ibmcloud.registry_password" -}}
+{{- if .Values.registry_password -}}
+{{ .Values.registry_password | quote }}
+{{- else -}}
+{{ .Values.apikey | quote }}
+{{- end -}}
+{{- end -}}
+

@@ -12,6 +12,8 @@ apiurl: "https://cloud.ibm.com"
 registry_url: "us.icr.io"
 region: "us-south"
 registry_user: "iamapikey"
+# If not provided the registry_password will default to 
+registry_password: ""
 # cluster_type should be kubernetes or openshift
 cluster_type: "kubernetes"
 
@@ -25,3 +27,5 @@ ingress_subdomain: ""
 tls_secret_name: ""
 cluster_name: ""
 cluster_version: ""
+# if not provided the registry_namespace will default to the resource group
+registry_namespace: ""

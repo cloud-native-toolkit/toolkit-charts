@@ -22,7 +22,7 @@ data:
   INGRESS_SUBDOMAIN: {{ required "The 'ingress_subdomain' is required!" .Values.ingress_subdomain | quote }}
   REGISTRY_NAMESPACE: {{ include "ibmcloud.registry_namespace" . }}
   CLUSTER_NAME: {{ include "ibmcloud.cluster_name" . }}
-  TLS_SECRET_NAME: {{ include "ibmcloud.tls_secret_name" . }}
+  TLS_SECRET_NAME: {{ .Values.tls_secret_name | quote }}
   {{- if .Values.cluster_version }}
   CLUSTER_VERSION: {{ .Values.cluster_version | quote }}
   {{- end }}
