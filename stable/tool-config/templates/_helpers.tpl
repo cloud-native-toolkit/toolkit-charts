@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "tool-config.name" -}}
-{{- required "The 'name' is required!" .Values.name -}}
+{{- default .Release.Name .Values.name -}}
 {{- end -}}
 
 {{- define "tool-config.config-name" -}}
@@ -24,6 +24,13 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{- define "tool-config.NAME" -}}
-{{- $name := include "tool-config.name" . -}}
-{{- $name | upper | replace "-" "_" -}}
+{{- include "tool-config.name" . | upper | replace "-" "_" -}}
+{{- end -}}
+
+{{- define "tool-config.app" -}}
+{{- if .Values.app -}}
+{{ .Values.app | quote }}
+{{- else -}}
+{{- include "tool-config.name" . -}}
+{{- end -}}
 {{- end -}}
