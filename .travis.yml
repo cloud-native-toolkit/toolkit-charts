@@ -1,0 +1,13 @@
+language: shell
+script:
+  - ./scripts/package.sh ${PUBLISH_DIR}
+  - ./scripts/publish.sh ${PUBLISH_BRANCH} ${PUBLISH_DIR} ${REPO_URL}
+git:
+  depth: false
+env:
+  global:
+    - PUBLISH_BRANCH=gh-pages
+    - PUBLISH_DIR=publish
+    - REPO_URL=https://ibm-garage-cloud.github.io/toolkit-charts/
+branches:
+  - master
