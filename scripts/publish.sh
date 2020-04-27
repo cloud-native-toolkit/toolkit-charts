@@ -32,7 +32,7 @@ publish_content() {
 
 generate_index() {
   helm repo index "${CHART_DIR}" --url "${BASE_REPO_URL}/${CHART_DIR}/" --merge "${CHART_DIR}/index.yaml"
-  cp "${CHART_DIR}/index.yaml" "${ROOT_DIR}"
+  cp "${CHART_DIR}/index.yaml" .
 }
 
 commit_files() {
