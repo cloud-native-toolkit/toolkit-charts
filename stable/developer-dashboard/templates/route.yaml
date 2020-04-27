@@ -1,14 +1,14 @@
 {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: {{ .Values.host }}
 spec:
   port:
-    targetPort: http
+    targetPort: {{ include "developer-dashboard.route-port" . }}
   to:
     kind: Service
     name: {{ include "developer-dashboard.fullname" . }}
   tls:
-    termination: Edge
+    termination: {{ include "developer-dashboard.route-termination" . }}
 {{- end }}
