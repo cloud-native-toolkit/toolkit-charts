@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ template "developer-dashboard.name" . }}-agent
+  labels:
+    "app.kubernetes.io/name": {{ template "developer-dashboard.name" . }}
+    "helm.sh/chart": {{ template "developer-dashboard.chart" . }}
+    "app.kubernetes.io/instance": {{ .Release.Name }}
+    "app.kubernetes.io/component": {{ template "developer-dashboard.name" . }}-role
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["*"]

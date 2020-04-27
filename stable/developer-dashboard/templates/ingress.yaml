@@ -1,0 +1,35 @@
+{{- if eq .Values.clusterType "kubernetes" -}}
+{{- $fullName := include "developer-dashboard.fullname" . -}}
+{{- $ingressPath := .Values.ingress.path -}}
+{{- $host := printf "%s.%s" .Values.host .Values.ingressSubdomain -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ template "developer-dashboard.name" . }}
+    chart: {{ template "developer-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+{{- if .Values.ingress.tls }}
+  tls:
+  {{- range .Values.ingress.tls }}
+    - hosts:
+        - {{ $host }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
+  rules:
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: {{ $ingressPath }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: http
+{{- end }}

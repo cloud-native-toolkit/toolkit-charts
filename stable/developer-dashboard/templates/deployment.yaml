@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "developer-dashboard.fullname" . }}
+  labels:
+    app: {{ include "developer-dashboard.name" . }}
+    chart: {{ include "developer-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    "app.kubernetes.io/name": {{ include "developer-dashboard.fullname" . }}
+    "helm.sh/chart": {{ include "developer-dashboard.chart" . }}
+    "app.kubernetes.io/instance": {{ .Release.Name }}
+    "app.kubernetes.io/component": {{ include "developer-dashboard.fullname" . }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "developer-dashboard.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "developer-dashboard.name" . }}
+        release: {{ .Release.Name }}
+        "app.kubernetes.io/name": {{ include "developer-dashboard.name" . }}
+        "helm.sh/chart": {{ printf "%s-%s" .Chart.Name .Chart.Version }}
+        "app.kubernetes.io/instance": {{ include "developer-dashboard.name" . }}
+        "app.kubernetes.io/component": {{ include "developer-dashboard.name" . }}-pod
+    spec:
+      serviceAccountName: {{ include "developer-dashboard.name" . }}
+      {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+      volumes:
+        - name: proxy-tls
+          secret:
+            secretName: {{ .Values.host }}-tls
+      {{- end }}
+      containers:
+        {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+        - name: oauth-proxy
+          image: openshift/oauth-proxy:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8443
+              name: public
+          args:
+            - --https-address=:8443
+            - --provider=openshift
+            - --openshift-service-account={{ include "developer-dashboard.name" . }}
+            - --upstream=http://localhost:{{ .Values.image.port }}
+            - --tls-cert=/etc/tls/private/tls.crt
+            - --tls-key=/etc/tls/private/tls.key
+            - --cookie-secret=SECRET
+          volumeMounts:
+            - mountPath: /etc/tls/private
+              name: proxy-tls
+        {{- end }}
+        - name: {{ .Chart.Name }}
+          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.image.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          envFrom:
+            - configMapRef:
+                name: "ibmcloud-config"
+                optional: true
+            {{- if .Values.configMaps }}
+            {{- range .Values.configMaps }}
+            - configMapRef:
+                name: {{ . | quote }}
+                optional: true
+            {{- end }}
+            {{- end }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

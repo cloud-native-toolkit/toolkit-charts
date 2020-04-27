@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "developer-dashboard.fullname" . }}
+  annotations:
+    service.alpha.openshift.io/serving-cert-secret-name: {{ .Values.host }}-tls
+  labels:
+    app: {{ include "developer-dashboard.name" . }}
+    chart: {{ include "developer-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+    - port: 443
+      targetPort: 8443
+      protocol: TCP
+      name: proxy
+    {{- end}}
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.image.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "developer-dashboard.name" . }}
+    release: {{ .Release.Name }}
