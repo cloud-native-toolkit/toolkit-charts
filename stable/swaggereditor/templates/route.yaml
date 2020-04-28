@@ -1,0 +1,34 @@
+{{- if eq .Values.clusterType "openshift" }}
+apiVersion: v1
+kind: Route
+metadata:
+  name: {{ .Values.host }}
+  labels:
+    app: {{ template "catalyst-dashboard.name" . }}
+    chart: {{ template "catalyst-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    "app.kubernetes.io/name": {{ include "catalyst-dashboard.fullname" . }}
+    "helm.sh/chart": {{ include "catalyst-dashboard.chart" . }}
+    "app.kubernetes.io/instance": {{ .Release.Name }}
+    "app.kubernetes.io/component": {{ include "catalyst-dashboard.fullname" . }}-deployment
+spec:
+  to:
+    kind: Service
+    name: {{ include "catalyst-dashboard.fullname" . }}
+    weight: 100
+  {{- if and (eq .Values.oauthEnabled "true") (eq .Values.clusterType "openshift") }}
+  port:
+    targetPort: proxy
+  tls:
+    termination: Reencrypt
+    insecureEdgeTerminationPolicy: Redirect
+  {{- else }}
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  {{- end }}
+  wildcardPolicy: None
+{{- end }}

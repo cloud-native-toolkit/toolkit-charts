@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "catalyst-dashboard.fullname" . }}
+  annotations:
+    service.alpha.openshift.io/serving-cert-secret-name: {{ .Values.host }}-tls
+  labels:
+    app: {{ template "catalyst-dashboard.name" . }}
+    chart: {{ template "catalyst-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    "app.kubernetes.io/name": {{ include "catalyst-dashboard.fullname" . }}
+    "helm.sh/chart": {{ include "catalyst-dashboard.chart" . }}
+    "app.kubernetes.io/instance": {{ .Release.Name }}
+    "app.kubernetes.io/component": {{ include "catalyst-dashboard.fullname" . }}-deployment
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    {{- if eq .Values.clusterType "openshift" }}
+    - port: 443
+      targetPort: 8443
+      protocol: TCP
+      name: proxy
+    {{- end }}
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.image.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "catalyst-dashboard.name" . }}
+    release: {{ .Release.Name }}

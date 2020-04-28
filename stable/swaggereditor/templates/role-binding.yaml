@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "catalyst-dashboard.name" . }}-agent
+  labels:
+    app: {{ template "catalyst-dashboard.name" . }}
+    chart: {{ template "catalyst-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    "app.kubernetes.io/name": {{ include "catalyst-dashboard.fullname" . }}
+    "helm.sh/chart": {{ include "catalyst-dashboard.chart" . }}
+    "app.kubernetes.io/instance": {{ .Release.Name }}
+    "app.kubernetes.io/component": {{ include "catalyst-dashboard.fullname" . }}-deployment
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "catalyst-dashboard.name" . }}-agent
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "catalyst-dashboard.name" . }}
+    namespace: {{ .Release.Namespace }}
