@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "catalyst-dashboard.fullname" . }}
+  name: {{ include "swaggereditor.fullname" . }}
   labels:
-    app: {{ include "catalyst-dashboard.name" . }}
-    chart: {{ include "catalyst-dashboard.chart" . }}
+    app: {{ include "swaggereditor.name" . }}
+    chart: {{ include "swaggereditor.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    "app.kubernetes.io/name": {{ include "catalyst-dashboard.fullname" . }}
-    "helm.sh/chart": {{ include "catalyst-dashboard.chart" . }}
+    "app.kubernetes.io/name": {{ include "swaggereditor.fullname" . }}
+    "helm.sh/chart": {{ include "swaggereditor.chart" . }}
     "app.kubernetes.io/instance": {{ .Release.Name }}
-    "app.kubernetes.io/component": {{ include "catalyst-dashboard.fullname" . }}-deployment
+    "app.kubernetes.io/component": {{ include "swaggereditor.fullname" . }}-deployment
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "catalyst-dashboard.name" . }}
+      app: {{ include "swaggereditor.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ include "catalyst-dashboard.name" . }}
+        app: {{ include "swaggereditor.name" . }}
         release: {{ .Release.Name }}
-        "app.kubernetes.io/name": {{ include "catalyst-dashboard.name" . }}
+        "app.kubernetes.io/name": {{ include "swaggereditor.name" . }}
         "helm.sh/chart": {{ printf "%s-%s" .Chart.Name .Chart.Version }}
-        "app.kubernetes.io/instance": {{ include "catalyst-dashboard.name" . }}
-        "app.kubernetes.io/component": {{ include "catalyst-dashboard.name" . }}-pod
+        "app.kubernetes.io/instance": {{ include "swaggereditor.name" . }}
+        "app.kubernetes.io/component": {{ include "swaggereditor.name" . }}-pod
     spec:
-      serviceAccountName: {{ include "catalyst-dashboard.name" . }}
+      serviceAccountName: {{ include "swaggereditor.name" . }}
       volumes:
         - name: cache
           emptyDir: {}
@@ -62,7 +62,7 @@ spec:
           args:
             - --https-address=:8443
             - --provider=openshift
-            - --openshift-service-account={{ printf "%s-agent" (include "catalyst-dashboard.name" .) }}
+            - --openshift-service-account={{ printf "%s-agent" (include "swaggereditor.name" .) }}
             - --upstream=http://localhost:{{ .Values.image.port }}
             - --tls-cert=/etc/tls/private/tls.crt
             - --tls-key=/etc/tls/private/tls.key

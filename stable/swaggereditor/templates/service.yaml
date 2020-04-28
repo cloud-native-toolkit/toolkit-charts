@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "catalyst-dashboard.fullname" . }}
+  name: {{ include "swaggereditor.fullname" . }}
   annotations:
     service.alpha.openshift.io/serving-cert-secret-name: {{ .Values.host }}-tls
   labels:
-    app: {{ template "catalyst-dashboard.name" . }}
-    chart: {{ template "catalyst-dashboard.chart" . }}
+    app: {{ template "swaggereditor.name" . }}
+    chart: {{ template "swaggereditor.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    "app.kubernetes.io/name": {{ include "catalyst-dashboard.fullname" . }}
-    "helm.sh/chart": {{ include "catalyst-dashboard.chart" . }}
+    "app.kubernetes.io/name": {{ include "swaggereditor.fullname" . }}
+    "helm.sh/chart": {{ include "swaggereditor.chart" . }}
     "app.kubernetes.io/instance": {{ .Release.Name }}
-    "app.kubernetes.io/component": {{ include "catalyst-dashboard.fullname" . }}-deployment
+    "app.kubernetes.io/component": {{ include "swaggereditor.fullname" . }}-deployment
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -27,5 +27,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: {{ include "catalyst-dashboard.name" . }}
+    app: {{ include "swaggereditor.name" . }}
     release: {{ .Release.Name }}
