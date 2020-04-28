@@ -30,3 +30,19 @@ Create chart name and version as used by the chart label.
 {{- define "catalyst-dashboard.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- define "swaggereditor.route-port" -}}
+{{- if .Values.sso.enabled -}}
+{{ printf "proxy" }}
+{{- else -}}
+{{ printf "http" }}
+{{- end -}}
+{{- end -}}
+
+{{- define "swaggereditor.route-termination" -}}
+{{- if .Values.sso.enabled -}}
+{{ printf "reencrypt" }}
+{{- else -}}
+{{ printf "edge" }}
+{{- end -}}
+{{- end -}}

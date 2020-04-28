@@ -1,4 +1,4 @@
-{{- if eq .Values.clusterType "openshift" }}
+{{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
 apiVersion: v1
 kind: Route
 metadata:
@@ -17,18 +17,10 @@ spec:
     kind: Service
     name: {{ include "catalyst-dashboard.fullname" . }}
     weight: 100
-  {{- if and (eq .Values.oauthEnabled "true") (eq .Values.clusterType "openshift") }}
   port:
-    targetPort: proxy
+    targetPort: {{ include "swaggereditor.route-port" . }}
   tls:
-    termination: Reencrypt
+    termination: {{ include "swaggereditor.route-termination" . }}
     insecureEdgeTerminationPolicy: Redirect
-  {{- else }}
-  port:
-    targetPort: http
-  tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
-  {{- end }}
   wildcardPolicy: None
 {{- end }}

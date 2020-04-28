@@ -31,7 +31,7 @@ spec:
       volumes:
         - name: cache
           emptyDir: {}
-      {{- if eq .Values.clusterType "openshift" }}
+      {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
         - name: proxy-tls
           secret:
             secretName: {{ .Values.host }}-tls
@@ -52,7 +52,7 @@ spec:
             - mountPath: /mount
               name: cache
       containers:
-        {{- if eq .Values.clusterType "openshift" }}
+        {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
         - name: oauth-proxy
           image: openshift/oauth-proxy:latest
           imagePullPolicy: IfNotPresent
