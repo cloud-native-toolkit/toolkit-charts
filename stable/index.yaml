@@ -3,7 +3,16 @@ entries:
   developer-dashboard:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.429957346Z"
+    created: "2020-04-28T04:42:49.174275979Z"
+    description: A Helm chart for Kubernetes
+    digest: 960f81e5e31068971dbff7a0056e42578ebaf4e854248e873535a0db83865e1c
+    name: developer-dashboard
+    urls:
+    - https://ibm-garage-cloud.github.io/toolkit-charts/stable/developer-dashboard-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2020-04-28T04:42:49.1738764Z"
     description: A Helm chart for Kubernetes
     digest: 323ebca8f551b5c738ffe737331359b29b24ac77683fd25a90a49caf01507cdb
     name: developer-dashboard
@@ -12,7 +21,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.429536822Z"
+    created: "2020-04-28T04:42:49.173459651Z"
     description: A Helm chart for Kubernetes
     digest: 9c37c8730ab212439b5b943609d529284591fe4c359abb62b21ab58399b0f27f
     name: developer-dashboard
@@ -22,17 +31,17 @@ entries:
   ibmcloud:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.431250939Z"
+    created: "2020-04-28T04:42:49.175432123Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
-    digest: b6ad2f43a015504899f8970fb89acccdc15f0ab524739efed6b47acc92fed78e
+    digest: d0625c30dabbaddba2fa3dba25db280745c5a586bc2f8f6e79ed964d5ebe0f61
     name: ibmcloud
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/ibmcloud-0.1.4.tgz
     version: 0.1.4
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.430983139Z"
+    created: "2020-04-28T04:42:49.175181068Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 29b2277f158ecb8882acf139c6e45668c8320b11f53f108cad88fc437ba942b0
@@ -42,7 +51,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.430711458Z"
+    created: "2020-04-28T04:42:49.174949466Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 9651af704fe021c4226c3fec2869013eeb2640ee444c9a109c91eccb91cfc530
@@ -52,7 +61,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.430483479Z"
+    created: "2020-04-28T04:42:49.17472542Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 2d82bbb8c0bd62a1f74afa6ef421fba1467120546e395ec1105d9e03bc45d797
@@ -62,7 +71,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.430237253Z"
+    created: "2020-04-28T04:42:49.17449851Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 4e527855521a70ffb153c9e9db2bf06b6fa1ca8ce050e19f776395769307083b
@@ -73,16 +82,16 @@ entries:
   ibmcloud-service:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.431618789Z"
+    created: "2020-04-28T04:42:49.175761651Z"
     description: A Helm chart for Kubernetes
-    digest: b5f6573b33632e2641e5e00d2daac99570e029b6bd39641bb845633b0d6d8d6f
+    digest: 57a22cc80d28e8102d7a769accbacf5c03d9e66724fce41a7d31d89f15ff2f6c
     name: ibmcloud-service
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/ibmcloud-service-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.431405206Z"
+    created: "2020-04-28T04:42:49.175580532Z"
     description: A Helm chart for Kubernetes
     digest: 331c54a8cd10ebda5b5b942ec0a77405a286059bc7347160bda3981bd310ebfa
     name: ibmcloud-service
@@ -92,17 +101,17 @@ entries:
   tool-config:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.432419143Z"
+    created: "2020-04-28T04:42:49.176572011Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
-    digest: 0e5f92d9b7f79be37f736a48034693dcf6df32d3aca1af188e23e60a26e85e1f
+    digest: 7e4829870202207718f3e201b578ea378156dd521582a66265f7ba4e5479c3b1
     name: tool-config
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/tool-config-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.432215228Z"
+    created: "2020-04-28T04:42:49.17635799Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 51574a56fefd9c488dfdb4a38408f4aefba552f45b363548a31470e29f84b112
@@ -112,7 +121,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.432017912Z"
+    created: "2020-04-28T04:42:49.176141538Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: d085b1ab9752ae263f3a0b9bd60fb5af8f5c0cffe1a64a8a2be6d4d5b0e400a7
@@ -122,7 +131,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-04-27T22:08:54.43179665Z"
+    created: "2020-04-28T04:42:49.175941648Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 3d82a339f8af1cc41c90d7ced2a233d182fd1992257d89792cb4df5938f00e77
@@ -130,4 +139,4 @@ entries:
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/tool-config-0.1.0.tgz
     version: 0.1.0
-generated: "2020-04-27T22:08:54.428333924Z"
+generated: "2020-04-28T04:42:49.172168713Z"
