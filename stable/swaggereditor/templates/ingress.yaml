@@ -1,8 +1,8 @@
-{{- if ne .Values.clusterType "openshift" -}}
+{{- if eq .Values.clusterType "openshift" -}}
 {{- $fullName := include "catalyst-dashboard.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
 {{- $host := printf "%s.%s" .Values.host .Values.ingressSubdomain -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}

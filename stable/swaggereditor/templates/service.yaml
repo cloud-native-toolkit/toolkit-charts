@@ -16,7 +16,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{- if eq .Values.clusterType "openshift" }}
+    {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
     - port: 443
       targetPort: 8443
       protocol: TCP
