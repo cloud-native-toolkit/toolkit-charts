@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "catalyst-dashboard.fullname" . }}
+  labels:
+    app: {{ include "catalyst-dashboard.name" . }}
+    chart: {{ include "catalyst-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    "app.kubernetes.io/name": {{ include "catalyst-dashboard.fullname" . }}
+    "helm.sh/chart": {{ include "catalyst-dashboard.chart" . }}
+    "app.kubernetes.io/instance": {{ .Release.Name }}
+    "app.kubernetes.io/component": {{ include "catalyst-dashboard.fullname" . }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "catalyst-dashboard.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "catalyst-dashboard.name" . }}
+        release: {{ .Release.Name }}
+        "app.kubernetes.io/name": {{ include "catalyst-dashboard.name" . }}
+        "helm.sh/chart": {{ printf "%s-%s" .Chart.Name .Chart.Version }}
+        "app.kubernetes.io/instance": {{ include "catalyst-dashboard.name" . }}
+        "app.kubernetes.io/component": {{ include "catalyst-dashboard.name" . }}-pod
+    spec:
+      serviceAccountName: {{ include "catalyst-dashboard.name" . }}
+      volumes:
+        - name: cache
+          emptyDir: {}
+      {{- if eq .Values.clusterType "openshift" }}
+        - name: proxy-tls
+          secret:
+            secretName: {{ .Values.host }}-tls
+      {{- end }}
+      initContainers:
+        - name: cache-permissions
+          image: alpine:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              chgrp -v -R 0 /mount
+              chmod -v -R g+rwx /mount
+              mkdir -p /mount/nginx/client_temp
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /mount
+              name: cache
+      containers:
+        {{- if eq .Values.clusterType "openshift" }}
+        - name: oauth-proxy
+          image: openshift/oauth-proxy:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8443
+              name: public
+          args:
+            - --https-address=:8443
+            - --provider=openshift
+            - --openshift-service-account={{ printf "%s-agent" (include "catalyst-dashboard.name" .) }}
+            - --upstream=http://localhost:{{ .Values.image.port }}
+            - --tls-cert=/etc/tls/private/tls.crt
+            - --tls-key=/etc/tls/private/tls.key
+            - --cookie-secret=SECRET
+          volumeMounts:
+            - mountPath: /etc/tls/private
+              name: proxy-tls
+        {{- end }}
+        - name: {{ .Chart.Name }}
+          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.image.port }}
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.image.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.image.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /var/cache
+              name: cache
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
