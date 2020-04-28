@@ -1,21 +1,21 @@
 {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: {{ .Values.host }}
   labels:
-    app: {{ template "catalyst-dashboard.name" . }}
-    chart: {{ template "catalyst-dashboard.chart" . }}
+    app: {{ template "swaggereditor.name" . }}
+    chart: {{ template "swaggereditor.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    "app.kubernetes.io/name": {{ include "catalyst-dashboard.fullname" . }}
-    "helm.sh/chart": {{ include "catalyst-dashboard.chart" . }}
+    "app.kubernetes.io/name": {{ include "swaggereditor.fullname" . }}
+    "helm.sh/chart": {{ include "swaggereditor.chart" . }}
     "app.kubernetes.io/instance": {{ .Release.Name }}
-    "app.kubernetes.io/component": {{ include "catalyst-dashboard.fullname" . }}-deployment
+    "app.kubernetes.io/component": {{ include "swaggereditor.fullname" . }}-deployment
 spec:
   to:
     kind: Service
-    name: {{ include "catalyst-dashboard.fullname" . }}
+    name: {{ include "swaggereditor.fullname" . }}
     weight: 100
   port:
     targetPort: {{ include "swaggereditor.route-port" . }}
