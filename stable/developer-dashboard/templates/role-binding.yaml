@@ -3,6 +3,7 @@ kind: RoleBinding
 metadata:
   name: {{ template "developer-dashboard.name" . }}-agent
   labels:
+    app: {{ include "developer-dashboard.name" . }}
     "app.kubernetes.io/name": {{ template "developer-dashboard.name" . }}
     "helm.sh/chart": {{ template "developer-dashboard.chart" . }}
     "app.kubernetes.io/instance": {{ .Release.Name }}
