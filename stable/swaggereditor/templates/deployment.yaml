@@ -62,7 +62,7 @@ spec:
           args:
             - --https-address=:8443
             - --provider=openshift
-            - --openshift-service-account={{ printf "%s-agent" (include "swaggereditor.name" .) }}
+            - --openshift-service-account={{ include "swaggereditor.name" . }}
             - --upstream=http://localhost:{{ .Values.image.port }}
             - --tls-cert=/etc/tls/private/tls.crt
             - --tls-key=/etc/tls/private/tls.key
