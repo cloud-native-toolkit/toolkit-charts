@@ -28,6 +28,7 @@ ingress:
   path: /
   hosts: 
     - apieditor
+  includeNamespace: false
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

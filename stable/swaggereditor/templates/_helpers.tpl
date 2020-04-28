@@ -31,6 +31,14 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "swaggereditor.ingress-host" -}}
+{{- if .Values.ingress.includeNamespace -}}
+{{- printf "%s-%s.%s" .Values.host .Release.Namespace .Values.ingressSubdomain -}}
+{{- else -}}
+{{- printf "%s.%s" .Values.host .Values.ingressSubdomain -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "swaggereditor.route-port" -}}
 {{- if .Values.sso.enabled -}}
 {{ printf "proxy" }}
