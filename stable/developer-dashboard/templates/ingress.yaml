@@ -1,7 +1,7 @@
 {{- if eq .Values.clusterType "kubernetes" -}}
 {{- $fullName := include "developer-dashboard.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
-{{- $host := printf "%s.%s" .Values.host .Values.ingressSubdomain -}}
+{{- $host := include "developer-dashboard.ingress-host" . -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
