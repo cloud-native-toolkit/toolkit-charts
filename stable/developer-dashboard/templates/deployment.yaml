@@ -1,3 +1,4 @@
+{{- $clusterType := include "developer-dashboard.clusterType" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,14 +29,14 @@ spec:
         "app.kubernetes.io/component": {{ include "developer-dashboard.name" . }}-pod
     spec:
       serviceAccountName: {{ include "developer-dashboard.name" . }}
-      {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+      {{- if eq $clusterType "openshift" }}
       volumes:
         - name: proxy-tls
           secret:
             secretName: {{ .Values.host }}-tls
       {{- end }}
       containers:
-        {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+        {{- if eq $clusterType "openshift" }}
         - name: oauth-proxy
           image: openshift/oauth-proxy:latest
           imagePullPolicy: IfNotPresent
