@@ -1,3 +1,4 @@
+{{- $clusterType := include "swaggereditor.clusterType" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,7 +32,7 @@ spec:
       volumes:
         - name: cache
           emptyDir: {}
-      {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+      {{- if (eq $clusterType "openshift") }}
         - name: proxy-tls
           secret:
             secretName: {{ .Values.host }}-tls
@@ -52,7 +53,7 @@ spec:
             - mountPath: /mount
               name: cache
       containers:
-        {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+        {{- if (eq $clusterType "openshift") }}
         - name: oauth-proxy
           image: openshift/oauth-proxy:latest
           imagePullPolicy: IfNotPresent
