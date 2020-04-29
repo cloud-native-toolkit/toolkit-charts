@@ -32,10 +32,11 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{- define "developer-dashboard.ingress-host" -}}
+{{- $ingressSubdomain := include "developer-dashboard.ingressSubdomain" . -}}
 {{- if .Values.ingress.includeNamespace -}}
-{{- printf "%s-%s.%s" .Values.host .Release.Namespace .Values.ingressSubdomain -}}
+{{- printf "%s-%s.%s" .Values.host .Release.Namespace $ingressSubdomain -}}
 {{- else -}}
-{{- printf "%s.%s" .Values.host .Values.ingressSubdomain -}}
+{{- printf "%s.%s" .Values.host $ingressSubdomain -}}
 {{- end -}}
 {{- end -}}
 
@@ -53,4 +54,21 @@ Create chart name and version as used by the chart label.
 {{- else -}}
 {{ printf "edge" }}
 {{- end -}}
+{{- end -}}
+
+{{- define "developer-dashboard.clusterType" -}}
+{{ $clusterType := default .Values.global.clusterType .Values.clusterType }}
+{{- if or (eq $clusterType "openshift") (regexFind "^ocp.*" $clusterType) -}}
+{{- "openshift" -}}
+{{- else -}}
+{{- "kubernetes" -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "developer-dashboard.ingressSubdomain" -}}
+{{- default .Values.global.ingressSubdomain .Values.ingressSubdomain -}}
+{{- end -}}
+
+{{- define "developer-dashboard.tlsSecretName" -}}
+{{- default .Values.global.tlsSecretName .Values.tlsSecretName -}}
 {{- end -}}

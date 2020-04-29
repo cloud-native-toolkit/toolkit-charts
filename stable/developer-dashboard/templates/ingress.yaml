@@ -1,7 +1,9 @@
-{{- if eq .Values.clusterType "kubernetes" -}}
+{{- $clusterType := include "developer-dashboard.clusterType" . -}}
+{{- if and (.Values.ingress.enabled) (eq $clusterType "kubernetes") -}}
 {{- $fullName := include "developer-dashboard.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
 {{- $host := include "developer-dashboard.ingress-host" . -}}
+{{- $tlsSecretName := include "developer-dashboard.tlsSecretName" . -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -16,13 +18,11 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
+{{- if $tlsSecretName }}
   tls:
-  {{- range .Values.ingress.tls }}
     - hosts:
         - {{ $host }}
-      secretName: {{ .secretName }}
-  {{- end }}
+      secretName: {{ $tlsSecretName }}
 {{- end }}
   rules:
     - host: {{ $host }}
