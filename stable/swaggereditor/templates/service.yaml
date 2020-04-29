@@ -1,3 +1,4 @@
+{{- $clusterType := include "swaggereditor.clusterType" . -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -16,7 +17,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+    {{- if (eq $clusterType "openshift") }}
     - port: 443
       targetPort: 8443
       protocol: TCP

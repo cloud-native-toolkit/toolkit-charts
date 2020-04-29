@@ -1,7 +1,9 @@
-{{- if eq .Values.clusterType "kubernetes" -}}
+{{- $clusterType := include "swaggereditor.clusterType" . -}}
+{{- if and (.Values.ingress.enabled) (eq $clusterType "kubernetes") -}}
 {{- $fullName := include "swaggereditor.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
 {{- $host := include "swaggereditor.ingress-host" . -}}
+{{- $tlsSecretName := include "swaggereditor.tlsSecretName" . -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -20,13 +22,11 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
+{{- if $tlsSecretName }}
   tls:
-  {{- range .Values.ingress.tls }}
     - hosts:
         - {{ $host }}
-      secretName: {{ .secretName }}
-  {{- end }}
+      secretName: {{ $tlsSecretName }}
 {{- end }}
   rules:
     - host: {{ $host }}

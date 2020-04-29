@@ -1,4 +1,5 @@
-{{- if or (eq .Values.clusterType "openshift") (regexFind "^ocp.*" .Values.clusterType) }}
+{{- $clusterType := include "swaggereditor.clusterType" . -}}
+{{- if (eq $clusterType "openshift") }}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:

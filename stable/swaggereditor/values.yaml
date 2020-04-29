@@ -2,13 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  clusterType: "kubernetes"
+  ingressSubdomain: ""
+  tlsSecretName: ""
+
 replicaCount: 1
-clusterType: "kubernetes"
-host: "apieditor"
+clusterType: ""
 ingressSubdomain: ""
+tlsSecretName: ""
+host: "apieditor"
 
 sso:
-  enabled: false
+  enabled: true
 
 image:
   repository: docker.io/swaggerapi/swagger-editor
@@ -26,13 +32,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   path: /
-  hosts: 
-    - apieditor
-  includeNamespace: false
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  includeNamespace: true
 
 configMaps: []
 
