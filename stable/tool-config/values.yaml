@@ -15,5 +15,9 @@ url: ""
 username: ""
 password: ""
 
+ingressSubdomain: ""
+applicationMenu: false
+section: "Cloud Native Toolkit"
+
 otherConfig: {}
 otherSecrets: {}

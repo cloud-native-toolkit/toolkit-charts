@@ -1,0 +1,24 @@
+{{- if and .Values.ingressSubdomain .Values.applicationMenu }}
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: {{ printf "toolkit-%s" (include "tool-config.name" .) }}
+  labels:
+    app: {{ include "tool-config.app" . }}
+    app.kubernetes.io/name: {{ include "tool-config.app" . }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.Version | quote }}
+    app.kubernetes.io/part-of: {{ include "tool-config.app" . }}
+    app.kubernetes.io/component: {{ .Values.component | quote }}
+    chart: {{ include "tool-config.chart" . }}
+    release: {{ .Release.Name | quote }}
+    group: {{ .Values.group | quote }}
+    grouping: {{ .Values.grouping | quote }}
+spec:
+  applicationMenu:
+    imageURL: {{ printf "https://dashboard-tools.%s/tools/icon/%s" .Values.ingressSubdomain (include "tool-config.name" .) }}
+    section: {{ .Values.section | quote }}
+  href: {{ .Values.url | quote }}
+  location: ApplicationMenu
+  text: {{ include "tool-config.display-name" . }}
+{{- end }}
