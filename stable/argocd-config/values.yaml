@@ -12,7 +12,8 @@ applicationTargets: {}
 # - targetRevision: ""
 #   targetNamespace: ""
 #   server: "" (optional)
-#   valueFile: "" (optional)
+#   valueFiles: (optional)
+#   - values.yaml
 #   applicationNames:
 #   - app1
 #   - app2
