@@ -61,3 +61,11 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "argocd.valueFiles" -}}
+{{- if . -}}
+{{ toYaml . }}
+{{- else -}}
+- values.yaml
+{{- end -}}
+{{- end -}}
