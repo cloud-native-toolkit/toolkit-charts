@@ -1,0 +1,17 @@
+{{- if .Values.project }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ .Values.project }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  sourceRepos:
+  - '*'
+  {{- if .Values.applicationTargets }}
+  destinations:
+  {{- range .Values.applicationTargets }}
+  - namespace: {{ .targetNamespace }}
+    server: {{ default "https://kubernetes.default.svc" .server }}
+  {{- end }}
+  {{- end }}
+{{- end }}

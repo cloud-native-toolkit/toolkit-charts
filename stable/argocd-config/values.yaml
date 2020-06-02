@@ -1,0 +1,22 @@
+# The url of the gitops repo that contains the applications
+repoUrl: ""
+
+# The name of the project. If left empty then will use 'default'
+project: ""
+
+# Lists the target environments and the names of the applications that should be created. 
+# The helm chart will loop over each `applicationTarget` and create an application for 
+# each `applicationName` (i.e. if there are 2 application targets each having 3 application
+# names then 6 applications will be created)
+applicationTargets: {}
+# - targetRevision: ""
+#   targetNamespace: ""
+#   server: ""
+#   applicationNames:
+#   - app1
+#   - app2
+
+# Flag indicating that roles should be created for the 
+# argocd-application-controller service account in the 
+# target namespaces. Not sure why this is necessary...
+controllerRbac: true
