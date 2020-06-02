@@ -11,7 +11,8 @@ project: ""
 applicationTargets: {}
 # - targetRevision: ""
 #   targetNamespace: ""
-#   server: ""
+#   server: "" (optional)
+#   valueFile: "" (optional)
 #   applicationNames:
 #   - app1
 #   - app2

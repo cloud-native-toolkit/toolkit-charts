@@ -5,6 +5,7 @@
 {{- $targetNamespace := .targetNamespace -}}
 {{- $targetRevision := .targetRevision -}}
 {{- $server := default "https://kubernetes.default.svc" .server | quote -}}
+{{- $valueFile := default "values.yaml" .valuesFile | quote -}}
 {{- range .applicationNames -}}
 {{- $name := . -}}
 apiVersion: argoproj.io/v1alpha1
@@ -23,7 +24,7 @@ spec:
     targetRevision: {{ $targetRevision }}
     helm:
       valueFiles:
-      - values.yaml
+      - {{ $valueFile }}
   syncPolicy:
     automated:
       prune: true
