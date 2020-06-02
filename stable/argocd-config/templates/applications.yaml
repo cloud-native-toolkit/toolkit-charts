@@ -1,0 +1,33 @@
+{{- $releaseNamespace := .Release.Namespace -}}
+{{- $targetRepo := required "The 'repoUrl' value is required containing the gitops repo url!" .Values.repoUrl | quote -}}
+{{- $project := default "default" .Values.project -}}
+{{- range .Values.applicationTargets }}
+{{- $targetNamespace := .targetNamespace -}}
+{{- $targetRevision := .targetRevision -}}
+{{- $server := default "https://kubernetes.default.svc" .server | quote -}}
+{{- range .applicationNames -}}
+{{- $name := . -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ printf "%s-%s" $targetRevision $name }}
+  namespace: {{ $releaseNamespace }}
+spec:
+  destination:
+    namespace: {{ $targetNamespace }}
+    server: {{ $server }}
+  project: {{ $project }}
+  source:
+    path: {{ $name }}
+    repoURL: {{ $targetRepo }}
+    targetRevision: {{ $targetRevision }}
+    helm:
+      valueFiles:
+      - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+{{- end }}
+{{- end }}
