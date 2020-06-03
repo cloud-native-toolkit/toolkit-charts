@@ -7,7 +7,7 @@ Expand the name of the chart.
 {{- end -}}
 
 {{- define "tool-config.display-name" -}}
-{{- default .Release.Name .Values.name -}}
+{{- default .Release.Name (default .Values.name .Values.displayName) -}}
 {{- end -}}
 
 {{- define "tool-config.config-name" -}}
