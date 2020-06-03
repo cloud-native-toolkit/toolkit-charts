@@ -18,6 +18,7 @@ password: ""
 ingressSubdomain: ""
 applicationMenu: false
 section: "Cloud-Native Toolkit"
+imageUrl: ""
 
 otherConfig: {}
 otherSecrets: {}

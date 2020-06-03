@@ -16,7 +16,7 @@ metadata:
     grouping: {{ .Values.grouping | quote }}
 spec:
   applicationMenu:
-    imageURL: {{ printf "https://dashboard-tools.%s/tools/icon/%s" .Values.ingressSubdomain (include "tool-config.name" .) }}
+    imageURL: {{ default (printf "https://dashboard-tools.%s/tools/icon/%s" .Values.ingressSubdomain (include "tool-config.name" .)) .Values.imageUrl }}
     section: {{ .Values.section | quote }}
   href: {{ .Values.url | quote }}
   location: ApplicationMenu
