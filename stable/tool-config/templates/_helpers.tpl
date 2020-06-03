@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "tool-config.name" -}}
-{{- (default .Release.Name .Values.name) | lower -}}
+{{- (default .Release.Name .Values.name) | nospace | lower -}}
 {{- end -}}
 
 {{- define "tool-config.display-name" -}}
