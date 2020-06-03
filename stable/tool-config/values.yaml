@@ -9,8 +9,8 @@ grouping: "garage-cloud-native-toolkit"
 
 component: "tools"
 
-# deprecated, use release name
 name: ""
+displayName: ""
 url: ""
 username: ""
 password: ""
