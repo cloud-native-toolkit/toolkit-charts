@@ -14,7 +14,7 @@ applicationTargets: {}
 #   server: "" (optional)
 #   valueFiles: (optional)
 #   - values.yaml
-#   applicationNames:
+#   applications:
 #   - app1
 #   - app2
 
