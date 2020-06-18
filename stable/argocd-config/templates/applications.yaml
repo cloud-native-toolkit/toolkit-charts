@@ -9,6 +9,7 @@
 {{- range .applications -}}
 {{- $name := .name -}}
 {{- $path := default .name .path -}}
+{{- $type := default "helm" .type -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -23,9 +24,11 @@ spec:
     path: {{ $path }}
     repoURL: {{ $targetRepo }}
     targetRevision: {{ $targetRevision }}
+    {{- if eq $type "helm" }}
     helm:
       valueFiles:
 {{ $valueFile | indent 8 }}
+    {{- end }}
   syncPolicy:
     automated:
       prune: true
