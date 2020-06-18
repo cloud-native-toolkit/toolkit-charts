@@ -17,7 +17,7 @@ metadata:
   annotations:
     description: {{ printf "Config map to hold the url for %s in the environment so that other components can access it" (include "tool-config.name" .) }}
 data:
-  {{ $toolPrefix }}_URL: {{ .Values.url | quote }}
+  {{ $toolPrefix }}_URL: {{ (include "tool-config.url" .) | quote }}
   {{- range $key, $val := .Values.otherConfig }}
   {{ printf "%s_%s" $toolPrefix (upper $key) }}: {{ $val | quote }}
   {{- end }}

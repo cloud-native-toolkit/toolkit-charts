@@ -18,6 +18,22 @@ Expand the name of the chart.
 {{- printf "%s-%s" (include "tool-config.name" .) "access" -}}
 {{- end -}}
 
+{{- define "tool-config.ingressSubdomain" -}}
+{{ default .Values.global.ingressSubdomain .Values.ingressSubdomain -}}
+{{- end -}}
+
+{{- define "tool-config.url" -}}
+{{- if .Values.url -}}
+{{ .Values.url }}
+{{- else -}}
+{{- if .Values.includeNamespace -}}
+{{ printf "https://%s-%s.%s" .Values.host .Release.Namespace (include "tool-config.ingressSubdomain" .)}}
+{{- else -}}
+{{ printf "https://%s.%s" .Values.host (include "tool-config.ingressSubdomain" .) }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{/*
 
 {{/*
