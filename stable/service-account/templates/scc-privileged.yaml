@@ -11,6 +11,7 @@ metadata:
       any SELinux context.  WARNING: this is the most relaxed SCC and should be used
       only for cluster administration. Grant with caution.'
   name: {{ $name }}
+  namespace: ""
 allowHostDirVolumePlugin: true
 allowHostIPC: true
 allowHostNetwork: true
