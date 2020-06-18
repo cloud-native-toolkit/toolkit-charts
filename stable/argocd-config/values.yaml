@@ -22,3 +22,5 @@ applicationTargets: {}
 # argocd-application-controller service account in the 
 # target namespaces. Not sure why this is necessary...
 controllerRbac: true
+
+clusterType: ""
