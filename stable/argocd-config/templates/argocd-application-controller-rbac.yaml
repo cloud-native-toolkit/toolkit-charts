@@ -61,6 +61,9 @@ subjects:
 - kind: ServiceAccount
   name: argocd-application-controller
   namespace: {{ $releaseNamespace }}
+- kind: ServiceAccount
+  name: argocd-server
+  namespace: {{ $releaseNamespace }}
 ---
 {{- end -}}
 {{- end -}}

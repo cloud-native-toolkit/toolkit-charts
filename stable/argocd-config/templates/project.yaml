@@ -7,6 +7,9 @@ metadata:
 spec:
   sourceRepos:
   - '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
   {{- if .Values.applicationTargets }}
   destinations:
   {{- range .Values.applicationTargets }}
