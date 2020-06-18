@@ -3,7 +3,19 @@ entries:
   argocd-config:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.107655916Z"
+    created: "2020-06-18T09:52:55.972084279Z"
+    description: Helm chart to create ArgoCD custom resources for projects and applications
+      with optional RBAC configuration to allow ArgoCD to create resources in other
+      namespaces
+    digest: 26860e22e5b43f2bb2027535b78bae1a428b3dc1b91f30fea1222b7a83f6ba14
+    name: argocd-config
+    type: application
+    urls:
+    - https://ibm-garage-cloud.github.io/toolkit-charts/stable/argocd-config-0.10.1.tgz
+    version: 0.10.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-06-18T09:52:55.971810224Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -15,7 +27,7 @@ entries:
     version: 0.10.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.11034453Z"
+    created: "2020-06-18T09:52:55.97461654Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -27,7 +39,7 @@ entries:
     version: 0.9.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.110044796Z"
+    created: "2020-06-18T09:52:55.97436921Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -39,7 +51,7 @@ entries:
     version: 0.9.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.109804004Z"
+    created: "2020-06-18T09:52:55.974084009Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -51,7 +63,7 @@ entries:
     version: 0.8.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.109559731Z"
+    created: "2020-06-18T09:52:55.97386238Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -63,7 +75,7 @@ entries:
     version: 0.8.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.109321338Z"
+    created: "2020-06-18T09:52:55.973638421Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -75,7 +87,7 @@ entries:
     version: 0.8.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.109091269Z"
+    created: "2020-06-18T09:52:55.973406624Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -87,7 +99,7 @@ entries:
     version: 0.8.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.108857565Z"
+    created: "2020-06-18T09:52:55.973191471Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -99,7 +111,7 @@ entries:
     version: 0.7.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.10860996Z"
+    created: "2020-06-18T09:52:55.972965983Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -111,7 +123,7 @@ entries:
     version: 0.6.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.108340976Z"
+    created: "2020-06-18T09:52:55.97274853Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -123,7 +135,7 @@ entries:
     version: 0.5.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.108122113Z"
+    created: "2020-06-18T09:52:55.972526577Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -135,7 +147,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.107906743Z"
+    created: "2020-06-18T09:52:55.972315397Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -147,7 +159,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.107384324Z"
+    created: "2020-06-18T09:52:55.971461361Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
       namespaces
@@ -160,9 +172,9 @@ entries:
   argocd-operator:
   - apiVersion: v2
     appVersion: 0.0.9
-    created: "2020-06-18T09:06:29.110867427Z"
+    created: "2020-06-18T09:52:55.975142386Z"
     description: A Helm chart to install ArgoCD via the operator
-    digest: d5a6b17abe65d951906ff85db0dc1be5e1542609960275bbd46af7682172af16
+    digest: 2ec03a0400ad4c6f70bf608f975c3d7a0f0c9ff8ec512e297650b4809ae156db
     name: argocd-operator
     type: application
     urls:
@@ -171,16 +183,16 @@ entries:
   developer-dashboard:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.112919591Z"
+    created: "2020-06-18T09:52:55.977111231Z"
     description: A Helm chart for Kubernetes
-    digest: 64b139eccf46a0a4153a688040ad76cc75131208378e3ccd2614c2e0fa479c19
+    digest: 11306991f581ec8c55a774ed9a44f67b52cffa6ace6bcda70ba72b1ab7685e9d
     name: developer-dashboard
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/developer-dashboard-1.0.0.tgz
     version: 1.0.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.112456617Z"
+    created: "2020-06-18T09:52:55.976735698Z"
     description: A Helm chart for Kubernetes
     digest: 54c6f7aa84248252cb805ff812dcbf7ff3d4c383b0d81005571e9f190c07d97e
     name: developer-dashboard
@@ -189,7 +201,7 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.112052039Z"
+    created: "2020-06-18T09:52:55.976327567Z"
     description: A Helm chart for Kubernetes
     digest: 06e7502304497faaa21df308c704601f67ff6c2b5b6e278aaddf5d75399004c9
     name: developer-dashboard
@@ -198,7 +210,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.111651675Z"
+    created: "2020-06-18T09:52:55.975922938Z"
     description: A Helm chart for Kubernetes
     digest: 323ebca8f551b5c738ffe737331359b29b24ac77683fd25a90a49caf01507cdb
     name: developer-dashboard
@@ -207,7 +219,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.111245037Z"
+    created: "2020-06-18T09:52:55.975526346Z"
     description: A Helm chart for Kubernetes
     digest: 9c37c8730ab212439b5b943609d529284591fe4c359abb62b21ab58399b0f27f
     name: developer-dashboard
@@ -217,17 +229,17 @@ entries:
   ibmcloud:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.116715423Z"
+    created: "2020-06-18T09:52:55.980375365Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
-    digest: 219e1d1657ae771212a61b21ae7b172f203a87bed02bb6a4ad9fe8742c25232f
+    digest: 6b0324a68a35df2d2f06af6d2c7a64000c2400579c82493be609f0574377b6b1
     name: ibmcloud
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/ibmcloud-0.1.5.tgz
     version: 0.1.5
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.115936831Z"
+    created: "2020-06-18T09:52:55.979760973Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 6ff1e0b60862911c4ca5ad2cd211937058ae3d6af0f00b9c73c183561ddfe983
@@ -237,7 +249,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.115335372Z"
+    created: "2020-06-18T09:52:55.979096812Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 29b2277f158ecb8882acf139c6e45668c8320b11f53f108cad88fc437ba942b0
@@ -247,7 +259,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.11473908Z"
+    created: "2020-06-18T09:52:55.97849328Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 9651af704fe021c4226c3fec2869013eeb2640ee444c9a109c91eccb91cfc530
@@ -257,7 +269,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.11414083Z"
+    created: "2020-06-18T09:52:55.977607054Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 2d82bbb8c0bd62a1f74afa6ef421fba1467120546e395ec1105d9e03bc45d797
@@ -267,7 +279,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.113468401Z"
+    created: "2020-06-18T09:52:55.9773355Z"
     description: A Helm chart for to create a ConfigMap and Secret containing information
       about the IBM Cloud environment
     digest: 4e527855521a70ffb153c9e9db2bf06b6fa1ca8ce050e19f776395769307083b
@@ -278,16 +290,16 @@ entries:
   ibmcloud-service:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.1171722Z"
+    created: "2020-06-18T09:52:55.981187791Z"
     description: A Helm chart for Kubernetes
-    digest: 91e45cd8a9d117e9f67ae374b6f61adf5536d2e927a7e9fd131308ce9c69e80f
+    digest: ac74f76c2c531d961c64b184f161887768fbdeafea03e9cb652d3c9dd69b2342
     name: ibmcloud-service
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/ibmcloud-service-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.117004397Z"
+    created: "2020-06-18T09:52:55.980982981Z"
     description: A Helm chart for Kubernetes
     digest: 331c54a8cd10ebda5b5b942ec0a77405a286059bc7347160bda3981bd310ebfa
     name: ibmcloud-service
@@ -297,9 +309,9 @@ entries:
   jaeger-operator:
   - apiVersion: v2
     appVersion: 1.18.0
-    created: "2020-06-18T09:06:29.118493829Z"
+    created: "2020-06-18T09:52:55.982430286Z"
     description: A Helm chart to install Jaeger via the operator
-    digest: a507eda4767c6fd59b0855bdbfb70f8cbe8f0c5f36f1402d73e1045a5270ddc5
+    digest: af96082e9b4b729b2ef611162085e15d788c9eed9abdafc4e3f9be7234b80e21
     name: jaeger-operator
     type: application
     urls:
@@ -308,9 +320,9 @@ entries:
   service-account:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.119082394Z"
+    created: "2020-06-18T09:52:55.982978188Z"
     description: A Helm chart for Kubernetes
-    digest: 5aaf9ad9dda82d16b502c367e8d2e5068386e6d37f304bf2e6ae7c78e20ebc20
+    digest: b667a16f35aef1cb035c5332fbe6facf419b3efaeba5ee54b3bc1f6529404013
     name: service-account
     type: application
     urls:
@@ -318,7 +330,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.118885331Z"
+    created: "2020-06-18T09:52:55.982802572Z"
     description: A Helm chart for Kubernetes
     digest: fd745698ea4c13c46bb255ae692da9f4f90916587086cb5dcaa68dd561b46755
     name: service-account
@@ -328,7 +340,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-18T09:06:29.118692422Z"
+    created: "2020-06-18T09:52:55.982627695Z"
     description: A Helm chart for Kubernetes
     digest: 64988c3b40627f5d41634977c3365c668aedc3eb3024f60f44d12071ebe10557
     name: service-account
@@ -339,16 +351,16 @@ entries:
   swaggereditor:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.121189606Z"
+    created: "2020-06-18T09:52:55.9849951Z"
     description: A Helm chart for installing Swagger Editor into a k8s compliant cluster
-    digest: 02173238052da846d36d084a4ca068351a02bd350bdf5679cb832e6093c5b6c2
+    digest: 6940791cc593600a8b5e4ee75abffd346dbb6d9b666c25c6e9868b4e77c4e660
     name: swaggereditor
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/swaggereditor-1.3.0.tgz
     version: 1.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.120788471Z"
+    created: "2020-06-18T09:52:55.984561194Z"
     description: A Helm chart for installing Swagger Editor into a k8s compliant cluster
     digest: fdab8a093b91d83f71c7ee527d0dae1bbfc06de7d84857d5743fe879103e0a02
     name: swaggereditor
@@ -357,7 +369,7 @@ entries:
     version: 1.2.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.120295423Z"
+    created: "2020-06-18T09:52:55.984170438Z"
     description: A Helm chart for installing Swagger Editor into a k8s compliant cluster
     digest: 9559457b9a28f461892a17719a41396b383b09309a333b92a7f847220ae76512
     name: swaggereditor
@@ -366,7 +378,7 @@ entries:
     version: 1.2.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.119874885Z"
+    created: "2020-06-18T09:52:55.983761569Z"
     description: A Helm chart for installing Swagger Editor into a k8s compliant cluster
     digest: ee96f5f6388d21dba69772c5d393d197309ba0ec249f4b78c1088cb4ab69461f
     name: swaggereditor
@@ -375,7 +387,7 @@ entries:
     version: 1.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.119465691Z"
+    created: "2020-06-18T09:52:55.983367396Z"
     description: A Helm chart for installing Swagger Editor into a k8s compliant cluster
     digest: ec55ef81d4e6373a84ae68ce3c36a67a002eb1f37ab6c2b92a6f319b9b1a21b1
     name: swaggereditor
@@ -385,7 +397,7 @@ entries:
   swaggereditor-dashboard:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.121583399Z"
+    created: "2020-06-18T09:52:55.985371651Z"
     description: A Helm chart for installing Swagger Editor into a k8s compliant cluster
     digest: 142fdbde575d051f29e017d3e88416e1b208017384916a2dac73fe5736bfe3b2
     name: swaggereditor-dashboard
@@ -395,17 +407,17 @@ entries:
   tool-config:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.125997231Z"
+    created: "2020-06-18T09:52:55.989414139Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
-    digest: 6f8be998925c1562d4bca7dffe97e60f325f087a11ee2838458530efb86eb02c
+    digest: d319548a48ad9145464cca817e1fff4aed0043372d7f68d4b8c8f22642ac6779
     name: tool-config
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/tool-config-0.5.0.tgz
     version: 0.5.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.125068602Z"
+    created: "2020-06-18T09:52:55.988742589Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 087abd1b554417037bd1a9b31df1beea868b1dab5b7118833a36821ca5189fc5
@@ -415,7 +427,7 @@ entries:
     version: 0.4.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.124482379Z"
+    created: "2020-06-18T09:52:55.988173899Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 8ad6002b39293470ea18e5e5f37b97f063828536fd53c415be681f7275a53619
@@ -425,7 +437,7 @@ entries:
     version: 0.4.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.123915737Z"
+    created: "2020-06-18T09:52:55.987581209Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: b3ee53f757a023cf0e43711f00788ddf48e3cef41e9065510fc730ba34a4b4b1
@@ -435,7 +447,7 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.123384524Z"
+    created: "2020-06-18T09:52:55.987026111Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 883f8d019805f98c691427d40b5b6dd61e5870e665f9351934f72d4252fee8b2
@@ -445,7 +457,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.122737361Z"
+    created: "2020-06-18T09:52:55.986156535Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: e6d3ca1a7182f4aafc4c6285b3f92eb95d6592a59f1829f682920dc4417c75ae
@@ -455,7 +467,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.122169235Z"
+    created: "2020-06-18T09:52:55.985939513Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 51574a56fefd9c488dfdb4a38408f4aefba552f45b363548a31470e29f84b112
@@ -465,7 +477,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.121973008Z"
+    created: "2020-06-18T09:52:55.985756415Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: d085b1ab9752ae263f3a0b9bd60fb5af8f5c0cffe1a64a8a2be6d4d5b0e400a7
@@ -475,7 +487,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-18T09:06:29.121780612Z"
+    created: "2020-06-18T09:52:55.98555747Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
     digest: 3d82a339f8af1cc41c90d7ced2a233d182fd1992257d89792cb4df5938f00e77
@@ -483,4 +495,4 @@ entries:
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/tool-config-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-18T09:06:29.106912549Z"
+generated: "2020-06-18T09:52:55.97053691Z"
