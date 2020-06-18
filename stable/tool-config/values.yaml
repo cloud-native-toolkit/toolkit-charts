@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  ingressSubdomain: ""
+
 # the name of the application the config is part of (used for app label)
 app: ""
 group: "catalyst-tools"
@@ -12,6 +15,8 @@ component: "tools"
 name: ""
 displayName: ""
 url: ""
+host: ""
+includeNamespace: true
 username: ""
 password: ""
 
