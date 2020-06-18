@@ -1,0 +1,21 @@
+# Default values for argocd-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  ingressSubdomain: ""
+
+nameOverride: ""
+
+olmNamespace: ""
+operatorNamespace: ""
+
+clusterType: ""
+
+ocpCatalog:
+  source: community-operators
+  channel: alpha
+  name: argocd-operator
+operatorHub:
+  source: operatorhubio-catalog
+  channel: alpha
+  name: argocd-operator
