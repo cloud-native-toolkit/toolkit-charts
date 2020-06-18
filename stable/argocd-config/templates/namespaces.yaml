@@ -1,0 +1,8 @@
+{{- range .Values.applicationTargets }}
+{{ $namespace := .targetNamespace }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ $namespace }}
+---
+{{- end -}}
