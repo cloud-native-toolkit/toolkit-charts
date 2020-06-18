@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "ocp-route.name" . }}
+  labels:
+    app: {{ default (include "ocp-route.name" .) .Values.app }}
+spec:
+  to:
+    kind: Service
+    name: {{ default (include "ocp-route.name" .) .Values.serviceName }}
+    weight: 100
+  port:
+    targetPort: {{ required "targetPort is requried" .Values.targetPort }}
+  tls:
+    termination: {{ .Values.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.insecurePolicy }}
+  wildcardPolicy: None
