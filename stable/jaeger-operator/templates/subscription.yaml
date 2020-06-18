@@ -1,0 +1,15 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: jaeger
+  namespace: {{ include "operator.operator-namespace" . }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+spec:
+  channel: {{ include "operator.channel" . }}
+  installPlanApproval: Automatic
+  name: {{ include "operator.catalog-name" . }}
+  source: {{ include "operator.source" . }}
+  sourceNamespace: {{ include "operator.olm-namespace" . }}

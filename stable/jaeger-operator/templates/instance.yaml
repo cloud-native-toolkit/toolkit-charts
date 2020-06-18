@@ -1,0 +1,21 @@
+{{- if eq (include "operator.cluster-type" .) "kubernetes" }}
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: {{ include "operator.name" . }}
+spec:
+  ingress:
+    hosts:
+      - {{ printf "%s-%s.%s" "jaeger" .Release.Namespace .Values.global.ingressSubdomain }}
+    {{- if .Values.global.tlsSecretName -}}
+    tls:
+      - hosts:
+          - {{ printf "%s-%s.%s" "jaeger" .Release.Namespace .Values.global.ingressSubdomain }}
+        secretName: {{ .Values.global.tlsSecretName }}
+    {{- end -}}
+{{- else -}}
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: {{ include "operator.name" . }}
+{{- end -}}
