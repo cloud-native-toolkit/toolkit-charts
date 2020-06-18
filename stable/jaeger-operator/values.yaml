@@ -1,0 +1,22 @@
+# Default values for argocd-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  ingressSubdomain: ""
+  tlsSecretName: ""
+
+nameOverride: ""
+
+olmNamespace: ""
+operatorNamespace: ""
+
+clusterType: ""
+
+ocpCatalog:
+  source: redhat-operators
+  channel: stable
+  name: jaeger-product
+operatorHub:
+  source: operatorhubio-catalog
+  channel: stable
+  name: jaeger
