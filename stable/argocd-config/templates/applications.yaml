@@ -6,8 +6,9 @@
 {{- $targetRevision := .targetRevision -}}
 {{- $server := default "https://kubernetes.default.svc" .server | quote -}}
 {{- $valueFile := include "argocd.valueFiles" .valueFiles -}}
-{{- range .applicationNames -}}
-{{- $name := . -}}
+{{- range .applications -}}
+{{- $name := .name -}}
+{{- $path := default .name .path -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -19,7 +20,7 @@ spec:
     server: {{ $server }}
   project: {{ $project }}
   source:
-    path: {{ $name }}
+    path: {{ $path }}
     repoURL: {{ $targetRepo }}
     targetRevision: {{ $targetRevision }}
     helm:
