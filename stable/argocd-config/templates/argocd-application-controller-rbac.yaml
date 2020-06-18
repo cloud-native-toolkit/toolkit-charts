@@ -35,11 +35,18 @@ rules:
   verbs:
   - "*"
 - apiGroups:
-  - "networking.k8s.io"
+    - "networking.k8s.io"
   resources:
-  - networkpolicies
+    - networkpolicies
   verbs:
-  - "*"
+    - "*"
+- apiGroups:
+    - "rbac.authorization.k8s.io"
+  resources:
+    - roles
+    - rolebindings
+  verbs:
+    - "*"
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
