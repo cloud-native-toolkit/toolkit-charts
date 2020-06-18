@@ -1,8 +1,16 @@
+{{- $clusterType := .Values.clusterType -}}
 {{- range .Values.applicationTargets }}
 {{ $namespace := .targetNamespace }}
+{{- if or (or (eq $clusterType "ocp3") (eq $clusterType "openshift")) ((eq $clusterType "ocp4")) -}}
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: {{ $namespace }}
+{{- else -}}
 apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ $namespace }}
+{{- end }}
 ---
 {{- end -}}
