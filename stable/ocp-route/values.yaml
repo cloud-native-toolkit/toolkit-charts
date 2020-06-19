@@ -1,0 +1,12 @@
+# Default values for ocp-route.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+
+targetPort: ""
+
+app: ""
+serviceName: ""
+termination: edge
+insecurePolicy: Redirect
