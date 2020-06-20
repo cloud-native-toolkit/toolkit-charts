@@ -1,5 +1,6 @@
+{{- if .Values.repoUrl -}}
 {{- $releaseNamespace := .Release.Namespace -}}
-{{- $targetRepo := required "The 'repoUrl' value is required containing the gitops repo url!" .Values.repoUrl | quote -}}
+{{- $targetRepo := .Values.repoUrl -}}
 {{- $project := default "default" .Values.project -}}
 {{- range .Values.applicationTargets }}
 {{- $targetNamespace := .targetNamespace -}}
@@ -36,3 +37,4 @@ spec:
 ---
 {{- end }}
 {{- end }}
+{{- end -}}
