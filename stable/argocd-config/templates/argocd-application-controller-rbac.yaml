@@ -1,6 +1,5 @@
 {{- if .Values.controllerRbac -}}
 {{- $releaseNamespace := .Release.Namespace -}}
-{{- range .Values.applicationTargets }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -29,5 +28,4 @@ subjects:
   name: argocd-server
   namespace: {{ $releaseNamespace }}
 ---
-{{- end -}}
 {{- end -}}
