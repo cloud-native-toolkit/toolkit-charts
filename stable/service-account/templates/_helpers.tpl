@@ -43,3 +43,14 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "service-account.isOpenShift" -}}
+{{- if or (or (eq .Values.clusterType "ocp3") (eq .Values.clusterType "ocp4")) (eq .Values.clusterType "openshift") -}}
+true
+{{- else -}}
+false
+{{- end -}}
+{{- end -}}
