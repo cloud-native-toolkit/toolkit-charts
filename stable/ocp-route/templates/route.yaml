@@ -1,4 +1,4 @@
-{{- if .Values.createRoute -}}
+{{- if eq (include "ocp-route.isOpenShift" .) "true" -}}
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
