@@ -1,3 +1,4 @@
+{{- if .Values.createRoute -}}
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -15,3 +16,4 @@ spec:
     termination: {{ .Values.termination }}
     insecureEdgeTerminationPolicy: {{ .Values.insecurePolicy }}
   wildcardPolicy: None
+{{- end -}}
