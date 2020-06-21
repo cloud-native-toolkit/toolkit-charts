@@ -1,4 +1,4 @@
-{{ $name :=  printf "%s-anyuid" (include "service-account.name" . ) }}
+{{ $name :=  printf "%s-%s-privileged" .Release.Namespace (include "service-account.name" . ) }}
 {{ $saName := printf "system:serviceaccount:%s:%s" .Release.Namespace (include "service-account.name" .) }}
 {{- range .Values.sccs }}
 {{- if eq "anyuid" . }}
@@ -10,6 +10,8 @@ metadata:
     kubernetes.io/description: anyuid provides all features of the restricted SCC
       but allows users to run with any UID and any GID.
   name: {{ $name }}
+  labels:
+{{- include "service-account.labels" . | nindent 4 }}
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false

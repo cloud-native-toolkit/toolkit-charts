@@ -3,4 +3,5 @@
 # Declare variables to be passed into your templates.
 name: ""
 
+createNamespace: true
 sccs: []
