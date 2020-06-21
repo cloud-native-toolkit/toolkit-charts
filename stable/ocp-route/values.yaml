@@ -1,8 +1,10 @@
 # Default values for ocp-route.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+global:
+  clusterType: "openshift"
 
-createRoute: true
+clusterType: ""
 
 nameOverride: ""
 
