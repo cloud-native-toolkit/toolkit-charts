@@ -1,6 +1,7 @@
 {{- if include "service-account.isOpenShift" . -}}
 {{ $name :=  printf "%s-%s-privileged" .Release.Namespace (include "service-account.name" . ) }}
 {{ $saName := printf "system:serviceaccount:%s:%s" .Release.Namespace (include "service-account.name" .) }}
+{{ $labels := include "service-account.labels" . }}
 {{- range .Values.sccs }}
 {{- if eq "privileged" . }}
 apiVersion: security.openshift.io/v1
@@ -14,7 +15,7 @@ metadata:
       only for cluster administration. Grant with caution.'
   name: {{ $name }}
   labels:
-{{- include "service-account.labels" . | nindent 4 }}
+{{- $labels | nindent 4 }}
 allowHostDirVolumePlugin: true
 allowHostIPC: true
 allowHostNetwork: true
