@@ -45,10 +45,18 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
+Cluster type
+*/}}
+{{- define "service-account.clusterType" -}}
+{{ default .Values.global.clusterType .Values.clusterType }}
+{{- end -}}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "service-account.isOpenShift" -}}
-{{- if or (or (eq .Values.clusterType "ocp3") (eq .Values.clusterType "ocp4")) (eq .Values.clusterType "openshift") -}}
+{{- $clusterType := include "service-account.clusterType" . -}}
+{{- if or (or (eq $clusterType "ocp3") (eq $clusterType "ocp4")) (eq $clusterType "openshift") -}}
 true
 {{- else -}}
 false
