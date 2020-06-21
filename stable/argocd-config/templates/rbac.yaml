@@ -3,7 +3,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: argocd-application-controller
+  name: {{ printf "%s-argocd" $releaseNamespace }}
   labels:
     app: argocd
 rules:
@@ -17,7 +17,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: argocd-application-controller
+  name: {{ printf "%s-argocd" $releaseNamespace }}
   labels:
     app: argocd
 roleRef:
