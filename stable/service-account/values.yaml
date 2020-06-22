@@ -2,10 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 global:
-  clusterType: ""
+  clusterType: "openshift"
 
 name: ""
 
-createNamespace: true
+create: true
 clusterType: ""
 sccs: []
