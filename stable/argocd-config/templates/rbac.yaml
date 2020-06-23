@@ -23,7 +23,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: argocd-application-controller
+  name: {{ printf "%s-argocd" $releaseNamespace }}
 subjects:
 - kind: ServiceAccount
   name: argocd-application-controller
