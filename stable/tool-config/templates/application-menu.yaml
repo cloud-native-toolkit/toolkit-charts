@@ -1,4 +1,4 @@
-{{- if and (include "tool-config.ingressSubdomain" .) .Values.applicationMenu }}
+{{- if and (and (include "tool-config.ingressSubdomain" .) .Values.applicationMenu) (or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4")) }}
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:

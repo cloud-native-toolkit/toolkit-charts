@@ -4,6 +4,7 @@
 
 global:
   ingressSubdomain: ""
+  clusterType: ""
 
 # the name of the application the config is part of (used for app label)
 app: ""
