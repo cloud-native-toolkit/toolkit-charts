@@ -21,3 +21,8 @@ operatorHub:
   source: operatorhubio-catalog
   channel: stable
   name: jaeger
+
+spec:
+  strategy: allInOne
+  storage:
+    type: memory
