@@ -4,6 +4,7 @@
 global:
   ingressSubdomain: ""
   tlsSecretName: ""
+  clusterType: ""
 
 nameOverride: ""
 

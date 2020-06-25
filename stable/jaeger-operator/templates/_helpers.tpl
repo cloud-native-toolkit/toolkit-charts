@@ -37,7 +37,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Selector labels
 */}}
 {{- define "operator.cluster-type" -}}
-{{ required "clusterType is required" .Values.clusterType }}
+{{ default .Values.global.clusterType .Values.clusterType }}
 {{- end -}}
 
 {{/*
