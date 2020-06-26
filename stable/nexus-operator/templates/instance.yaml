@@ -4,9 +4,9 @@ metadata:
   name: {{ include "operator.name" . }}
 spec:
   networking:
-    expose: true
+    expose: {{ include "nexus-operator.expose" . }}
     exposeAs: {{ include "nexus-operator.exposeAs" . }}
-    {{- if and (eq (include "operator.cluster-type" .) "kubernetes") .Values.host }}
+    {{- if eq (include "operator.cluster-type" .) "kubernetes" }}
     host: {{ .Values.host }}
     {{- end }}
   persistence:

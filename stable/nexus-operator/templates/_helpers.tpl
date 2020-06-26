@@ -109,6 +109,22 @@ Operator channel
 {{- end -}}
 {{- end -}}
 
+{{- define "nexus-operator.host" -}}
+{{- if .Values.host -}}
+{{- .Values.host -}}
+{{- else -}}
+{{- printf "%s-%s.%s" (include "operator.name" .) .Release.Namespace (include .Values.global.ingressSubdomain .) -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "nexus-operator.expose" -}}
+{{- if eq (include "operator.cluster-type" .) "kubernetes" -}}
+true
+{{- else -}}
+false
+{{- end -}}
+{{- end -}}
+
 {{/*
 Nexus exposeAs
 */}}
@@ -117,5 +133,17 @@ Nexus exposeAs
 Ingress
 {{- else -}}
 Route
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "operator.isOpenShift" -}}
+{{- $clusterType := include "operator.cluster-type" . -}}
+{{- if or (or (eq $clusterType "ocp3") (eq $clusterType "ocp4")) (eq $clusterType "openshift") -}}
+true
+{{- else -}}
+false
 {{- end -}}
 {{- end -}}
