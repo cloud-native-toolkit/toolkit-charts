@@ -1,0 +1,19 @@
+{{- if eq (include "operator.isOpenShift" .) "true" -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "operator.name" . }}
+  labels:
+    app: {{ default (include "operator.name" .) .Values.app }}
+spec:
+  to:
+    kind: Service
+    name: {{ include "operator.name" . }}
+    weight: 100
+  port:
+    targetPort: 8081
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+{{- end -}}
