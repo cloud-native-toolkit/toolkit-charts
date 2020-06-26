@@ -1,0 +1,25 @@
+apiVersion: apps.m88i.io/v1alpha1
+kind: Nexus
+metadata:
+  name: {{ include "operator.name" . }}
+spec:
+  networking:
+    expose: true
+    exposeAs: {{ include "nexus-operator.exposeAs" . }}
+    {{- if and (eq (include "operator.cluster-type" .) "kubernetes") .Values.host }}
+    host: {{ .Values.host }}
+    {{- end }}
+  persistence:
+    persistent: true
+    volumeSize: 10Gi
+  replicas: 1
+  resources:
+    limits:
+      cpu: '2'
+      memory: 2Gi
+    requests:
+      cpu: '1'
+      memory: 2Gi
+  {{- if .Values.serviceAccount }}
+  serviceAccountName: {{ .Values.serviceAccount }}
+  {{- end }}
