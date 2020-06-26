@@ -125,6 +125,14 @@ false
 {{- end -}}
 {{- end -}}
 
+{{- define "nexus-operator.useRedHatImage" -}}
+{{- if eq (include "operator.cluster-type" .) "kubernetes" -}}
+false
+{{- else -}}
+{{ .Values.useRedHatImage }}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Nexus exposeAs
 */}}

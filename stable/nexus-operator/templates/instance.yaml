@@ -20,6 +20,7 @@ spec:
     requests:
       cpu: '1'
       memory: 2Gi
+  useRedHatImage: {{ include "nexus-operator.useRedHatImage" . }}
   {{- if .Values.serviceAccount }}
   serviceAccountName: {{ .Values.serviceAccount }}
   {{- end }}
