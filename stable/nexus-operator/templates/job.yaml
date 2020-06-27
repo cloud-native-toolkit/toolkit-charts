@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "operator.job-name" . }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+  labels:
+  {{- include "operator.labels" . | nindent 4 }}
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ include "operator.job-name" . }}
+      initContainers:
+        - name: wait-for-deployment
+          image: ibmgaragecloud/helm-kubectl:3.2.3
+          command: ["/bin/bash", "-c", "kubectl rollout status -n $NAMESPACE deployment $DEPLOYMENT_NAME"]
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEPLOYMENT_NAME
+              value: {{ include "operator.name" . }}
+      containers:
+        - name: create-secret
+          image: ibmgaragecloud/helm-kubectl:3.2.3
+          command: ["/bin/bash", "-c"]
+          args:
+            - POD_NAME=$(kubectl get pods -n "${NAMESPACE}" -l app=${NAME} -o jsonpath='{range .items[]}{.metadata.name}{"\n"}{end}') &&
+              PASSWORD=$(kubectl exec "pod/${POD_NAME}" -n "${NAMESPACE}" -- cat /nexus-data/admin.password) &&
+              helm template nexus tool-config --repo $HELM_REPO --namespace $NAMESPACE --set clusterType=$CLUSTER_TYPE --set url=$URL --set applicationMenu=true --set displayName=Nexus --set username=admin --set password=$PASSWORD |
+              kubectl apply -n $NAMESPACE -f -
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: NAME
+              value: {{ include "operator.name" . }}
+            - name: URL
+              value: {{ printf "https://%s" ( include "nexus-operator.host" . ) }}
+            - name: CLUSTER_TYPE
+              value: {{ include "operator.cluster-type" . }}
+            - name: HELM_REPO
+              value: https://ibm-garage-cloud.github.io/toolkit-charts/
+            - name: HOME
+              value: /root
+      restartPolicy: Never
+  backoffLimit: 4
