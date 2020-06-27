@@ -7,7 +7,7 @@ spec:
     expose: {{ include "nexus-operator.expose" . }}
     exposeAs: {{ include "nexus-operator.exposeAs" . }}
     {{- if eq (include "operator.cluster-type" .) "kubernetes" }}
-    host: {{ .Values.host }}
+    host: {{ include "nexus-operator.host" . }}
     {{- end }}
   persistence:
     persistent: true
@@ -21,6 +21,4 @@ spec:
       cpu: '1'
       memory: 2Gi
   useRedHatImage: {{ include "nexus-operator.useRedHatImage" . }}
-  {{- if .Values.serviceAccount }}
-  serviceAccountName: {{ .Values.serviceAccount }}
-  {{- end }}
+  serviceAccountName: {{ required "serviceAccount must be provided" .Values.serviceAccount }}

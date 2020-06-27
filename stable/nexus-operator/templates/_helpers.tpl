@@ -6,6 +6,10 @@ Expand the name of the chart.
 {{- default .Release.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "operator.job-name" -}}
+{{- printf "%s-job" (include "operator.name" .) -}}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -113,7 +117,7 @@ Operator channel
 {{- if .Values.host -}}
 {{- .Values.host -}}
 {{- else -}}
-{{- printf "%s-%s.%s" (include "operator.name" .) .Release.Namespace (include .Values.global.ingressSubdomain .) -}}
+{{- printf "%s-%s.%s" (include "operator.name" .) .Release.Namespace .Values.global.ingressSubdomain -}}
 {{- end -}}
 {{- end -}}
 
