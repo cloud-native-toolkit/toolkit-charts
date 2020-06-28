@@ -4,11 +4,7 @@ metadata:
   name: {{ include "operator.name" . }}
 spec:
   networking:
-    expose: {{ include "nexus-operator.expose" . }}
-    exposeAs: {{ include "nexus-operator.exposeAs" . }}
-    {{- if eq (include "operator.cluster-type" .) "kubernetes" }}
-    host: {{ include "nexus-operator.host" . }}
-    {{- end }}
+    expose: false
   persistence:
     persistent: true
     volumeSize: 10Gi
