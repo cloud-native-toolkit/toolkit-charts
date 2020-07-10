@@ -12,6 +12,7 @@ clusterType: ""
 ingressSubdomain: ""
 tlsSecretName: ""
 host: "dashboard"
+iconHost: ""
 
 sso:
   enabled: true

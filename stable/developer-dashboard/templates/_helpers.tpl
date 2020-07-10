@@ -72,3 +72,11 @@ Create chart name and version as used by the chart label.
 {{- define "developer-dashboard.tlsSecretName" -}}
 {{- default .Values.global.tlsSecretName .Values.tlsSecretName -}}
 {{- end -}}
+
+{{- define "developer-dashboard.iconHost" -}}
+{{- if .Values.iconHost -}}
+{{ .Values.iconHost }}
+{{- else -}}
+{{ printf "%s-icons.%s" .Values.host (include "developer-dashboard.ingressSubdomain" .) }}
+{{- end -}}
+{{- end -}}
