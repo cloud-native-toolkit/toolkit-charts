@@ -30,5 +30,5 @@ spec:
     kind: Service
     name: {{ include "developer-dashboard.fullname" . }}
   tls:
-    termination: {{ include "developer-dashboard.route-termination" . }}
+    termination: edge
 {{- end }}
