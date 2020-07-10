@@ -18,7 +18,7 @@ sso:
 
 image:
   repository: ibmgaragecloud/developer-dashboard
-  tag: 1.0.31
+  tag: 1.1.0
   pullPolicy: IfNotPresent
   port: 3000
 

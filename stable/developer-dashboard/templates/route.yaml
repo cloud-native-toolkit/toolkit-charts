@@ -14,4 +14,21 @@ spec:
     name: {{ include "developer-dashboard.fullname" . }}
   tls:
     termination: {{ include "developer-dashboard.route-termination" . }}
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ printf "%s-icons" .Values.host }}
+  labels:
+    app: {{ include "developer-dashboard.name" . }}
+spec:
+  host: {{ printf "%s-icons.%s" .Values.host (include "developer-dashboard.ingressSubdomain" .) }}
+  path: /tools
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: {{ include "developer-dashboard.fullname" . }}
+  tls:
+    termination: {{ include "developer-dashboard.route-termination" . }}
 {{- end }}
