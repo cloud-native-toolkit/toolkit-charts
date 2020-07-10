@@ -22,7 +22,7 @@ metadata:
   labels:
     app: {{ include "developer-dashboard.name" . }}
 spec:
-  host: {{ printf "%s-icons.%s" .Values.host (include "developer-dashboard.ingressSubdomain" .) }}
+  host: {{ include "developer-dashboard.iconHost" . }}
   path: /tools
   port:
     targetPort: http
