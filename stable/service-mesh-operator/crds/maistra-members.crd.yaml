@@ -1,0 +1,42 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: servicemeshmembers.maistra.io
+spec:
+  conversion:
+    strategy: None
+  group: maistra.io
+  names:
+    kind: ServiceMeshMember
+    listKind: ServiceMeshMemberList
+    plural: servicemeshmembers
+    shortNames:
+    - smm
+    singular: servicemeshmember
+  preserveUnknownFields: true
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - description: The ServiceMeshControlPlane this namespace belongs to
+      jsonPath: .status.annotations.controlPlaneRef
+      name: Control Plane
+      type: string
+    - description: Whether or not namespace is configured as a member of the mesh.
+      jsonPath: .status.conditions[?(@.type=="Ready")].status
+      name: Ready
+      type: string
+    - description: The age of the object
+      jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
