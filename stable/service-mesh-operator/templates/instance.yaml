@@ -1,34 +1,17 @@
+{{- if .Values.createInstance -}}
 {{- if eq (include "operator.cluster-type" .) "ocp4" }}
 apiVersion: maistra.io/v1
 kind: ServiceMeshControlPlane
 metadata:
-  name: basic-install
-  namespace: tools
+  name: {{ include "operator.name" . }}
 spec:
-  version: v1.1
-  istio:
-    gateways:
-      istio-egressgateway:
-        autoscaleEnabled: false
-      istio-ingressgateway:
-        autoscaleEnabled: false
-        ior_enabled: false
-    mixer:
-      policy:
-        autoscaleEnabled: false
-      telemetry:
-        autoscaleEnabled: false
-    pilot:
-      autoscaleEnabled: false
-      traceSampling: 100
-    kiali:
-      enabled: true
-    grafana:
-      enabled: true
-    tracing:
-      enabled: true
-      jaeger:
-        template: all-in-one
+{{ .Values.ocpSpec | toYaml | indent 2 }}
 {{- else -}}
-
+apiVersion: istio.banzaicloud.io/v1beta1
+kind: Istio
+metadata:
+  name: {{ include "operator.name" . }}
+spec:
+{{ .Values.iksSpec | toYaml | indent 2 }}
+{{- end -}}
 {{- end -}}
