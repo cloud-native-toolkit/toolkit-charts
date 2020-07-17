@@ -22,6 +22,8 @@ operatorHub:
   channel: stable
   name: jaeger
 
+createInstance: true
+
 spec:
   strategy: allInOne
   storage:

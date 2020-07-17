@@ -1,3 +1,4 @@
+{{- if .Values.createInstance }}
 {{- if eq (include "operator.cluster-type" .) "kubernetes" }}
 apiVersion: jaegertracing.io/v1
 kind: Jaeger
@@ -20,4 +21,5 @@ metadata:
   name: {{ include "operator.name" . }}
 spec:
 {{ .Values.spec | toYaml | indent 2 }}
+{{- end -}}
 {{- end -}}
