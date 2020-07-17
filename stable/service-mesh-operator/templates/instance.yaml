@@ -1,0 +1,34 @@
+{{- if eq (include "operator.cluster-type" .) "ocp4" }}
+apiVersion: maistra.io/v1
+kind: ServiceMeshControlPlane
+metadata:
+  name: basic-install
+  namespace: tools
+spec:
+  version: v1.1
+  istio:
+    gateways:
+      istio-egressgateway:
+        autoscaleEnabled: false
+      istio-ingressgateway:
+        autoscaleEnabled: false
+        ior_enabled: false
+    mixer:
+      policy:
+        autoscaleEnabled: false
+      telemetry:
+        autoscaleEnabled: false
+    pilot:
+      autoscaleEnabled: false
+      traceSampling: 100
+    kiali:
+      enabled: true
+    grafana:
+      enabled: true
+    tracing:
+      enabled: true
+      jaeger:
+        template: all-in-one
+{{- else -}}
+
+{{- end -}}

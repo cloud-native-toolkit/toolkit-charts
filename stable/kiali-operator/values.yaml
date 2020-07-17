@@ -1,0 +1,42 @@
+# Default values for argocd-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  ingressSubdomain: ""
+  tlsSecretName: ""
+  clusterType: ""
+
+nameOverride: ""
+
+olmNamespace: ""
+operatorNamespace: ""
+
+clusterType: ""
+
+ocpCatalog:
+  source: redhat-operators
+  channel: stable
+  name: kiali-ossm
+operatorHub:
+  channel: stable
+  name: kiali
+  source: operatorhubio-catalog
+
+createInstance: false
+
+spec:
+  installation_tag: My Kiali
+  istio_namespace: istio-system
+  deployment:
+    namespace: istio-system
+    verbose_mode: '4'
+    view_only_mode: false
+  external_services:
+    grafana:
+      url: ''
+    prometheus:
+      url: ''
+    tracing:
+      url: ''
+  server:
+    web_root: /mykiali
