@@ -1,0 +1,72 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: servicemeshcontrolplanes.maistra.io
+spec:
+  conversion:
+    strategy: None
+  group: maistra.io
+  names:
+    kind: ServiceMeshControlPlane
+    listKind: ServiceMeshControlPlaneList
+    plural: servicemeshcontrolplanes
+    shortNames:
+    - smcp
+    singular: servicemeshcontrolplane
+  preserveUnknownFields: true
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - description: How many of the total number of member namespaces are configured
+      jsonPath: .status.annotations.readyComponentCount
+      name: Ready
+      type: string
+    - description: Whether or not the control plane installation is up to date and
+        ready to handle requests.
+      jsonPath: .status.conditions[?(@.type=="Reconciled")].reason
+      name: Status
+      type: string
+    - description: The configuration template to use as the base.
+      jsonPath: .status.lastAppliedConfiguration.template
+      name: Template
+      type: string
+    - description: The actual current version of the control plane installation.
+      jsonPath: .status.lastAppliedConfiguration.version
+      name: Version
+      type: string
+    - description: The age of the object
+      jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - description: The image hub used as the base for all component images.
+      jsonPath: .status.lastAppliedConfiguration.istio.global.hub
+      name: Image hub
+      priority: 1
+      type: string
+    - description: The image tag used for all component images.
+      jsonPath: .status.lastAppliedConfiguration.istio.global.tag
+      name: Tag
+      priority: 1
+      type: string
+    - description: A human-readable description of the control plane component readiness.
+      jsonPath: .status.conditions[?(@.type=="Ready")].message
+      name: Readiness status message
+      priority: 1
+      type: string
+    - description: The status of the reconciliation process, if the control plane
+        is not up to date with the latest version this resource.
+      jsonPath: .status.conditions[?(@.type=="Reconciled")].message
+      name: Reconciliation Status message
+      priority: 1
+      type: string
+    name: v1
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
