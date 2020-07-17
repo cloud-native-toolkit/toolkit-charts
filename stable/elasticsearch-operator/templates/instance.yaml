@@ -1,0 +1,9 @@
+{{- if and (eq (include "operator.cluster-type" .) "ocp4") .Values.createInstance }}
+apiVersion: logging.openshift.io/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+  namespace: openshift-operators
+spec:
+{{ .Values.spec | toYaml | indent 2 }}
+{{- end -}}
