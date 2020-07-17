@@ -3,13 +3,18 @@
 # Declare variables to be passed into your templates.
 global:
   ingressSubdomain: ""
+  tlsSecretName: ""
+  clusterType: ""
+  olmNamespace: ""
+  operatorNamespace: ""
 
 nameOverride: ""
 
 olmNamespace: ""
 operatorNamespace: ""
 
-clusterType: ""
+namespaceScoped: true
+createInstance: true
 
 ocpCatalog:
   source: community-operators

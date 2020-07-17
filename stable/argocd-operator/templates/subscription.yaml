@@ -13,4 +13,3 @@ spec:
   name: {{ include "operator.catalog-name" . }}
   source: {{ include "operator.source" . }}
   sourceNamespace: {{ include "operator.olm-namespace" . }}
-  startingCSV: {{ printf "argocd-operator.v%s" .Chart.AppVersion }}
