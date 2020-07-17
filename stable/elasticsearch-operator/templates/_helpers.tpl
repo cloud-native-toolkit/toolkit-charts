@@ -45,9 +45,9 @@ Default OLM Namespace
 */}}
 {{- define "operator.default-olm-namespace" -}}
 {{- if eq (include "operator.cluster-type" .) "ocp4" -}}
-{{ "openshift-marketplace" }}
+{{ default "openshift-marketplace" .Values.global.olmNamespace }}
 {{- else -}}
-{{ "olm" }}
+{{ default "olm" .Values.global.olmNamespace }}
 {{- end -}}
 {{- end -}}
 
@@ -63,9 +63,9 @@ Operator Namespace
 */}}
 {{- define "operator.default-operator-namespace" -}}
 {{- if eq (include "operator.cluster-type" .) "ocp4" -}}
-{{ "openshift-operators" }}
+{{ default "openshift-operators" .Values.global.operatorNamespace }}
 {{- else -}}
-{{ "operators" }}
+{{ default "operators" .Values.global.operatorNamespace }}
 {{- end -}}
 {{- end -}}
 

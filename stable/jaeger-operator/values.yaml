@@ -5,6 +5,8 @@ global:
   ingressSubdomain: ""
   tlsSecretName: ""
   clusterType: ""
+  olmNamespace: ""
+  operatorNamespace: ""
 
 nameOverride: ""
 
