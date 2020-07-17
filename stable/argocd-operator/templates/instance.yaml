@@ -1,3 +1,4 @@
+{{- if .Values.createInstance -}}
 {{- if eq (include "operator.cluster-type" .) "kubernetes" }}
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
@@ -28,4 +29,5 @@ spec:
     scopes: '[groups]'
   server:
     route: true
+{{- end -}}
 {{- end -}}
