@@ -1,4 +1,4 @@
-{{- if and (and (include "tool-config.ingressSubdomain" .) .Values.applicationMenu) (or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4")) }}
+{{- if and (and (include "tool-config.imageUrl" .) .Values.applicationMenu) (or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4")) }}
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
@@ -16,7 +16,7 @@ metadata:
     grouping: {{ .Values.grouping | quote }}
 spec:
   applicationMenu:
-    imageURL: {{ default (printf "https://dashboard-tools.%s/tools/icon/%s" (include "tool-config.ingressSubdomain" .) (include "tool-config.name" .)) .Values.imageUrl }}
+    imageURL: {{ include "tool-config.imageUrl" . }}
     section: {{ .Values.section | quote }}
   href: {{ include "tool-config.url" . | quote }}
   location: ApplicationMenu
