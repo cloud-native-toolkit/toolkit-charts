@@ -54,3 +54,13 @@ Create chart name and version as used by the chart label.
 {{- include "tool-config.name" . -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "tool-config.imageUrl" -}}
+{{- if .Values.imageUrl -}}
+{{ .Values.imageUrl | quote }}
+{{- else if (include "tool-config.ingressSubdomain" .) -}}
+{{ printf "https://dashboard-tools.%s/tools/icon/%s" (include "tool-config.ingressSubdomain" .) (include "tool-config.name" .) }}
+{{- else -}}
+{{- "" -}}
+{{- end -}}
+{{- end -}}
