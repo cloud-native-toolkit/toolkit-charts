@@ -1,0 +1,18 @@
+{{- $clusterType := include "tool-test.clusterType" . -}}
+{{- if (eq $clusterType "openshift") }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "tool-test.fullname" . }}
+  labels:
+    app: {{ include "tool-test.name" . }}
+    chart: {{ include "tool-test.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  port:
+    targetPort: {{ .Values.service.portName }}
+  to:
+    kind: Service
+    name: {{ include "tool-test.service-name" . }}
+{{- end }}

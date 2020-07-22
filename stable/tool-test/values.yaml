@@ -1,0 +1,33 @@
+# Default values for tool-test.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  clusterType: "kubernetes"
+
+host: "tooltest"
+
+service:
+  name: dummy-service
+  port: 80
+  targetPort: http
+  portName: http
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /dummy
+  includeNamespace: true
+  subdomain: "com"
+
+configMaps: []
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
