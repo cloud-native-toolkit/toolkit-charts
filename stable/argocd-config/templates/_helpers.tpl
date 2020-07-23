@@ -47,6 +47,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "argocd.selectorLabels" -}}
+app: argocd
 app.kubernetes.io/name: {{ include "argocd.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}

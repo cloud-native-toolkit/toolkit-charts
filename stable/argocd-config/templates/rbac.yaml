@@ -5,7 +5,7 @@ kind: ClusterRole
 metadata:
   name: {{ printf "%s-argocd" $releaseNamespace }}
   labels:
-    app: argocd
+{{ include "argocd.labels" . | indent 4 }}
 rules:
 - apiGroups:
   - "*"
@@ -19,7 +19,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ printf "%s-argocd" $releaseNamespace }}
   labels:
-    app: argocd
+{{ include "argocd.labels" . | indent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

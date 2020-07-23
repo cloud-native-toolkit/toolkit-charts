@@ -16,6 +16,8 @@ kind: Application
 metadata:
   name: {{ printf "%s-%s" $targetRevision $name }}
   namespace: {{ $releaseNamespace }}
+  labels:
+{{ include "argocd.labels" . | indent 4 }}
 spec:
   destination:
     namespace: {{ $targetNamespace }}
