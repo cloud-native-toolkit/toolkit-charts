@@ -4,16 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "tool-config.config-name" . }}
   labels:
-    app: {{ include "tool-config.app" . }}
-    app.kubernetes.io/name: {{ include "tool-config.app" . }}
-    app.kubernetes.io/instance: {{ .Release.Name | quote }}
-    app.kubernetes.io/version: {{ .Chart.Version | quote }}
-    app.kubernetes.io/part-of: {{ include "tool-config.app" . }}
-    app.kubernetes.io/component: {{ .Values.component | quote }}
-    chart: {{ include "tool-config.chart" . }}
-    release: {{ .Release.Name | quote }}
-    group: {{ .Values.group | quote }}
-    grouping: {{ .Values.grouping | quote }}
+{{ include "tool-config.labels" . | indent 4 }}
   annotations:
     description: {{ printf "Config map to hold the url for %s in the environment so that other components can access it" (include "tool-config.name" .) }}
 data:

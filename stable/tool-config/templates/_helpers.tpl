@@ -35,6 +35,30 @@ Expand the name of the chart.
 {{- end -}}
 
 {{/*
+Common labels
+*/}}
+{{- define "tool-config.labels" -}}
+helm.sh/chart: {{ include "tool-config.chart" . }}
+app: {{ include "tool-config.app" . }}
+release: {{ .Release.Name | quote }}
+app.kubernetes.io/part-of: {{ include "tool-config.app" . }}
+app.kubernetes.io/component: {{ .Values.component | quote }}
+group: {{ .Values.group | quote }}
+grouping: {{ .Values.grouping | quote }}
+{{ include "tool-config.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "tool-config.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "tool-config.app" . }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
+{{- end -}}
 
 {{/*
 Create chart name and version as used by the chart label.
