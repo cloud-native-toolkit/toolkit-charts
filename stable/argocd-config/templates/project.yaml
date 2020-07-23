@@ -4,6 +4,8 @@ kind: AppProject
 metadata:
   name: {{ .Values.project }}
   namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "argocd.labels" . | indent 4 }}
 spec:
   sourceRepos:
   - '*'

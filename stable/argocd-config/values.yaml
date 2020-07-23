@@ -21,6 +21,6 @@ applicationTargets: {}
 # Flag indicating that roles should be created for the 
 # argocd-application-controller service account in the 
 # target namespaces. Not sure why this is necessary...
-controllerRbac: true
+controllerRbac: false
 
 clusterType: ""
