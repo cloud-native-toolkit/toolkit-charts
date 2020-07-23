@@ -55,9 +55,21 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 {{- end -}}
 
+{{- define "tool-config.base64Image" -}}
+{{ $name := include "tool-config.name" . }}
+{{- range $key, $val := .Values.base64Images -}}
+{{- if eq $key $name -}}
+{{ $val }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "tool-config.imageUrl" -}}
+{{- $base64Image := include "tool-config.base64Image" . -}}
 {{- if .Values.imageUrl -}}
 {{ .Values.imageUrl | quote }}
+{{- else if $base64Image -}}
+{{ $base64Image }}
 {{- else if (include "tool-config.ingressSubdomain" .) -}}
 {{ printf "https://dashboard-tools.%s/tools/icon/%s" (include "tool-config.ingressSubdomain" .) (include "tool-config.name" .) }}
 {{- else -}}
