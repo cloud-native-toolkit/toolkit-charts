@@ -1,0 +1,28 @@
+{{- $clusterType := include "tool-test.clusterType" . -}}
+{{- if and (.Values.ingress.enabled) (eq $clusterType "kubernetes") -}}
+{{- $fullName := include "tool-test.fullname" . -}}
+{{- $ingressPath := .Values.ingress.path -}}
+{{- $host := include "tool-test.ingress-host" . -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ template "tool-test.name" . }}
+    chart: {{ template "tool-test.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+ rules:
+ - host: {{ $host }}
+   http:
+     paths:
+     - path: {{ $ingressPath }}
+       backend:
+         serviceName: {{ include "tool-test.service-name" . }}
+         servicePort: {{ .Values.service.portName }}
+{{- end }}
