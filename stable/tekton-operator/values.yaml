@@ -18,6 +18,6 @@ ocpCatalog:
   channel: ocp-4.4
   name: openshift-pipelines-operator-rh
 operatorHub:
-  source: operatorhubio-catalog
-  channel: stable
-  name: jaeger
+  source: ""
+  channel: ""
+  name: ""
