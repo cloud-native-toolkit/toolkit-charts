@@ -26,7 +26,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "ibmcloud.config-name" . }}
   labels:
-  {{ include "ibmcloud.labels" . | indent 4 }}
+{{ include "ibmcloud.labels" . | indent 4 }}
   annotations:
     description: "ConfigMap to hold the ibmcloud configuration values used to access the cluster environment (so that processes within the cluster can operate on the cluster)"
 data:
