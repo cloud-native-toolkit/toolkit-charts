@@ -34,6 +34,14 @@ Expand the name of the chart.
 {{- end -}}
 {{- end -}}
 
+{{- define "tool-config.private-url" -}}
+{{- if .Values.privateUrl -}}
+{{ .Values.privateUrl }}
+{{- else -}}
+{{ include "tool-config.url" . }}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Common labels
 */}}
