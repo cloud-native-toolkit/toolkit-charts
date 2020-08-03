@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "ibmcloud.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- default "cloud" .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "ibmcloud.config-name" -}}
@@ -11,7 +11,7 @@ Expand the name of the chart.
 {{- end -}}
 
 {{- define "ibmcloud.apikey-name" -}}
-{{- printf "%s-%s" (include "ibmcloud.name" .) "apikey" -}}
+{{- printf "%s-%s" (include "ibmcloud.name" .) "access" -}}
 {{- end -}}
 
 {{/*
@@ -77,3 +77,29 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 {{- end -}}
 
+
+{{/*
+Common labels
+*/}}
+{{- define "ibmcloud.labels" -}}
+helm.sh/chart: {{ include "ibmcloud.chart" . }}
+app: {{ include "ibmcloud.name" . }}
+release: {{ .Release.Name | quote }}
+app.kubernetes.io/part-of: {{ include "ibmcloud.name" . }}
+app.kubernetes.io/component: {{ .Values.component | quote }}
+group: {{ .Values.group | quote }}
+grouping: {{ .Values.grouping | quote }}
+{{ include "ibmcloud.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "ibmcloud.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "ibmcloud.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
+{{- end -}}
