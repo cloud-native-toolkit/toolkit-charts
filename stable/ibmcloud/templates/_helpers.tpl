@@ -86,7 +86,7 @@ helm.sh/chart: {{ include "ibmcloud.chart" . }}
 app: {{ include "ibmcloud.name" . }}
 release: {{ .Release.Name | quote }}
 app.kubernetes.io/part-of: {{ include "ibmcloud.name" . }}
-app.kubernetes.io/component: {{ .Values.component | quote }}
+app.kubernetes.io/component: {{ default "cloud" .Values.component | quote }}
 group: {{ .Values.group | quote }}
 grouping: {{ .Values.grouping | quote }}
 {{ include "ibmcloud.selectorLabels" . }}
