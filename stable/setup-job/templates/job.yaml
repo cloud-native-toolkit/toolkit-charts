@@ -8,12 +8,12 @@ spec:
             serviceAccountName: {{ default "default" .Values.serviceAccountName }}
             initContainers:
               - name: {{ printf "wait-for-%s" (include "setup-job.name" .) }}
-                image: docker.io/alpine:latest
+                image: docker.io/byrnedo/alpine-curl:latest
                 imagePullPolicy: IfNotPresent
                 command: ["sh"]
                 args:
                   - "-c"
-                  - "apk add curl; until curl -Isf ${URL}; do echo \">>> waiting for ${URL}\"; sleep 90; done; echo \">>> Started\""
+                  - "until curl -Isf ${URL}; do echo \">>> waiting for ${URL}\"; sleep 90; done; echo \">>> Started\""
                 env:
                 - name: URL
                   valueFrom:
