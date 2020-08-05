@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: {{ include include "setup-job.fullname" . }}
+spec:
+    template:
+        spec:
+            serviceAccountName: {{ default "default" .Values.serviceAccountName }}
+            initContainers:
+              - name: {{ printf "wait-for-%s" (include "setup-job.name" .) }}
+                image: docker.io/alpine:latest
+                imagePullPolicy: IfNotPresent
+                command: ["sh"]
+                args:
+                  - "-c"
+                  - "apk add curl; until curl -Isf ${URL}; do echo \">>> waiting for ${URL}\"; sleep 90; done; echo \">>> Started\""
+                env:
+                - name: URL
+                  valueFrom:
+                    secretKeyRef:
+                      key: {{ .Values.secret.key }}
+                      name: {{ .Values.secret.name }}
+            containers:
+                - name: {{ include include "setup-job.fullname" . }}
+                  image: garagecatalyst/node11:latest
+                  imagePullPolicy: IfNotPresent
+                  command: ["bash"]
+                  args:
+                    - "-c"
+                    - "export NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace); echo \"NAMESPACE: ${NAMESPACE}\"; npm i -g @ibmgaragecloud/cloud-native-toolkit-web-cli; $(npm config get prefix)/bin/igc ${COMMAND} --inCluster -n ${NAMESPACE}"
+                  env:
+                    - name: COMMAND
+                      value: {{ .Values.command }}
+            restartPolicy: Never
+    backoffLimit: 4
