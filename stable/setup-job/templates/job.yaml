@@ -22,14 +22,18 @@ spec:
                       name: {{ .Values.secret.name }}
             containers:
                 - name: {{ include "setup-job.fullname" . }}
-                  image: garagecatalyst/node11:latest
-                  imagePullPolicy: IfNotPresent
+                  image: ibmgaragecloud/nodejs:latest
+                  imagePullPolicy: Always
                   command: ["bash"]
                   args:
                     - "-c"
-                    - "export NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace); echo \"NAMESPACE: ${NAMESPACE}\"; npm i -g @ibmgaragecloud/cloud-native-toolkit-web-cli; $(npm config get prefix)/bin/igc-web ${COMMAND} --inCluster -n ${NAMESPACE}"
+                    - "npm i -g @ibmgaragecloud/cloud-native-toolkit-web-cli; $(npm config get prefix)/bin/igc-web ${COMMAND} --inCluster -n ${NAMESPACE}"
                   env:
                     - name: COMMAND
                       value: {{ .Values.command }}
+                    - name: NAMESPACE
+                      valueFrom:
+                        fieldRef:
+                          fieldPath: metadata.namespace
             restartPolicy: Never
     backoffLimit: 4
