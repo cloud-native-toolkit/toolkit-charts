@@ -9,3 +9,8 @@ name: ""
 create: true
 clusterType: ""
 sccs: []
+roles: []
+
+#  - apiGroups: []
+#    resources: []
+#    verbs: []
