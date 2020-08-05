@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-    name: {{ include include "setup-job.fullname" . }}
+    name: {{ include "setup-job.fullname" . }}
 spec:
     template:
         spec:
@@ -21,7 +21,7 @@ spec:
                       key: {{ .Values.secret.key }}
                       name: {{ .Values.secret.name }}
             containers:
-                - name: {{ include include "setup-job.fullname" . }}
+                - name: {{ include "setup-job.fullname" . }}
                   image: garagecatalyst/node11:latest
                   imagePullPolicy: IfNotPresent
                   command: ["bash"]
