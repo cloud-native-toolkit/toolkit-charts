@@ -1,7 +1,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-    name: {{ include "setup-job.fullname" . }}
+  name: {{ include "setup-job.fullname" . }}
+  labels:
+{{ include "setup-job.labels" . | indent 4 }}
 spec:
     template:
         spec:
