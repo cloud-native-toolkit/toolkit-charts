@@ -32,6 +32,7 @@ Common labels
 */}}
 {{- define "setup-job.labels" -}}
 helm.sh/chart: {{ include "setup-job.chart" . }}
+app: {{ include "setup-job.name" . }}
 {{ include "setup-job.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
