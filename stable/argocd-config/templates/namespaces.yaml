@@ -1,4 +1,5 @@
 {{- $clusterType := .Values.clusterType -}}
+{{- $labels := include "argocd.labels" . -}}
 {{- range .Values.applicationTargets }}
 {{ $namespace := .targetNamespace }}
 {{- if or (or (eq $clusterType "ocp3") (eq $clusterType "openshift")) ((eq $clusterType "ocp4")) -}}
@@ -12,7 +13,7 @@ kind: Namespace
 metadata:
   name: {{ $namespace }}
   labels:
-{{ include "argocd.labels" . | indent 4 }}
+{{ $labels | indent 4 }}
 {{- end }}
 ---
 {{- end -}}

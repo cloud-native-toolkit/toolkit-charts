@@ -2,6 +2,7 @@
 {{- $releaseNamespace := .Release.Namespace -}}
 {{- $targetRepo := .Values.repoUrl -}}
 {{- $project := default "default" .Values.project -}}
+{{- $labels := include "argocd.labels" . -}}
 {{- range .Values.applicationTargets }}
 {{- $targetNamespace := .targetNamespace -}}
 {{- $targetRevision := .targetRevision -}}
@@ -17,7 +18,7 @@ metadata:
   name: {{ printf "%s-%s" $targetRevision $name }}
   namespace: {{ $releaseNamespace }}
   labels:
-{{ include "argocd.labels" . | indent 4 }}
+{{ $labels  | indent 4 }}
 spec:
   destination:
     namespace: {{ $targetNamespace }}
