@@ -1,0 +1,17 @@
+# Default values for cloud-setup.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  clusterType: ""
+  ingressSubdomain: ""
+  tlsSecretName: ""
+
+ibmcloud: {}
+
+github-config: {}
+
+imageregistry-config: {}
+
+cntk-dev-guide: {}
+
+first-app: {}
