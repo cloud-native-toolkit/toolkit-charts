@@ -1,0 +1,18 @@
+dependencies:
+- name: ibmcloud
+  repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+  version: 0.2.2
+- name: tool-config
+  repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+  version: 0.9.0
+- name: tool-config
+  repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+  version: 0.9.0
+- name: doc-config
+  repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+  version: 0.1.0
+- name: doc-config
+  repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+  version: 0.1.0
+digest: sha256:c60be3aceb4b4c6a630774de461a0a08d4f27162a3d6c6bff62cd6bb1606d6c8
+generated: "2020-08-12T16:43:24.012396-05:00"
