@@ -1,0 +1,12 @@
+{{- if or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4") }}
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: {{ printf "toolkit-%s" (include "doc-config.name" .) }}
+  labels:
+{{ include "doc-config.labels" . | indent 4 }}
+spec:
+  href: {{ required "The url is required" .Values.url | quote }}
+  location: HelpMenu
+  text: {{ include "doc-config.display-name" . }}
+{{- end }}
