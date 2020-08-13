@@ -1,6 +1,10 @@
 # Default values for configuration
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+global:
+  ingressSubdomain: ""
+  clusterType: ""
+  tlsSecretName: ""
 
 app: "garage-cloud-native-toolkit"
 group: "catalyst-tools"

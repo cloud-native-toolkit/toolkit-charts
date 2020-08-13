@@ -32,12 +32,12 @@ metadata:
 data:
   CLUSTER_TYPE: {{ include "ibmcloud.cluster_type" . }}
   SERVER_URL: {{ required "The 'server_url' is required!" .Values.server_url | quote }}
-  {{- if .Values.region -}}
+  {{- if .Values.region }}
   REGION: {{ .Values.region | quote }}
-  {{- end -}}
-  {{- if .Values.resource_group -}}
+  {{- end }}
+  {{- if .Values.resource_group }}
   RESOURCE_GROUP: {{ .Values.resource_group | quote }}
-  {{- end -}}
+  {{- end }}
   {{- if .Values.cluster_version }}
   CLUSTER_VERSION: {{ .Values.cluster_version | quote }}
-  {{- end -}}
+  {{- end }}

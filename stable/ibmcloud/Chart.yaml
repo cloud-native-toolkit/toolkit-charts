@@ -2,4 +2,4 @@ apiVersion: v2
 appVersion: "1.0"
 description: A Helm chart for to create a ConfigMap and Secret containing information about the IBM Cloud environment
 name: ibmcloud
-version: 0.3.0
+version: 0.3.1
