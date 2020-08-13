@@ -10,7 +10,7 @@ grouping: "garage-cloud-native-toolkit"
 # These values will be defaulted and can be overridden
 apiurl: "https://cloud.ibm.com"
 registry_url: "us.icr.io"
-region: "us-south"
+region: ""
 registry_user: "iamapikey"
 # If not provided the registry_password will default to 
 registry_password: ""
@@ -18,10 +18,7 @@ registry_password: ""
 cluster_type: "kubernetes"
 
 # These values are required
-apikey: ""
-resource_group: ""
 server_url: ""
-ingress_subdomain: ""
 
 # these values will be derived if not provided
 tls_secret_name: ""
@@ -29,3 +26,8 @@ cluster_name: ""
 cluster_version: ""
 # if not provided the registry_namespace will default to the resource group
 registry_namespace: ""
+
+# if not provided the attributes will be skipped
+apikey: ""
+resource_group: ""
+ingress_subdomain: ""
