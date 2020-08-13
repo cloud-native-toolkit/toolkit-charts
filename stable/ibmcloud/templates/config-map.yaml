@@ -12,8 +12,8 @@ data:
   REGISTRY_URL: {{ .Values.registry_url | quote }}
   REGION: {{ .Values.region | quote }}
   SERVER_URL: {{ required "The 'server_url' is required!" .Values.server_url | quote }}
-  RESOURCE_GROUP: {{ required "The 'resource_group' is required!" .Values.resource_group | quote }}
-  INGRESS_SUBDOMAIN: {{ required "The 'ingress_subdomain' is required!" .Values.ingress_subdomain | quote }}
+  RESOURCE_GROUP: {{ .Values.resource_group | quote }}
+  INGRESS_SUBDOMAIN: {{ .Values.ingress_subdomain | quote }}
   REGISTRY_NAMESPACE: {{ include "ibmcloud.registry_namespace" . }}
   CLUSTER_NAME: {{ include "ibmcloud.cluster_name" . }}
   TLS_SECRET_NAME: {{ .Values.tls_secret_name | quote }}
@@ -31,15 +31,13 @@ metadata:
     description: "ConfigMap to hold the ibmcloud configuration values used to access the cluster environment (so that processes within the cluster can operate on the cluster)"
 data:
   CLUSTER_TYPE: {{ include "ibmcloud.cluster_type" . }}
-  APIURL: {{ .Values.apiurl | quote }}
-  REGISTRY_URL: {{ .Values.registry_url | quote }}
-  REGION: {{ .Values.region | quote }}
   SERVER_URL: {{ required "The 'server_url' is required!" .Values.server_url | quote }}
-  RESOURCE_GROUP: {{ required "The 'resource_group' is required!" .Values.resource_group | quote }}
-  INGRESS_SUBDOMAIN: {{ required "The 'ingress_subdomain' is required!" .Values.ingress_subdomain | quote }}
-  REGISTRY_NAMESPACE: {{ include "ibmcloud.registry_namespace" . }}
-  CLUSTER_NAME: {{ include "ibmcloud.cluster_name" . }}
-  TLS_SECRET_NAME: {{ .Values.tls_secret_name | quote }}
+  {{- if .Values.region -}}
+  REGION: {{ .Values.region | quote }}
+  {{- end -}}
+  {{- if .Values.resource_group -}}
+  RESOURCE_GROUP: {{ .Values.resource_group | quote }}
+  {{- end -}}
   {{- if .Values.cluster_version }}
   CLUSTER_VERSION: {{ .Values.cluster_version | quote }}
-  {{- end }}
+  {{- end -}}
