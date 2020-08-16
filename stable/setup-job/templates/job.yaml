@@ -29,7 +29,7 @@ spec:
                   command: ["bash"]
                   args:
                     - "-c"
-                    - "npm i -g @ibmgaragecloud/cloud-native-toolkit-web-cli; $(npm config get prefix)/bin/igc-web ${COMMAND} --inCluster -n ${NAMESPACE}"
+                    - "npm i -g @ibmgaragecloud/cloud-native-toolkit-web-cli; $(npm config get prefix)/bin/igc-web ${COMMAND} --inCluster -n ${NAMESPACE} --debug"
                   env:
                     - name: COMMAND
                       value: {{ .Values.command }}
