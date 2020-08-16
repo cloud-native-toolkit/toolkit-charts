@@ -8,3 +8,4 @@ command: ""
 secret:
   name: ""
   key: ""
+cliVersion: "latest"
