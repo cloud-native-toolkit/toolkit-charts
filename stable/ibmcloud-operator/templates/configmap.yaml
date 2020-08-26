@@ -4,7 +4,7 @@ metadata:
   name: config-ibm-cloud-operator
   namespace: default
   labels:
-{{ include "operator.labels" . | indent 4 }}
+    {{- include "operator.labels" . | nindent 4 }}
 data:
   org: {{ .Values.org | quote }}
   region: {{ .Values.region | quote }}
