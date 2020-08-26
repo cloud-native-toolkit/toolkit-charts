@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-ibm-cloud-operator
+  namespace: default
+  labels:
+{{ include "operator.labels" . | indent 4 }}
+data:
+  org: {{ .Values.org | quote }}
+  region: {{ .Values.region | quote }}
+  resourcegroup: {{ required "The resourceGroup must be provided" .Values.resourceGroup | quote }}
+  resourcegroupid: {{ .Values.resourceGroupId | quote }}
+  space: {{ .Values.space | quote }}
+  user: {{ .Values.user | quote }}
