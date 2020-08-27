@@ -15,5 +15,4 @@ spec:
       protocol: TCP
       name: {{ .Values.service.portName }}
   selector:
-    app: {{ include "tool-test.name" . }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "tool-test.name" . }}
