@@ -15,4 +15,6 @@ spec:
   to:
     kind: Service
     name: {{ include "tool-test.service-name" . }}
+  tls:
+    termination: edge
 {{- end }}
