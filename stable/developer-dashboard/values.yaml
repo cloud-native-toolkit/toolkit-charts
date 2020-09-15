@@ -22,6 +22,8 @@ image:
   tag: 1.1.1
   pullPolicy: IfNotPresent
   port: 3000
+  repoUrl: "https://github.com/ibm-garage-cloud/developer-dashboard"
+  repoRef: ""
 
 service:
   type: ClusterIP

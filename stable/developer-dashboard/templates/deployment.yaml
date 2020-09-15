@@ -3,6 +3,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "developer-dashboard.fullname" . }}
+  annotations:
+    app.openshift.io/vcs-ref: {{ default (printf "v%s" .Values.image.tag) .Values.image.repoRef }}
+    app.openshift.io/vcs-uri: {{ .Values.image.repoUrl }}
   labels:
     app: {{ include "developer-dashboard.name" . }}
     chart: {{ include "developer-dashboard.chart" . }}
