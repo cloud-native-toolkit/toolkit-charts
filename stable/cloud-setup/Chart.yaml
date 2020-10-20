@@ -14,7 +14,7 @@ type: application
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.2.1
+version: 0.3.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
@@ -24,14 +24,6 @@ dependencies:
   - name: ibmcloud
     version: 0.3.1
     repository: https://ibm-garage-cloud.github.io/toolkit-charts/
-  - name: tool-config
-    version: 0.9.0
-    repository: https://ibm-garage-cloud.github.io/toolkit-charts/
-    alias: github-config
-  - name: tool-config
-    version: 0.9.0
-    repository: https://ibm-garage-cloud.github.io/toolkit-charts/
-    alias: imageregistry-config
   - name: doc-config
     version: 0.1.0
     repository: https://ibm-garage-cloud.github.io/toolkit-charts/
