@@ -11,6 +11,7 @@ project: ""
 applicationTargets: {}
 # - targetRevision: ""
 #   targetNamespace: ""
+#   createNamespace: true
 #   server: "" (optional)
 #   valueFiles: (optional)
 #   - values.yaml

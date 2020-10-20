@@ -8,6 +8,7 @@
 {{- $targetRevision := .targetRevision -}}
 {{- $server := default "https://kubernetes.default.svc" .server | quote -}}
 {{- $valueFile := include "argocd.valueFiles" .valueFiles -}}
+{{- $createNamespace := .createNamespace }}
 {{- range .applications -}}
 {{- $name := .name -}}
 {{- $path := default .name .path -}}
@@ -42,6 +43,10 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    {{- if $createNamespace }}
+    syncOptions:
+      - CreateNamespace=true
+    {{- end }}
 ---
 {{- end }}
 {{- end }}
