@@ -16,7 +16,20 @@ applicationTargets: {}
 #   - values.yaml
 #   applications:
 #   - app1
-#   - app2
+#   - name: app1
+#   - name: app1
+#     type: helm
+#   - name: app1
+#     type: helm
+#     path: app1
+#   - name: app2
+#     type: directory
+#   - name: app3
+#     type: plugin
+#     plugin: plugin-name
+#   - name: app4
+#     type: kustomize
+#     path: app4/overlay
 
 # Flag indicating that roles should be created for the 
 # argocd-application-controller service account in the 

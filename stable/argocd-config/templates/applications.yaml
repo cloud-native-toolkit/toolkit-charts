@@ -12,6 +12,7 @@
 {{- $name := .name -}}
 {{- $path := default .name .path -}}
 {{- $type := default "helm" .type -}}
+{{- $plugin := .plugin }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -31,7 +32,11 @@ spec:
     {{- if eq $type "helm" }}
     helm:
       valueFiles:
-{{ $valueFile | indent 8 }}
+        {{ $valueFile | nindent 8 }}
+    {{- end }}
+    {{- if eq $type "plugin" }}
+    plugin:
+      name: {{ $plugin }}
     {{- end }}
   syncPolicy:
     automated:
