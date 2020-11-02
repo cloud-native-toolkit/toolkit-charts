@@ -6,6 +6,10 @@ Expand the name of the chart.
 {{- (default .Release.Name .Values.name) | nospace | lower -}}
 {{- end -}}
 
+{{- define "tool-config.image-name" -}}
+{{- (default (include "tool-config.name" .) .Values.type) | nospace | lower -}}
+{{- end -}}
+
 {{- define "tool-config.display-name" -}}
 {{- default .Release.Name (default .Values.name .Values.displayName) -}}
 {{- end -}}
@@ -88,11 +92,10 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{- define "tool-config.base64Image" -}}
-{{ $name := include "tool-config.name" . }}
-{{ $type := .Values.type }}
+{{- $name := include "tool-config.image-name" . }}
 {{- range $key, $val := .Values.base64Images -}}
-{{- if or (eq $key $name) (eq $key $type) -}}
-{{ $val }}
+{{- if or (eq $key $name) -}}
+{{- $val }}
 {{- end -}}
 {{- end -}}
 {{- end -}}
