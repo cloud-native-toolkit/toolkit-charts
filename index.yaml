@@ -301,6 +301,28 @@ entries:
   cloud-setup:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2020-11-02T15:15:07.745969397Z"
+    dependencies:
+    - name: ibmcloud
+      repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+      version: 0.3.1
+    - alias: cntk-dev-guide
+      name: doc-config
+      repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+      version: 0.1.0
+    - alias: first-app
+      name: doc-config
+      repository: https://ibm-garage-cloud.github.io/toolkit-charts/
+      version: 0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 305b2ca08cf9337e99a77aeb6faa934114abe1ef6a2915e34219857a9f13f614
+    name: cloud-setup
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/cloud-setup-0.3.1/cloud-setup-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-10-28T17:25:17.863625917Z"
     dependencies:
     - name: ibmcloud
