@@ -8,10 +8,6 @@ global:
 
 ibmcloud: {}
 
-github-config: {}
-
-imageregistry-config: {}
-
 cntk-dev-guide: {}
 
 first-app: {}
