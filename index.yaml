@@ -1226,6 +1226,16 @@ entries:
   tool-config:
   - apiVersion: v1
     appVersion: "1.0"
+    created: "2020-11-02T19:45:55.806734355Z"
+    description: A Helm chart to create a ConfigMap and Secret containing the configuration
+      information for a deployed tool
+    digest: 2b55c58f5637d67c6e2bc88592251a5f8e0d34193cdc2e9b57828adddc83506c
+    name: tool-config
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/tool-config-0.10.1/tool-config-0.10.1.tgz
+    version: 0.10.1
+  - apiVersion: v1
+    appVersion: "1.0"
     created: "2020-11-02T19:05:48.004433193Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
