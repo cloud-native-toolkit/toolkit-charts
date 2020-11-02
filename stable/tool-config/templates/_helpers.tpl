@@ -89,8 +89,9 @@ Create chart name and version as used by the chart label.
 
 {{- define "tool-config.base64Image" -}}
 {{ $name := include "tool-config.name" . }}
+{{ $type := .Values.type }}
 {{- range $key, $val := .Values.base64Images -}}
-{{- if eq $key $name -}}
+{{- if or (eq $key $name) (eq $key $type) -}}
 {{ $val }}
 {{- end -}}
 {{- end -}}
