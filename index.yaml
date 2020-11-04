@@ -1137,6 +1137,16 @@ entries:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/setup-job-0.1.0.tgz
     version: 0.1.0
   swaggereditor:
+  - apiVersion: v2
+    appVersion: v3.14.5
+    created: "2020-11-04T06:30:06.277172282Z"
+    description: A Helm chart for Kubernetes
+    digest: 6ddd8d2051af2f8b18372ad16c524799f1d46ed55c3dd0b7d1dbd8bbd99722aa
+    name: swaggereditor
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/swaggereditor-2.0.0/swaggereditor-2.0.0.tgz
+    version: 2.0.0
   - apiVersion: v1
     appVersion: "1.0"
     created: "2020-10-28T17:25:17.907125462Z"
