@@ -1,23 +1,13 @@
-{{- $clusterType := include "swaggereditor.clusterType" . -}}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "swaggereditor.fullname" . }}
-  annotations:
-    service.alpha.openshift.io/serving-cert-secret-name: {{ .Values.host }}-tls
   labels:
-    app: {{ template "swaggereditor.name" . }}
-    chart: {{ template "swaggereditor.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    "app.kubernetes.io/name": {{ include "swaggereditor.fullname" . }}
-    "helm.sh/chart": {{ include "swaggereditor.chart" . }}
-    "app.kubernetes.io/instance": {{ .Release.Name }}
-    "app.kubernetes.io/component": {{ include "swaggereditor.fullname" . }}-deployment
+    {{- include "swaggereditor.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{- if (eq $clusterType "openshift") }}
+    {{- if .Capabilities.APIVersions.Has "route.openshift.io/v1" }}
     - port: 443
       targetPort: 8443
       protocol: TCP
@@ -28,5 +18,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: {{ include "swaggereditor.name" . }}
-    release: {{ .Release.Name }}
+    {{- include "swaggereditor.selectorLabels" . | nindent 4 }}

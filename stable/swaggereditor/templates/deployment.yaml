@@ -4,56 +4,32 @@ kind: Deployment
 metadata:
   name: {{ include "swaggereditor.fullname" . }}
   labels:
-    app: {{ include "swaggereditor.name" . }}
-    chart: {{ include "swaggereditor.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    "app.kubernetes.io/name": {{ include "swaggereditor.fullname" . }}
-    "helm.sh/chart": {{ include "swaggereditor.chart" . }}
-    "app.kubernetes.io/instance": {{ .Release.Name }}
-    "app.kubernetes.io/component": {{ include "swaggereditor.fullname" . }}-deployment
+    {{- include "swaggereditor.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "swaggereditor.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "swaggereditor.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ include "swaggereditor.name" . }}
-        release: {{ .Release.Name }}
-        "app.kubernetes.io/name": {{ include "swaggereditor.name" . }}
-        "helm.sh/chart": {{ printf "%s-%s" .Chart.Name .Chart.Version }}
-        "app.kubernetes.io/instance": {{ include "swaggereditor.name" . }}
-        "app.kubernetes.io/component": {{ include "swaggereditor.name" . }}-pod
+        {{- include "swaggereditor.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "swaggereditor.name" . }}
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "swaggereditor.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and (eq $clusterType "openshift") .Values.sso.enabled }}
       volumes:
-        - name: cache
-          emptyDir: {}
-      {{- if (eq $clusterType "openshift") }}
         - name: proxy-tls
           secret:
             secretName: {{ .Values.host }}-tls
       {{- end }}
-      initContainers:
-        - name: cache-permissions
-          image: alpine:latest
-          command:
-            - /bin/sh
-            - -c
-            - |
-              chgrp -v -R 0 /mount
-              chmod -v -R g+rwx /mount
-              mkdir -p /mount/nginx/client_temp
-          securityContext:
-            privileged: true
-          volumeMounts:
-            - mountPath: /mount
-              name: cache
       containers:
-        {{- if (eq $clusterType "openshift") }}
+        {{- if and (eq $clusterType "openshift") .Values.sso.enabled }}
         - name: oauth-proxy
           image: openshift/oauth-proxy:latest
           imagePullPolicy: IfNotPresent
@@ -73,38 +49,33 @@ spec:
               name: proxy-tls
         {{- end }}
         - name: {{ .Chart.Name }}
-          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.image.port }}
               protocol: TCP
           livenessProbe:
-            tcpSocket:
-              port: {{ .Values.image.port }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            httpGet:
+              path: /
+              port: http
           readinessProbe:
-            tcpSocket:
-              port: {{ .Values.image.port }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          securityContext:
-            privileged: true
-          volumeMounts:
-            - mountPath: /var/cache
-              name: cache
+            httpGet:
+              path: /
+              port: http
           resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     {{- with .Values.affinity }}
       affinity:
-{{ toYaml . | indent 8 }}
+        {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.tolerations }}
       tolerations:
-{{ toYaml . | indent 8 }}
+        {{- toYaml . | nindent 8 }}
     {{- end }}

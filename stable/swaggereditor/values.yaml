@@ -14,11 +14,10 @@ tlsSecretName: ""
 host: "apieditor"
 
 sso:
-  enabled: true
+  enabled: false
 
 image:
-  repository: docker.io/swaggerapi/swagger-editor
-  tag: latest
+  repository: docker.io/ibmgaragecloud/swagger-editor
   pullPolicy: Always
   port: 8080
 
@@ -30,9 +29,13 @@ ingress:
   enabled: true
   annotations: {}
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/tls-acme: "true"
   path: /
   includeNamespace: true
+
+serviceAccount:
+  create: true
+  name: ""
 
 configMaps: []
 
@@ -46,7 +49,7 @@ resources: {}
   #  memory: 128Mi
   # requests:
   #  cpu: 100m
-  #  memory: 128Mi
+#  memory: 128Mi
 
 nodeSelector: {}
 
