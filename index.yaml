@@ -1057,6 +1057,16 @@ entries:
     version: 0.1.0
   setup-job:
   - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2020-11-04T21:46:18.172286348Z"
+    description: A Helm chart for Kubernetes
+    digest: 52de6cde4916af85c1912bd79d6f4a0d4d43e5c257feb8898259f5c474b25e03
+    name: setup-job
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/setup-job-0.2.0/setup-job-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2020-10-28T17:25:17.903124682Z"
     description: A Helm chart for Kubernetes
