@@ -31,6 +31,46 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{/*
+Common labels
+*/}}
+{{- define "swaggereditor.labels" -}}
+helm.sh/chart: {{ include "swaggereditor.chart" . }}
+{{ include "swaggereditor.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "swaggereditor.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "swaggereditor.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "swaggereditor.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "swaggereditor.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{- define "swaggereditor.clusterType" -}}
+{{ $clusterType := default .Values.global.clusterType .Values.clusterType }}
+{{- if or (eq $clusterType "openshift") (regexFind "^ocp.*" $clusterType) -}}
+{{- "openshift" -}}
+{{- else -}}
+{{- "kubernetes" -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "swaggereditor.route-port" -}}
 {{- if .Values.sso.enabled -}}
 {{ printf "proxy" }}
@@ -45,30 +85,4 @@ Create chart name and version as used by the chart label.
 {{- else -}}
 {{ printf "edge" }}
 {{- end -}}
-{{- end -}}
-
-{{- define "swaggereditor.ingress-host" -}}
-{{- $ingressSubdomain := include "swaggereditor.ingressSubdomain" . -}}
-{{- if .Values.ingress.includeNamespace -}}
-{{- printf "%s-%s.%s" .Values.host .Release.Namespace $ingressSubdomain -}}
-{{- else -}}
-{{- printf "%s.%s" .Values.host $ingressSubdomain -}}
-{{- end -}}
-{{- end -}}
-
-{{- define "swaggereditor.clusterType" -}}
-{{ $clusterType := default .Values.global.clusterType .Values.clusterType }}
-{{- if or (eq $clusterType "openshift") (regexFind "^ocp.*" $clusterType) -}}
-{{- "openshift" -}}
-{{- else -}}
-{{- "kubernetes" -}}
-{{- end -}}
-{{- end -}}
-
-{{- define "swaggereditor.ingressSubdomain" -}}
-{{- default .Values.global.ingressSubdomain .Values.ingressSubdomain -}}
-{{- end -}}
-
-{{- define "swaggereditor.tlsSecretName" -}}
-{{- default .Values.global.tlsSecretName .Values.tlsSecretName -}}
 {{- end -}}
