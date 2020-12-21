@@ -50,10 +50,19 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.configMap }}
+          {{- if or .Values.configMap .Values.envFrom }}
           envFrom:
+            {{- if .Values.configMap }}
             - configMapRef:
                 name: {{ include "starter-kit.fullname" . }}
+            {{- end }}
+            {{- if .Values.envFrom }}
+            {{- toYaml .Values.envFrom | nindent 12 }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.env }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
           {{- end }}
           ports:
             - name: http

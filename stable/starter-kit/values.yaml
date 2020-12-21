@@ -94,3 +94,5 @@ partOf: ""
 runtime: ""
 
 configMap: {}
+envFrom: {}
+env: {}
