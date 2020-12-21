@@ -60,3 +60,23 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "starter-kit.host" -}}
+{{- $chartName := include "starter-kit.name" . -}}
+{{- $host := default $chartName .Values.ingress.host -}}
+{{- $subdomain := .Values.ingress.subdomain | default .Values.global.ingressSubdomain -}}
+{{- if .Values.ingress.namespaceInHost -}}
+{{- printf "%s-%s.%s" $host .Release.Namespace $subdomain -}}
+{{- else -}}
+{{- printf "%s.%s" $host $subdomain -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "starter-kit.tlsSecretName" -}}
+{{- $secretName := .Values.ingress.tlsSecretName | default .Values.global.tlsSecretName -}}
+{{- if $secretName }}
+{{- printf "%s" $secretName -}}
+{{- else -}}
+{{- printf "" -}}
+{{- end -}}
+{{- end -}}
