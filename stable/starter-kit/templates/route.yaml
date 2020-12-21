@@ -1,5 +1,4 @@
-{{- if .Values.expose }}
-{{- if not .Values.ingress.enabled -}}
+{{- if .Values.route.enabled -}}
 {{- $fullName := include "starter-kit.fullname" . -}}
 kind: Route
 apiVersion: route.openshift.io/v1
@@ -15,5 +14,4 @@ spec:
   tls:
     termination: edge
   wildcardPolicy: None
-{{- end }}
 {{- end }}

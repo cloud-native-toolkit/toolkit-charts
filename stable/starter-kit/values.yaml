@@ -57,7 +57,8 @@ ingress:
   subdomain: containers.appdomain.cloud
   tlsSecretName: ""
 
-expose: false
+route:
+  enabled: false
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

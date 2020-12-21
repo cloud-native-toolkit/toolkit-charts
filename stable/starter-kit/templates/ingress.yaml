@@ -1,4 +1,3 @@
-{{- if .Values.expose }}
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "starter-kit.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
@@ -31,5 +30,4 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: http
-  {{- end }}
   {{- end }}
