@@ -1146,6 +1146,17 @@ entries:
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/setup-job-0.1.0.tgz
     version: 0.1.0
+  starter-kit:
+  - apiVersion: v2
+    appVersion: 1.18.0
+    created: "2020-12-21T22:18:26.251037514Z"
+    description: A Helm chart for Kubernetes
+    digest: 1cb91b20d96d0a090e3143c39bcf2e44a3a101596769305bbaf540733f4643a4
+    name: starter-kit
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/starter-kit-0.1.0/starter-kit-0.1.0.tgz
+    version: 0.1.0
   swaggereditor:
   - apiVersion: v2
     appVersion: v3.14.5
