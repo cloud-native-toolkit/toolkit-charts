@@ -10,6 +10,9 @@ metadata:
     {{- if .Values.connectsTo }}
     app.openshift.io/connects-to: {{ .Values.connectsTo }}
     {{- end }}
+    {{- if .Values.configMap }}
+    checksum/config: {{ include (print $.Template.BasePath "/config-map.yaml") . | sha256sum }}
+    {{- end }}
   labels:
     {{- include "starter-kit.labels" . | nindent 4 }}
     {{- if .Values.partOf }}
