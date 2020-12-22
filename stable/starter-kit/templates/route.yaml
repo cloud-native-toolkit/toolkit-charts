@@ -11,7 +11,30 @@ spec:
     kind: Service
     name: {{ $fullName }}
     weight: 100
+  port:
+    targetPort: http
   tls:
     termination: edge
+    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
   wildcardPolicy: None
+{{- if .Values.graphql.enabled }}
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ printf "%s-graphql" $fullName }}
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
+spec:
+  to:
+    kind: Service
+    name: {{ $fullName }}
+    weight: 100
+  port:
+    targetPort: graphql
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
+  wildcardPolicy: None
+{{- end }}
 {{- end }}

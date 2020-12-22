@@ -78,6 +78,30 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.graphql.enabled }}
+        - name: graphql
+          image: {{ .Values.graphql.image }}
+          imagePullPolicy: {{ .Values.graphql.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: graphql
+              containerPort: {{ .Values.graphql.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: graphql
+          readinessProbe:
+            httpGet:
+              path: /
+              port: graphql
+          env:
+            - name: PORT
+              value: {{ .Values.graphql.port }}
+            - name: REST_PORT
+              value: {{ .Values.image.port }}
+            - name: OPENAPI_PATH
+              value: {{ .Values.graphql.openapiPath }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
