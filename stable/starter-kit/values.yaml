@@ -59,6 +59,14 @@ ingress:
 
 route:
   enabled: false
+  insecureEdgeTerminationPolicy: Allow
+
+graphql:
+  enabled: false
+  image: quay.io/ibmgaragecloud/graphql-sidecar
+  pullPolicy: IfNotPresent
+  port: 3001
+  openapiPath: /openapi.json
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

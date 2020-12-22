@@ -11,5 +11,11 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    {{- if .Values.graphql.enabled }}
+    - port: {{ .Values.graphql.port }}
+      targetPort: graphql
+      protocol: TCP
+      name: graphql
+    {{- end }}
   selector:
     {{- include "starter-kit.selectorLabels" . | nindent 4 }}
