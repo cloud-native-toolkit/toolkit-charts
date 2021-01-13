@@ -3,6 +3,18 @@ entries:
   argocd-config:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-01-13T04:01:41.512911638Z"
+    description: Helm chart to create ArgoCD custom resources for projects and applications
+      with optional RBAC configuration to allow ArgoCD to create resources in other
+      namespaces
+    digest: 3c3fa384dde76e85e00579b4bb4a08d250cfabdcd3301e1a18df399d6b0c84b9
+    name: argocd-config
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/argocd-config-0.16.0/argocd-config-0.16.0.tgz
+    version: 0.16.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-10-28T17:25:17.800103257Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
