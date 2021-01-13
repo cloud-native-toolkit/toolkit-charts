@@ -14,6 +14,13 @@
 {{- $path := default .name .path -}}
 {{- $type := default "helm" .type -}}
 {{- $plugin := .plugin }}
+{{- if $createNamespace }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ $targetNamespace }}
+{{- end }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
