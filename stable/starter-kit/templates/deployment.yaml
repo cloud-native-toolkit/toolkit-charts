@@ -77,7 +77,7 @@ spec:
               path: {{ .Values.image.probePath }}
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- include "starter-kit.resources" . | nindent 12 }}
         {{- if .Values.graphql.enabled }}
         - name: graphql
           image: {{ .Values.graphql.image }}
