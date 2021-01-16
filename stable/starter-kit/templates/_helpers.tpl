@@ -80,3 +80,51 @@ Create the name of the service account to use
 {{- printf "" -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "starter-kit.resources" -}}
+{{- if .Values.resources -}}
+{{ toYaml .Values.resources }}
+{{- else -}}
+{{ include "starter-kit.default-resources" . }}
+{{- end -}}
+{{- end -}}
+
+{{- define "starter-kit.default-resources" -}}
+{{- $runtime := .Values.runtime -}}
+{{- if eq $runtime "golang" -}}
+limits:
+  cpu: 200m
+  memory: 256Mi
+requests:
+  cpu: 100m
+  memory: 128Mi
+{{- else if or (eq $runtime "js") (eq $runtime "nodejs") -}}
+limits:
+  cpu: 500m
+  memory: 512Mi
+requests:
+  cpu: 100m
+  memory: 128Mi
+{{- else if or (or (eq $runtime "openjdk") (eq $runtime "spring")) (eq $runtime "openliberty") -}}
+limits:
+  cpu: 500m
+  memory: 1024Mi
+requests:
+  cpu: 100m
+  memory: 256Mi
+{{- else if eq $runtime "python" -}}
+limits:
+  cpu: 500m
+  memory: 512Mi
+requests:
+  cpu: 100m
+  memory: 128Mi
+{{- else -}}
+limits:
+  cpu: 500m
+  memory: 1024Mi
+requests:
+  cpu: 100m
+  memory: 128Mi
+{{- end -}}
+{{- end -}}

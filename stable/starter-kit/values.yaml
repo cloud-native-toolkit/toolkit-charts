@@ -100,6 +100,8 @@ vcsInfo:
 connectsTo: ""
 
 partOf: ""
+# The app.openshift.io/runtime value. The full list can be found at static/assets/ on the OpenShift cluster.
+# Any of the following values will set default resource limits: golang, js, nodejs, openjdk, openliberty, python, spring
 runtime: ""
 
 configMap: {}
