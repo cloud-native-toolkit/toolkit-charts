@@ -5,6 +5,8 @@ A collection of helm charts used by and/or provided for the Garage Cloud Native 
 This GitHub repository also serves as a Helm repository, hosting the helm charts via GitHub pages. The url
 for the Helm repository is https://ibm-garage-cloud.github.io/toolkit-charts/
 
+To view the helm repo metadata see [index.yaml](https://ibm-garage-cloud.github.io/toolkit-charts/index.yaml)
+
 ## Usage
 
 The following commands assume Helm 3. The helm charts can be used with Helm 2 but the syntax is slightly different.
