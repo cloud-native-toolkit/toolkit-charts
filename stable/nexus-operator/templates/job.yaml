@@ -14,7 +14,7 @@ spec:
       serviceAccountName: {{ include "operator.job-name" . }}
       initContainers:
         - name: wait-for-deployment
-          image: ibmgaragecloud/helm-kubectl:3.2.3
+          image: quay.io/ibmgaragecloud/helm-kubectl:3.2.3
           command: ["/bin/bash", "-c", "kubectl rollout status -n $NAMESPACE deployment $DEPLOYMENT_NAME"]
           env:
             - name: NAMESPACE
@@ -25,7 +25,7 @@ spec:
               value: {{ include "operator.name" . }}
       containers:
         - name: create-secret
-          image: ibmgaragecloud/helm-kubectl:3.2.3
+          image: quay.io/ibmgaragecloud/helm-kubectl:3.2.3
           command: ["/bin/bash", "-c"]
           args:
             - POD_NAME=$(kubectl get pods -n "${NAMESPACE}" -l app=${NAME} -o jsonpath='{range .items[]}{.metadata.name}{"\n"}{end}') &&
