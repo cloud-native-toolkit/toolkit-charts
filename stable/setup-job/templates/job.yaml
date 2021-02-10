@@ -10,7 +10,7 @@ spec:
             serviceAccountName: {{ default "default" .Values.serviceAccountName }}
             initContainers:
               - name: {{ printf "wait-for-%s" (include "setup-job.name" .) }}
-                image: docker.io/byrnedo/alpine-curl:latest
+                image: quay.io/ibmgaragecloud/alpine-curl
                 imagePullPolicy: IfNotPresent
                 command: ["sh"]
                 args:
@@ -24,7 +24,7 @@ spec:
                       name: {{ .Values.secret.name }}
             containers:
                 - name: {{ include "setup-job.fullname" . }}
-                  image: ibmgaragecloud/nodejs:latest
+                  image: quay.io/ibmgaragecloud/nodejs:latest
                   imagePullPolicy: Always
                   command: ["bash"]
                   args:
