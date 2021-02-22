@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "starter-kit.fullname" . }}
+  {{- if (or (or (and .Values.vcsInfo.repoUrl .Values.vcsInfo.branch) .Values.connectsTo) .Values.configMap) }}
   annotations:
     {{- if and .Values.vcsInfo.repoUrl .Values.vcsInfo.branch }}
     app.openshift.io/vcs-ref: {{ .Values.vcsInfo.branch }}
