@@ -1180,6 +1180,16 @@ entries:
     version: 0.1.0
   starter-kit:
   - apiVersion: v2
+    appVersion: 0.4.2
+    created: "2021-02-22T22:31:51.57933042Z"
+    description: A Helm chart for Kubernetes
+    digest: 90131aac93e68216c499a3733acd53fe301036d8e4703a73df0379cc89fdf52c
+    name: starter-kit
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/starter-kit-0.4.2/starter-kit-0.4.2.tgz
+    version: 0.4.2
+  - apiVersion: v2
     appVersion: 0.4.1
     created: "2021-02-22T22:23:11.365087555Z"
     description: A Helm chart for Kubernetes
