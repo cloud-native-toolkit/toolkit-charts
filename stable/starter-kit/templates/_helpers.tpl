@@ -34,6 +34,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "starter-kit.labels" -}}
+app: {{ include "starter-kit.name" . }}
 helm.sh/chart: {{ include "starter-kit.chart" . }}
 {{ include "starter-kit.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
