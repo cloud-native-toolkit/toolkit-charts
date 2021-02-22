@@ -14,6 +14,7 @@ metadata:
     {{- if .Values.configMap }}
     checksum/config: {{ include (print $.Template.BasePath "/config-map.yaml") . | sha256sum }}
     {{- end }}
+  {{- end }}
   labels:
     {{- include "starter-kit.labels" . | nindent 4 }}
     {{- if .Values.partOf }}
