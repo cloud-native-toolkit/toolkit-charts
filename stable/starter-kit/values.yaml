@@ -1,6 +1,6 @@
-# Default values for starter-kit.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+## Default values for starter-kit.
+## This is a YAML-formatted file.
+## Declare variables to be passed into your templates.
 
 global:
   tlsSecretName: ""
@@ -13,7 +13,7 @@ image:
   pullPolicy: IfNotPresent
   port: 8080
   probePath: /
-  # Overrides the image tag whose default is the chart appVersion.
+  ## Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 imagePullSecrets: []
@@ -21,12 +21,12 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  ## Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  ## Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
 podAnnotations: {}
@@ -69,10 +69,10 @@ graphql:
   openapiPath: /openapi.json
 
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
@@ -100,10 +100,12 @@ vcsInfo:
 connectsTo: ""
 
 partOf: ""
-# The app.openshift.io/runtime value. The full list can be found at static/assets/ on the OpenShift cluster.
-# Any of the following values will set default resource limits: golang, js, nodejs, openjdk, openliberty, python, spring
+## The app.openshift.io/runtime value. The full list can be found at static/assets/ on the OpenShift cluster.
+## Any of the following values will set default resource limits: golang, js, nodejs, openjdk, openliberty, python, spring
 runtime: ""
 
 configMap: {}
 envFrom: {}
 env: {}
+## Value for the istio sidecar injection annotation
+istio: true
