@@ -38,6 +38,7 @@ app: {{ include "starter-kit.name" . }}
 helm.sh/chart: {{ include "starter-kit.chart" . }}
 {{ include "starter-kit.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
+version: {{ .Values.image.tag | default .Chart.AppVersion | quote }}
 app.kubernetes.io/version: {{ .Values.image.tag | default .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
