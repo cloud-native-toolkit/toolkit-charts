@@ -445,6 +445,17 @@ entries:
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/cloud-setup-0.1.0.tgz
     version: 0.1.0
+  cp-platform-navigator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-03-03T04:02:49.773225351Z"
+    description: A Helm chart for Kubernetes
+    digest: 873615d3e11341493227328846c6dcaa8c10e06c4194e6de1b53027473171d46
+    name: cp-platform-navigator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/cp-platform-navigator-0.1.0/cp-platform-navigator-0.1.0.tgz
+    version: 0.1.0
   developer-dashboard:
   - apiVersion: v1
     appVersion: "1.0"
