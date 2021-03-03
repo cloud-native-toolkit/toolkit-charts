@@ -72,12 +72,10 @@ spec:
               containerPort: {{ .Values.image.port }}
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: {{ .Values.image.probePath }}
+            tcpSocket:
               port: http
           readinessProbe:
-            httpGet:
-              path: {{ .Values.image.probePath }}
+            tcpSocket:
               port: http
           resources:
             {{- include "starter-kit.resources" . | nindent 12 }}
@@ -90,12 +88,10 @@ spec:
               containerPort: {{ .Values.graphql.port }}
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: graphql
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: graphql
           env:
             - name: PORT
