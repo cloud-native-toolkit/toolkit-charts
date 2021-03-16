@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ingresscontroller-config
+  namespace: {{ .Values.argo.namespace | default "tools" }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+    helm.sh/hook-weight: "100"
+spec:
+  template:
+    spec:
+      containers:
+        - name: config
+          image: quay.io/openshift/origin-cli:latest
+          command: ["oc"]
+          args:
+            - patch
+            - -n
+            - openshift-ingress-operator
+            - ingresscontroller.operator.openshift.io/default
+            - --type=merge
+            - -p
+            - '{"spec": {"replicas": {{ .Values.ingress.replicas | int }}, "nodePlacement": {"nodeSelector": {"matchLabels": {"node-role.kubernetes.io/infra": ""}},"tolerations": [{"effect":"NoSchedule","key": "infra","value": "reserved"},{"effect":"NoExecute","key": "infra","value": "reserved"}]}}}'
+      restartPolicy: Never
+      serviceAccountName: {{ .Values.argo.serviceAccount | default "argocd-server" }}
+  backoffLimit: 4
