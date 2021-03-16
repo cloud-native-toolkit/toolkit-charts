@@ -916,6 +916,42 @@ entries:
     urls:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/ocp-route-0.1.0.tgz
     version: 0.1.0
+  ocs-operator:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-03-16T19:27:36.654420405Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: b2d8b33a0720032b4c5d636c13439370d3ea99b6af25fc2ce5b4e3b80510e06c
+    name: ocs-operator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/ocs-operator-0.1.0/ocs-operator-0.1.0.tgz
+    version: 0.1.0
+  refarch-infraconfig:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-03-16T19:27:36.767497561Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 2629280c6b8bab5bf28b971d6b5bc3f99a58baa57f644c4314bc4ac0a7141a8a
+    name: refarch-infraconfig
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/refarch-infraconfig-0.1.0/refarch-infraconfig-0.1.0.tgz
+    version: 0.1.0
+  refarch-machinesets:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-03-16T19:27:36.892920356Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: f40a026d12cac9d175452a2a1614e5e294691ef5d44b0d68bc2049cd21f0ad91
+    name: refarch-machinesets
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/refarch-machinesets-0.1.0/refarch-machinesets-0.1.0.tgz
+    version: 0.1.0
   service-account:
   - apiVersion: v2
     appVersion: 1.16.0
