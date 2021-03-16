@@ -1,0 +1,62 @@
+{{ $infraid:= required "You need to provide the infrastructureID of your cluster in your values.yaml file" .Values.infrastructureId }}
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: {{ .Values.infrastructureId }}-infra
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ .Values.infrastructureId | quote }}
+spec:
+  replicas: {{ .Values.vsphere.infraNodes.nodeCount }}
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ .Values.infrastructureId | quote}}
+      machine.openshift.io/cluster-api-machineset: {{ .Values.infrastructureId }}-infra
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ .Values.infrastructureId | quote}}
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        machine.openshift.io/cluster-api-machineset: {{ .Values.infrastructureId }}-infra
+    spec:
+      taints:
+      - effect: NoSchedule
+        key: infra
+        value: reserved
+      - effect: NoExecute
+        key: infra
+        value: reserved
+      metadata:
+        labels:
+          node-role.kubernetes.io/infra: ""
+      providerSpec:
+        value:
+          {{- if eq .Values.cloudProvider "vSphere" }}
+          apiVersion: vsphereprovider.openshift.io/v1beta1
+          credentialsSecret:
+            name: vsphere-cloud-credentials
+          diskGiB: {{ .Values.vsphere.infraNodes.diskGiB }}
+          kind: VSphereMachineProviderSpec
+          memoryMiB: {{ .Values.vsphere.infraNodes.memoryMiB }}
+          metadata:
+            creationTimestamp: null
+          network:
+            devices:
+            - networkName: {{ .Values.vsphere.networkName }}
+          numCPUs: {{ .Values.vsphere.infraNodes.numCPUs }}
+          numCoresPerSocket: {{ .Values.vsphere.infraNodes.numCoresPerSocket }}
+          snapshot: ""
+          template: {{ .Values.infrastructureId }}-rhcos
+          userDataSecret:
+            name: worker-user-data
+          workspace:
+            datacenter: {{ .Values.vsphere.datacenter }}
+            datastore: {{ .Values.vsphere.datastore }}
+            folder: /{{ .Values.vsphere.datacenter }}/vm/{{ .Values.infrastructureId | default "empty" }}
+            resourcePool: /{{ .Values.vsphere.datacenter }}/host/{{ .Values.vsphere.cluster }}/Resources
+            server: {{ .Values.vsphere.server }}
+          {{- end }}

@@ -1,0 +1,38 @@
+# Default values for refarch-ocp4-gitops.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+cloudProvider: vSphere
+infrastructureId: ""
+
+
+vsphere:
+  networkName: vdpg-192.168.100
+  datacenter: dc01
+  datastore: openshift
+  cluster: cluster01
+  # folder: /dc01/vm/waiops-4cnmf
+  # resourcePool: /dc01/host/cluster01/Resources
+  server: vcsa67.rtp.raleigh.ibm.com
+  infraNodes:
+    zones: 1
+    nodeCount: 3
+    diskGiB: 120
+    memoryMiB: 16384
+    numCPUs: 4
+    numCoresPerSocket: 1
+  storageNodes:
+    zones: 1
+    nodeCount: 3
+    diskGiB: 120
+    memoryMiB: 65536
+    numCPUs: 16
+    numCoresPerSocket: 1
+  cloudpakNodes:
+    zones: 1
+    nodeCount: 0
+    diskGiB: 120
+    memoryMiB: 32768
+    numCPUs: 8
+    numCoresPerSocket: 1
+

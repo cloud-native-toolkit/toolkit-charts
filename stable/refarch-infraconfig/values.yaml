@@ -1,0 +1,14 @@
+# Default values for refarch-ocp4-gitops.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+argo:
+  namespace: tools
+  serviceAccount: argocd-server
+
+registry:
+  storageClassName: ocs-storagecluster-cephfs
+  replicas: 2
+
+ingress:
+  replicas: 2

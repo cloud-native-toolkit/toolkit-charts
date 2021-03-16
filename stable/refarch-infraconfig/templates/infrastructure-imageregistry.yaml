@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: image-registry-storage
+  namespace: openshift-image-registry
+  annotations:
+    argocd.argoproj.io/sync-wave: "200"
+    helm.sh/hook-weight: "200"
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: {{ .Values.registry.storageClassName }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: imageregistry-config
+  namespace: {{ .Values.argo.namespace | default "tools" }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "201"
+spec:
+  template:
+    spec:
+      containers:
+        - name: config
+          image: quay.io/openshift/origin-cli:latest
+          command: ["oc"]
+          args:
+            - patch
+            - configs.imageregistry.operator.openshift.io/cluster
+            - --type=merge
+            - -p
+            - '{"spec": {"storage": {"pvc": {"claim": ""}}, "replicas": {{ .Values.registry.replicas | int }}, "managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule","key": "infra","value": "reserved"},{"effect": "NoExecute","key": "infra","value": "reserved"}]}}'
+      restartPolicy: Never
+      serviceAccountName: {{ .Values.argo.serviceAccount | default "argocd-server" }}
+  backoffLimit: 4
