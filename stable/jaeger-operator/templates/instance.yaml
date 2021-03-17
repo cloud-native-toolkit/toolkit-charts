@@ -1,9 +1,11 @@
 {{- if .Values.createInstance }}
+{{- $namespace := default "openshift-operators" .Values.namespaceInstance -}}
 {{- if eq (include "operator.cluster-type" .) "kubernetes" }}
 apiVersion: jaegertracing.io/v1
 kind: Jaeger
 metadata:
   name: {{ include "operator.name" . }}
+  namespace: {{ $namespace }}
 spec:
   ingress:
     hosts:
@@ -19,6 +21,7 @@ apiVersion: jaegertracing.io/v1
 kind: Jaeger
 metadata:
   name: {{ include "operator.name" . }}
+  namespace: {{ $namespace }}
 spec:
 {{ .Values.spec | toYaml | indent 2 }}
 {{- end -}}

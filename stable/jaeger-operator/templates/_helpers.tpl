@@ -99,7 +99,7 @@ Operator channel
 {{- end -}}
 
 {{/*
-Operator channel
+Operator name
 */}}
 {{- define "operator.catalog-name" -}}
 {{- if eq (include "operator.cluster-type" .) "ocp4" -}}
