@@ -25,8 +25,45 @@ operatorHub:
   name: jaeger
 
 createInstance: true
+namespaceInstance: ""
 
 spec:
-  strategy: allInOne
+  allInOne:
+    config: {}
+    options: {}
+    resources: {}
+  resources: {}
+  agent:
+    config: {}
+    options: {}
+    resources: {}
+  sampling:
+    options: {}
+  query:
+    options: {}
+    resources: {}
+  collector:
+    config: {}
+    options: {}
+    resources: {}
+  ingester:
+    config: {}
+    options: {}
+    resources: {}
+  ui:
+    options: {}
+  ingress:
+    openshift: {}
+    options: {}
+    resources: {}
   storage:
-    type: memory
+    cassandraCreateSchema: {}
+    dependencies:
+      resources: {}
+    elasticsearch:
+      storage: {}
+    esIndexCleaner:
+      resources: {}
+    esRollover:
+      resources: {}
+    options: {}

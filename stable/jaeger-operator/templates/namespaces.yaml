@@ -1,0 +1,7 @@
+{{- if (and .Values.operatorNamespace (ne (include "operator.default-operator-namespace" .) .Values.operatorNamespace)) -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+  name: {{ include "operator.operator-namespace" . }}
+{{- end -}}

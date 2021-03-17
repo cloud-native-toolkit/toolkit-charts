@@ -25,21 +25,22 @@ operatorHub:
   name: elasticsearch-operator
 
 createInstance: false
+namespaceInstance: ""
 
 spec:
   managementState: Managed
   nodeSpec:
     image: >-
-      registry.redhat.io/openshift4/ose-logging-elasticsearch6@sha256:314c9985b7a2bd7926f81be33a19c8b961bf22bf9a52b21bb17baeba259a2f11
+      registry.redhat.io/openshift4/ose-logging-elasticsearch6@sha256:f6e6b28f6c1bc5c35303fbfce0c41daf2671acbe967423276b7fae0eac825202
     resources:
       limits:
         memory: 1Gi
       requests:
         memory: 512Mi
-  redundancyPolicy: SingleRedundancy
   nodes:
     - nodeCount: 1
       roles:
         - client
         - data
         - master
+  redundancyPolicy: SingleRedundancy

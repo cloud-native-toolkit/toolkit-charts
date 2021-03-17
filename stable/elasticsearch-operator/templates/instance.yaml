@@ -1,9 +1,10 @@
 {{- if and (eq (include "operator.cluster-type" .) "ocp4") .Values.createInstance }}
+{{- $namespace := default "openshift-operators" .Values.namespaceInstance -}}
 apiVersion: logging.openshift.io/v1
 kind: Elasticsearch
 metadata:
   name: elasticsearch
-  namespace: openshift-operators
+  namespace: {{ $namespace }}
 spec:
 {{ .Values.spec | toYaml | indent 2 }}
 {{- end -}}
