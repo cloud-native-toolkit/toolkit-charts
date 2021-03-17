@@ -550,6 +550,16 @@ entries:
     version: 0.1.0
   elasticsearch-operator:
   - apiVersion: v2
+    appVersion: 1.17.0
+    created: "2021-03-17T00:52:44.102480045Z"
+    description: A Helm chart for Kubernetes
+    digest: 07e4393864179f0457594dbc5e082c8cc1bc055d652e6297801ca06e415f0a06
+    name: elasticsearch-operator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/elasticsearch-operator-0.4.0/elasticsearch-operator-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2020-10-28T17:25:17.868645489Z"
     description: A Helm chart for Kubernetes
@@ -743,6 +753,16 @@ entries:
     - https://ibm-garage-cloud.github.io/toolkit-charts/stable/iteration-zero-0.1.0.tgz
     version: 0.1.0
   jaeger-operator:
+  - apiVersion: v2
+    appVersion: 1.19.0
+    created: "2021-03-17T00:52:44.21384463Z"
+    description: A Helm chart to install Jaeger via the operator
+    digest: da574078fb9bc4673de9f6c3190c2e9c590a4110ead7aee447732aaa5610b997
+    name: jaeger-operator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/jaeger-operator-0.7.0/jaeger-operator-0.7.0.tgz
+    version: 0.7.0
   - apiVersion: v2
     appVersion: 1.18.0
     created: "2020-10-28T17:25:17.885403726Z"
