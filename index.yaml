@@ -765,6 +765,16 @@ entries:
   jaeger-operator:
   - apiVersion: v2
     appVersion: 1.19.0
+    created: "2021-03-19T21:54:19.858571969Z"
+    description: A Helm chart to install Jaeger via the operator
+    digest: b6cf059103a1aa437f46baba4d76c53d5bca59249e4a7e84312e5e6cbaf3b752
+    name: jaeger-operator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/jaeger-operator-0.8.0/jaeger-operator-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v2
+    appVersion: 1.19.0
     created: "2021-03-17T00:52:44.21384463Z"
     description: A Helm chart to install Jaeger via the operator
     digest: da574078fb9bc4673de9f6c3190c2e9c590a4110ead7aee447732aaa5610b997
