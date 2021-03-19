@@ -13,15 +13,15 @@ nameOverride: ""
 olmNamespace: ""
 operatorNamespace: ""
 
-clusterType: ""
+clusterType: "ocp4"
 
 ocpCatalog:
   source: redhat-operators
-  channel: "4.5"
+  channel: "4.6"
   name: elasticsearch-operator
 operatorHub:
   source: operatorhubio-catalog
-  channel: "4.5"
+  channel: "4.6"
   name: elasticsearch-operator
 
 createInstance: false
