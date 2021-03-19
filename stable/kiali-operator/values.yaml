@@ -6,14 +6,12 @@ global:
   tlsSecretName: ""
   clusterType: ""
   olmNamespace: ""
-  operatorNamespace: ""
 
 nameOverride: ""
 
 olmNamespace: ""
-operatorNamespace: ""
 
-clusterType: ""
+clusterType: "ocp4"
 
 ocpCatalog:
   source: redhat-operators
@@ -25,10 +23,9 @@ operatorHub:
   source: operatorhubio-catalog
 
 createInstance: false
+namespaceInstance: ""
 
 spec:
-  installation_tag: My Kiali
-  istio_namespace: istio-system
   deployment:
     namespace: istio-system
     verbose_mode: '4'
@@ -40,5 +37,7 @@ spec:
       url: ''
     tracing:
       url: ''
+  installation_tag: My Kiali
+  istio_namespace: istio-system
   server:
     web_root: /mykiali
