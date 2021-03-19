@@ -6,14 +6,12 @@ global:
   tlsSecretName: ""
   clusterType: ""
   olmNamespace: ""
-  operatorNamespace: ""
 
 nameOverride: ""
 
 olmNamespace: ""
-operatorNamespace: ""
 
-clusterType: ""
+clusterType: "ocp4"
 
 ocpCatalog:
   source: redhat-operators
@@ -24,33 +22,30 @@ operatorHub:
   channel: beta
   name: istio
 
-createInstance: true
+createInstance: false
 
 ocpSpec:
-  version: v1.1
-  istio:
-    gateways:
-      istio-egressgateway:
-        autoscaleEnabled: false
-      istio-ingressgateway:
-        autoscaleEnabled: false
-        ior_enabled: false
-    mixer:
-      policy:
-        autoscaleEnabled: false
-      telemetry:
-        autoscaleEnabled: false
-    pilot:
-      autoscaleEnabled: false
-      traceSampling: 100
-    kiali:
-      enabled: true
+  addons:
     grafana:
       enabled: true
-    tracing:
+    jaeger:
+      install:
+        storage:
+          type: Memory
+    kiali:
       enabled: true
-      jaeger:
-        template: all-in-one
+    prometheus:
+      enabled: true
+  policy:
+    type: Istiod
+  profiles:
+    - default
+  telemetry:
+    type: Istiod
+  tracing:
+    sampling: 10000
+    type: Jaeger
+  version: v2.0
 
 iksSpec:
   autoInjectionNamespaces:
