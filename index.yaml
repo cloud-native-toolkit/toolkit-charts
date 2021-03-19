@@ -551,6 +551,16 @@ entries:
   elasticsearch-operator:
   - apiVersion: v2
     appVersion: 1.17.0
+    created: "2021-03-19T21:50:35.917305238Z"
+    description: A Helm chart for Kubernetes
+    digest: 6e743f3b237c02dcbe6f71d2244901f22ee6a23b3768806eed6deff584ced126
+    name: elasticsearch-operator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/elasticsearch-operator-0.5.0/elasticsearch-operator-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v2
+    appVersion: 1.17.0
     created: "2021-03-17T00:52:44.102480045Z"
     description: A Helm chart for Kubernetes
     digest: 07e4393864179f0457594dbc5e082c8cc1bc055d652e6297801ca06e415f0a06
