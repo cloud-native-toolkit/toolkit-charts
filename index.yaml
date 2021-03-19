@@ -846,6 +846,16 @@ entries:
   kiali-operator:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-03-19T22:18:18.558506763Z"
+    description: A Helm chart for Kubernetes
+    digest: 76406716eca33ac1245199cb92d78e95476ddb9c7a76cb5512fc50b21e99cc3f
+    name: kiali-operator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/kiali-operator-0.4.0/kiali-operator-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-10-28T17:25:17.886354286Z"
     description: A Helm chart for Kubernetes
     digest: 753536f4fe93a824930205d33a6d79c169484fcc201a7a8dd46d2eb29bd9d92a
