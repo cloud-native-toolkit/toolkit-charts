@@ -1,8 +1,14 @@
 {{- if and (eq (include "operator.cluster-type" .) "ocp4") .Values.createInstance }}
+{{- $namespace := default "openshift-operators" .Values.namespaceInstance -}}
 apiVersion: kiali.io/v1alpha1
 kind: Kiali
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "200"
+    helm.sh/hook-weight: "200"
   name: kiali
+  namespace: {{ $namespace }}
 spec:
 {{ .Values.spec | toYaml | indent 2 }}
 {{- end -}}
