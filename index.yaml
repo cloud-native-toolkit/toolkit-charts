@@ -1116,6 +1116,16 @@ entries:
   service-mesh-operator:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-03-20T01:51:32.540827294Z"
+    description: A Helm chart for Kubernetes
+    digest: 058a3a2abc2be48c7ddd6a1d37bed11053730abb66b80095c43aa08e5d10fcd0
+    name: service-mesh-operator
+    type: application
+    urls:
+    - https://github.com/ibm-garage-cloud/toolkit-charts/releases/download/service-mesh-operator-0.6.0/service-mesh-operator-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-10-28T17:25:17.900651337Z"
     description: A Helm chart for Kubernetes
     digest: 86372826e811a8cf0886f6519ce6a5d4e94d598905acc7274d19280384f7c1df
