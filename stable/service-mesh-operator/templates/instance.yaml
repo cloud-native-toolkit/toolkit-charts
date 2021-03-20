@@ -1,16 +1,26 @@
 {{- if .Values.createInstance -}}
+{{- $namespace := default "openshift-operators" .Values.namespaceInstance -}}
 {{- if eq (include "operator.cluster-type" .) "ocp4" }}
-apiVersion: maistra.io/v1
+apiVersion: maistra.io/v2
 kind: ServiceMeshControlPlane
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "300"
+    helm.sh/hook-weight: "300"
   name: {{ include "operator.name" . }}
+  namespace: {{ $namespace }}
 spec:
 {{ .Values.ocpSpec | toYaml | indent 2 }}
 {{- else -}}
 apiVersion: istio.banzaicloud.io/v1beta1
 kind: Istio
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "300"
   name: {{ include "operator.name" . }}
+  namespace: {{ $namespace }}
 spec:
 {{ .Values.iksSpec | toYaml | indent 2 }}
 {{- end -}}
