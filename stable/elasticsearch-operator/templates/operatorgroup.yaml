@@ -13,4 +13,3 @@ spec:
   targetNamespaces:
     - {{ include "operator.operator-namespace" . }}
 {{- end -}}
-{{- end -}}
