@@ -43,3 +43,4 @@ Alternatively, the helm repo can be inlined with the `--repo` argument, skipping
 ```
 helm template mychart {chart} --namespace {namespace} --repo https://ibm-garage-cloud.github.io/toolkit-charts/ ... | kubectl apply -n {namespace} -f -
 ```
+hello
