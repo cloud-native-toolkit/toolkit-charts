@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.subscriptions.cloudpakforintegration.name }}
+  annotations:
+    helm.sh/hook-weight: "220"  
+spec:
+  {{- toYaml .Values.subscriptions.cloudpakforintegration.subscription | nindent 2 }}

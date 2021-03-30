@@ -1,0 +1,7 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: opencloud-operators
+  namespace: openshift-marketplace
+spec:
+  {{- toYaml .Values.catalogs.commonservices.catalog | nindent 2 }}
