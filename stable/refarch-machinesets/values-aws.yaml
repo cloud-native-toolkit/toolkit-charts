@@ -1,0 +1,31 @@
+# Default values for refarch-ocp4-gitops.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+infrastructureId: ""
+
+cloudProvider: aws
+
+aws:
+  region: us-east-2
+  zones:
+  - us-east-1a
+  - us-east-1b
+  - us-east-1c
+  image: ami-046fe691f52a953f9
+  infraNodes:
+    nodeCount: 1
+    volumeSize: 120
+    volumeType: gp2
+    instanceType: m5.xlarge
+  storageNodes:
+    zones: 1
+    nodeCount: 3
+    volumeSize: 120
+    volumeType: gp2
+    instanceType: m5.4xlarge
+  cloudpakNodes:
+    zones: 1
+    nodeCount: 0
+    volumeSize: 120
+    volumeType: gp2
+    instanceType: m5.xlarge
