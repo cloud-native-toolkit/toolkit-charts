@@ -1,3 +1,4 @@
+{{- if eq .Values.cloudProvider "vSphere" }}
 {{ $infraid:= required "You need to provide the infrastructureID of your cluster in your values.yaml file" .Values.infrastructureId }}
 ---
 apiVersion: machineconfiguration.openshift.io/v1
@@ -87,7 +88,6 @@ spec:
           node-role.kubernetes.io/cp4x: ""
       providerSpec:
         value:
-          {{- if eq .Values.cloudProvider "vSphere" }}
           apiVersion: vsphereprovider.openshift.io/v1beta1
           credentialsSecret:
             name: vsphere-cloud-credentials
@@ -111,4 +111,4 @@ spec:
             folder: /{{ .Values.vsphere.datacenter }}/vm/{{ .Values.infrastructureId }}
             resourcePool: /{{ .Values.vsphere.datacenter }}/host/{{ .Values.vsphere.cluster }}/Resources
             server: {{ .Values.vsphere.server }}
-          {{- end }}
+{{- end }}
