@@ -3,6 +3,7 @@ kind: Subscription
 metadata:
   name: {{ .Values.subscriptions.cloudpakforintegration.name }}
   annotations:
-    helm.sh/hook-weight: "220"  
+    argocd.argoproj.io/sync-wave: "200"
+    helm.sh/hook-weight: "200"
 spec:
   {{- toYaml .Values.subscriptions.cloudpakforintegration.subscription | nindent 2 }}

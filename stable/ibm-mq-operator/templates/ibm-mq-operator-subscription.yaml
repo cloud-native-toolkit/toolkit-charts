@@ -1,0 +1,9 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.subscriptions.ibmmq.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "250"
+    helm.sh/hook-weight: "250"
+spec:
+  {{- toYaml .Values.subscriptions.ibmmq.subscription | nindent 2 }}
