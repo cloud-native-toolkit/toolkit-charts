@@ -6,14 +6,12 @@ global:
   tlsSecretName: ""
   clusterType: ""
   olmNamespace: ""
-  operatorNamespace: ""
 
 nameOverride: ""
 
 olmNamespace: ""
-operatorNamespace: ""
 
-clusterType: ""
+clusterType: "ocp4"
 
 ocpCatalog:
   source: redhat-operators
@@ -24,7 +22,7 @@ operatorHub:
   channel: stable
   name: jaeger
 
-createInstance: true
+createInstance: false
 namespaceInstance: ""
 
 spec:
