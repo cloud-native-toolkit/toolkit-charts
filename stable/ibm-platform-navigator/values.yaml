@@ -1,0 +1,13 @@
+# Default values for ibm-platform-navigator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  platformnavigator:
+    name: ibm-platform-navigator
+    subscription:
+      channel: v4.1-eus
+      installPlanApproval: Automatic
+      name: ibm-integration-platform-navigator
+      source: ibm-operator-catalog
+      sourceNamespace: openshift-marketplace
