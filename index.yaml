@@ -634,6 +634,16 @@ entries:
   ibm-cp4i-operators:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-04-20T21:01:03.269693989Z"
+    description: A Helm chart for IBM Cloud Pak for Integration operator
+    digest: b69a8f9b66418483598d0543836c58c176eb851ff2de3b554d838f5969662bf9
+    name: ibm-cp4i-operators
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4i-operators-0.2.1/ibm-cp4i-operators-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2021-04-20T20:44:19.870660412Z"
     description: A Helm chart for IBM Cloud Pak for Integration operator
     digest: 94e356e111bb461e082ff9198bdee45e26929ccd96fcdb7b35114456e4ed1d6e
