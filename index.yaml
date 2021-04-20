@@ -609,6 +609,61 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/elasticsearch-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-catalogs:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-04-20T20:44:19.680746066Z"
+    description: A Helm chart for IBM Catalog Sources
+    digest: 5a07ccd7f7c7911b7961655e51aed098fdad210d44680c72a5e1285a8263daa9
+    name: ibm-catalogs
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-catalogs-0.2.0/ibm-catalogs-0.2.0.tgz
+    version: 0.2.0
+  ibm-common-services:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-04-20T20:44:19.774359182Z"
+    description: A Helm chart for Kubernetes
+    digest: 0879f813ebe9ee494fcd9a8df70764d155e01ed9cdd2c8df2f02399f7cc65ec6
+    name: ibm-common-services
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-common-services-0.2.0/ibm-common-services-0.2.0.tgz
+    version: 0.2.0
+  ibm-cp4i-operators:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-04-20T20:44:19.870660412Z"
+    description: A Helm chart for IBM Cloud Pak for Integration operator
+    digest: 94e356e111bb461e082ff9198bdee45e26929ccd96fcdb7b35114456e4ed1d6e
+    name: ibm-cp4i-operators
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4i-operators-0.2.0/ibm-cp4i-operators-0.2.0.tgz
+    version: 0.2.0
+  ibm-mq-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-04-20T20:44:19.980836246Z"
+    description: A Helm chart for IBM MQ operator
+    digest: 7b363d3f6d4e8c34cf76e9940d92cb9cc9adf766f8c6e7d7754662c33cb9db6c
+    name: ibm-mq-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-mq-operator-0.2.3/ibm-mq-operator-0.2.3.tgz
+    version: 0.2.3
+  ibm-platform-navigator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-04-20T20:44:20.079315563Z"
+    description: A Helm chart for IBM Platform Navigator operator
+    digest: ccb43061a07d6f0a98083fa8219b1b68cff0af76ae24bc6fec4ce037b9dbf819
+    name: ibm-platform-navigator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-platform-navigator-0.2.0/ibm-platform-navigator-0.2.0.tgz
+    version: 0.2.0
   ibmcloud:
   - apiVersion: v2
     appVersion: "1.0"
@@ -1042,6 +1097,17 @@ entries:
     type: application
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-machinesets-0.1.0/refarch-machinesets-0.1.0.tgz
+    version: 0.1.0
+  sealed-secrets-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-04-20T20:44:20.168057117Z"
+    description: A Helm chart for Kubernetes
+    digest: a9c2aea9fd12580ff7a8d0b85ee687148e6be9cb3f4ea7629050d35d3ae17be0
+    name: sealed-secrets-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/sealed-secrets-operator-0.1.0/sealed-secrets-operator-0.1.0.tgz
     version: 0.1.0
   service-account:
   - apiVersion: v2
