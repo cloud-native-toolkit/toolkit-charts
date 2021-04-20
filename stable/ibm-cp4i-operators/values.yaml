@@ -1,0 +1,13 @@
+# Default values for ibm-cp4i-operators.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  cloudpakforintegration:
+    name: ibm-cp-integration
+    subscription:
+      channel: v1.0
+      installPlanApproval: Automatic
+      name: ibm-cp-integration
+      source: ibm-operator-catalog
+      sourceNamespace: openshift-marketplace

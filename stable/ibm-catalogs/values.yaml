@@ -1,0 +1,25 @@
+# Default values for ibm-catalogs.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+catalogs:
+  commonservices:
+    name: opencloud-operators
+    catalog:
+      displayName: IBMCS Operators
+      publisher: IBM
+      sourceType: grpc
+      image: docker.io/ibmcom/ibm-common-service-catalog:latest
+      updateStrategy:
+        registryPoll:
+          interval: 45m
+
+  ibmoperators:
+    name: ibm-operator-catalog
+    catalog:
+      displayName: "IBM Operator Catalog"
+      publisher: IBM
+      sourceType: grpc
+      image: docker.io/ibmcom/ibm-operator-catalog
+      updateStrategy:
+        registryPoll:
+          interval: 45m

@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.subscriptions.commonservice.name }}
+  namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+    helm.sh/hook-weight: "100"
+spec:
+  {{- toYaml .Values.subscriptions.commonservice | nindent 2 }}

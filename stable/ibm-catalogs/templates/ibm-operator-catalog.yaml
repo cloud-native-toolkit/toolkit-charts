@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: ibm-operator-catalog
+  namespace: openshift-marketplace
+  annotations:
+    argocd.argoproj.io/sync-wave: "000"
+    helm.sh/hook-weight: "000"
+spec:
+  {{- toYaml .Values.catalogs.ibmoperators.catalog | nindent 2 }}
