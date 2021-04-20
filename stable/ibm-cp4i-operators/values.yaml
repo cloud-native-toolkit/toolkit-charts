@@ -6,7 +6,7 @@ subscriptions:
   cloudpakforintegration:
     name: ibm-cp-integration
     subscription:
-      channel: v1.0
+      channel: v1.1-eus
       installPlanApproval: Automatic
       name: ibm-cp-integration
       source: ibm-operator-catalog
