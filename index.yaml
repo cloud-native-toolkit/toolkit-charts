@@ -1073,6 +1073,23 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocs-operator-0.1.0/ocs-operator-0.1.0.tgz
     version: 0.1.0
+  openldap:
+  - apiVersion: v1
+    created: "2021-04-23T15:32:31.598164639Z"
+    description: A OpenLDAP Chart for Kubernetes
+    digest: 41a9827d72e396b514cf0132b9cbbaa58faf86b3cb3902f7895d2a7a0823a8f7
+    home: https://www.openldap.ort
+    keywords:
+    - ldap
+    maintainers:
+    - email: hans.kristian.moen@gmail.com
+      name: Hans Kristian Moen
+    name: openldap
+    sources:
+    - https://github.com/openldap/openldap
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openldap-0.1.6/openldap-0.1.6.tgz
+    version: 0.1.6
   refarch-infraconfig:
   - apiVersion: v2
     appVersion: 0.1.0
