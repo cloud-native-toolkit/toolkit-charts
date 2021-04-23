@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Release.Name}}-admin
+spec:
+{{- if .Values.PhpLdapAdmin.NodePort }}
+  type: NodePort
+{{- end }}
+  ports:
+  - port: 80
+    targetPort: 80
+{{- if .Values.PhpLdapAdmin.NodePort }}
+    nodePort: 31080
+{{- end }}
+  selector:
+    app: {{.Release.Name}}-admin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}-admin
+spec:
+  replicas: {{.Values.OpenLdap.Replicas}}
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}-admin
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}-admin
+    spec:
+      containers:
+      - name: {{.Release.Name}}-admin
+        image: {{.Values.PhpLdapAdmin.Image}}:{{.Values.PhpLdapAdmin.ImageTag}}
+        imagePullPolicy: {{.Values.PhpLdapAdmin.ImagePullPolicy}}
+        ports:
+          - containerPort: 80
+        env:
+        - name: PHPLDAPADMIN_HTTPS
+          value: "{{.Values.OpenLdap.Https}}"
+        - name: PHPLDAPADMIN_LDAP_HOSTS
+          value: "{{.Values.PhpLdapAdmin.LdapEndpoint | default .Release.Name}}"
+---
+{{- if .Values.route.enabled -}}
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{.Release.Name}}-admin
+spec:
+  port:
+    targetPort: 80
+  to:
+    kind: Service
+    name: {{.Release.Name}}-admin
+    weight: 100
+  wildcardPolicy: None
+{{- end }}
