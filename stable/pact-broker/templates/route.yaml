@@ -1,0 +1,17 @@
+{{- if .Values.route.enabled -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  name: {{ include "pact-broker.name" . }}
+spec:
+  port:
+    targetPort: {{ .Values.service.portName }}
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.route.insecure }}
+    termination: {{ .Values.route.termination }}
+  to:
+    kind: Service
+    name: {{ include "pact-broker.fullname" . }}
+{{- end -}}
