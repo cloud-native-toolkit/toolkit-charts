@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Release.Name}}-seedusers
+data:
+  seedusers.ldif: |
+{{- include (print .Template.BasePath "/_seedusers2.ldif.tpl") . | indent 4 }}  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{.Release.Name}}
+  name: {{.Release.Name}}
+spec:
+  ports:
+    - port: 389
+  selector:
+    app: {{.Release.Name}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}
+  labels:
+    app: {{.Release.Name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}
+    spec:
+      initContainers:
+        - name: init-copy
+          image: {{.Values.OpenLdap.InitImage}}:{{.Values.OpenLdap.InitImageTag}}
+          imagePullPolicy: {{.Values.OpenLdap.InitImagePullPolicy}}
+          command: ['sh','-c','cp /config-map/* /config-storage; ls -lrt /config-storage']
+          volumeMounts:
+          - name: {{.Release.Name}}-seedusers
+            mountPath: /config-map
+          - name: config-storage
+            mountPath: /config-storage
+      containers:
+        - name: {{.Release.Name}}
+          image: {{.Values.OpenLdap.Image}}:{{.Values.OpenLdap.ImageTag}}
+          imagePullPolicy: {{.Values.OpenLdap.ImagePullPolicy}}
+          args: ["--loglevel", "debug"]
+          volumeMounts:
+            - name: config-storage
+              mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom
+            - name: ldap-certs
+              mountPath: /container/service/slapd/assets/certs
+          ports:
+            - containerPort: 389
+            - containerPort: 636
+          env:
+            - name: LDAP_LOG_LEVEL
+              value: "256"
+            - name: LDAP_ORGANISATION
+              value: "Example Inc."
+            - name: LDAP_DOMAIN
+              value: "{{.Values.OpenLdap.Domain}}"
+            - name: LDAP_ADMIN_PASSWORD
+              value: "{{.Values.OpenLdap.AdminPassword}}"
+            - name: LDAP_REMOVE_CONFIG_AFTER_SETUP
+              value: "false"
+      volumes:
+        - name: config-storage
+          emptyDir: {}
+        - name: ldap-certs
+          emptyDir: {}
+        - name: {{.Release.Name}}-seedusers
+          configMap:
+            name: {{.Release.Name}}-seedusers
+

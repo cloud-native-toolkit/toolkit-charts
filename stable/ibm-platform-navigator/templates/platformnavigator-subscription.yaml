@@ -1,0 +1,9 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.subscriptions.platformnavigator.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "150"
+    helm.sh/hook-weight: "150"
+spec:
+  {{- toYaml .Values.subscriptions.platformnavigator.subscription | nindent 2 }}
