@@ -19,6 +19,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{.Release.Name}}-admin
+  annotations:
+    argocd.argoproj.io/sync-wave: "200"
+    helm.sh/hook-weight: "200"       
 spec:
   replicas: {{.Values.OpenLdap.Replicas}}
   selector:
@@ -29,6 +32,7 @@ spec:
       labels:
         app: {{.Release.Name}}-admin
     spec:
+      serviceAccount: openldap
       containers:
       - name: {{.Release.Name}}-admin
         image: {{.Values.PhpLdapAdmin.Image}}:{{.Values.PhpLdapAdmin.ImageTag}}
