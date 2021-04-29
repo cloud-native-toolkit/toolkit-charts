@@ -48,9 +48,9 @@ spec:
           instanceType: {{ $.Values.aws.storageNodes.instanceType }}
           blockDevices:
           - ebs:
-            iops: 0
-            volumeSize: {{ $.Values.aws.storageNodes.volumeSize }}
-            volumeType: {{ $.Values.aws.storageNodes.volumeType }}
+              iops: 0
+              volumeSize: {{ $.Values.aws.storageNodes.volumeSize }}
+              volumeType: {{ $.Values.aws.storageNodes.volumeType }}
           ami:
             id: {{ $.Values.aws.image }}
           subnet:
