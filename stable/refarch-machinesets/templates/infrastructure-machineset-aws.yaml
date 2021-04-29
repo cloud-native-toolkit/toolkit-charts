@@ -6,7 +6,7 @@
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: {{ $.Values.infrastructureId }}-infra-{{ . | title }}
+  name: {{ $.Values.infrastructureId }}-infra-{{ . }}
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "0"
@@ -18,14 +18,14 @@ spec:
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId | quote }}
-      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-infra-{{ . | title }}
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-infra-{{ . }}
   template:
     metadata:
       labels:
         machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId | quote }}
         machine.openshift.io/cluster-api-machine-role: infra
         machine.openshift.io/cluster-api-machine-type: infra
-        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-infra-{{ . | title }}
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-infra-{{ . }}
     spec:
       taints:
       - effect: NoSchedule
@@ -46,7 +46,7 @@ spec:
           userDataSecret:
             name: worker-user-data
           placement:
-            availabilityZone: {{ . | title }}
+            availabilityZone: {{ . }}
             region: {{ $.Values.aws.region }}
           instanceType: {{ $.Values.aws.storageNodes.instanceType }}
           blockDevices:
@@ -60,7 +60,7 @@ spec:
             filters:
             - name: tag:Name
               values:
-              - {{ $.Values.infrastructureId }}-private-{{ . | title }}
+              - {{ $.Values.infrastructureId }}-private-{{ . }}
           iamInstanceProfile:
             id: {{ $.Values.infrastructureId }}>-worker-profile
           securityGroups:
