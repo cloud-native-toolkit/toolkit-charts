@@ -48,12 +48,12 @@ spec:
           placement:
             availabilityZone: {{ . }}
             region: {{ $.Values.aws.region }}
-          instanceType: {{ $.Values.aws.storageNodes.instanceType }}
+          instanceType: {{ $.Values.aws.infraNodes.instanceType }}
           blockDevices:
           - ebs:
               iops: 0
-              volumeSize: {{ $.Values.aws.storageNodes.volumeSize }}
-              volumeType: {{ $.Values.aws.storageNodes.volumeType }}
+              volumeSize: {{ $.Values.aws.infraNodes.volumeSize }}
+              volumeType: {{ $.Values.aws.infraNodes.volumeType }}
           ami:
             id: {{ $.Values.aws.image }}
           subnet:
@@ -62,7 +62,7 @@ spec:
               values:
               - {{ $.Values.infrastructureId }}-private-{{ . }}
           iamInstanceProfile:
-            id: {{ $.Values.infrastructureId }}>-worker-profile
+            id: {{ $.Values.infrastructureId }}-worker-profile
           securityGroups:
           - filters:
             - name: tag:Name
