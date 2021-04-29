@@ -65,7 +65,7 @@ kind: MachineSet
 metadata:
   labels:
     machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
-  name: {{ $.Values.infrastructureId }}-cp4x
+  name: {{ $.Values.infrastructureId }}-cp4x-{{ . }}
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -75,50 +75,51 @@ spec:
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
-      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x-{{ . }}
   template:
     metadata:
       labels:
         machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
         machine.openshift.io/cluster-api-machine-role: worker
         machine.openshift.io/cluster-api-machine-type: worker
-        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x-{{ . }}
     spec:
       metadata:
         labels:
           node-role.kubernetes.io/cp4x: ""
       providerSpec:
-        apiVersion: awsprovider.openshift.io/v1beta1
-        credentialsSecret:
-          name: aws-cloud-credentials
-        kind: AWSMachineProviderSpec
-        userDataSecret:
-          name: worker-user-data
-        placement:
-          availabilityZone: {{ . }}
-          region: {{ $.Values.aws.region }}
-        instanceType: {{ $.Values.aws.cloudpakNodes.instanceType }}
-        blockDevices:
-        - ebs:
-            iops: 0
-            volumeSize: {{ $.Values.aws.cloudpakNodes.volumeSize }}
-            volumeType: {{ $.Values.aws.cloudpakNodes.volumeType }}
-        ami:
-          id: {{ $.Values.aws.image }}
-        subnet:
-          filters:
-          - name: tag:Name
-            values:
-            - {{ $.Values.infrastructureId }}-private-{{ . }}
-        iamInstanceProfile:
-          id: {{ $.Values.infrastructureId }}>-worker-profile
-        securityGroups:
-        - filters:
-          - name: tag:Name
-            values:
-            - {{ $.Values.infrastructureId }}-worker-sg
-        tags:
-        - name: kubernetes.io/cluster/{{ $.Values.infrastructureId }}
-          value: owned
+        value:
+          apiVersion: awsprovider.openshift.io/v1beta1
+          credentialsSecret:
+            name: aws-cloud-credentials
+          kind: AWSMachineProviderSpec
+          userDataSecret:
+            name: worker-user-data
+          placement:
+            availabilityZone: {{ . }}
+            region: {{ $.Values.aws.region }}
+          instanceType: {{ $.Values.aws.cloudpakNodes.instanceType }}
+          blockDevices:
+          - ebs:
+              iops: 0
+              volumeSize: {{ $.Values.aws.cloudpakNodes.volumeSize }}
+              volumeType: {{ $.Values.aws.cloudpakNodes.volumeType }}
+          ami:
+            id: {{ $.Values.aws.image }}
+          subnet:
+            filters:
+            - name: tag:Name
+              values:
+              - {{ $.Values.infrastructureId }}-private-{{ . }}
+          iamInstanceProfile:
+            id: {{ $.Values.infrastructureId }}-worker-profile
+          securityGroups:
+          - filters:
+            - name: tag:Name
+              values:
+              - {{ $.Values.infrastructureId }}-worker-sg
+          tags:
+          - name: kubernetes.io/cluster/{{ $.Values.infrastructureId }}
+            value: owned
 {{- end }}
 {{- end }}

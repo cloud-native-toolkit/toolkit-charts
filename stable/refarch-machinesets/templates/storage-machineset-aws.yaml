@@ -43,7 +43,7 @@ spec:
           userDataSecret:
             name: worker-user-data
           placement:
-            availabilityZone: {{ . | title }}
+            availabilityZone: {{ . }}
             region: {{ $.Values.aws.region }}
           instanceType: {{ $.Values.aws.storageNodes.instanceType }}
           blockDevices:
@@ -57,9 +57,9 @@ spec:
             filters:
             - name: tag:Name
               values:
-              - {{ $.Values.infrastructureId }}-private-{{ . | title }}
+              - {{ $.Values.infrastructureId }}-private-{{ . }}
           iamInstanceProfile:
-            id: {{ $.Values.infrastructureId }}>-worker-profile
+            id: {{ $.Values.infrastructureId }}-worker-profile
           securityGroups:
           - filters:
             - name: tag:Name
