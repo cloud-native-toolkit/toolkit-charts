@@ -5,7 +5,7 @@
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: {{ $.Values.infrastructureId }}-storage-{{ . | title }}
+  name: {{ $.Values.infrastructureId }}-storage-{{ . }}
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "0"
@@ -17,14 +17,14 @@ spec:
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId  }}
-      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-storage-{{ . | title }}
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-storage-{{ . }}
   template:
     metadata:
       labels:
         machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
         machine.openshift.io/cluster-api-machine-role: storage
         machine.openshift.io/cluster-api-machine-type: storage
-        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-storage-{{ . | title }}
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-storage-{{ . }}
     spec:
       taints:
       - effect: NoSchedule
