@@ -4,7 +4,7 @@ metadata:
   name: {{.Release.Name}}-seedusers
 data:
   seedusers.ldif: |
-{{- include (print .Template.BasePath "/_seedusers2.ldif.tpl") . | indent 4 }}  
+{{- include (print .Template.BasePath "/_seedusers2.ldif.tpl") . | indent 4 }}
 ---
 apiVersion: v1
 kind: Service
@@ -24,6 +24,9 @@ metadata:
   name: {{.Release.Name}}
   labels:
     app: {{.Release.Name}}
+  annotations:
+    argocd.argoproj.io/sync-wave: "200"
+    helm.sh/hook-weight: "200"
 spec:
   replicas: 1
   selector:
@@ -76,4 +79,4 @@ spec:
         - name: {{.Release.Name}}-seedusers
           configMap:
             name: {{.Release.Name}}-seedusers
-
+      serviceAccount: openldap
