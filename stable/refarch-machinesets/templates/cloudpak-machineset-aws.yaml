@@ -100,9 +100,9 @@ spec:
         instanceType: {{ $.Values.aws.cloudpakNodes.instanceType }}
         blockDevices:
         - ebs:
-          iops: 0
-          volumeSize: {{ $.Values.aws.cloudpakNodes.volumeSize }}
-          volumeType: {{ $.Values.aws.cloudpakNodes.volumeType }}
+            iops: 0
+            volumeSize: {{ $.Values.aws.cloudpakNodes.volumeSize }}
+            volumeType: {{ $.Values.aws.cloudpakNodes.volumeType }}
         ami:
           id: {{ $.Values.aws.image }}
         subnet:
