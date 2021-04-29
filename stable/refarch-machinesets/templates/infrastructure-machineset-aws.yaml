@@ -1,0 +1,75 @@
+{{- if eq .Values.cloudProvider "aws" }}
+{{ $infraid:= required "You need to provide the infrastructureID of your cluster in your values.yaml file" .Values.infrastructureId }}
+{{ $infraid:= required "You need to provide the infrastructureID of your cluster in your values.yaml file" .Values.infrastructureId }}
+{{- range .Values.aws.zones }}
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: {{ $.Values.infrastructureId }}-infra-{{ . }}
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId | quote }}
+spec:
+  replicas: {{ $.Values.aws.infraNodes.nodeCount }}
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId | quote }}
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-infra-{{ . }}
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId | quote }}
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-infra-{{ . }}
+    spec:
+      taints:
+      - effect: NoSchedule
+        key: infra
+        value: reserved
+      - effect: NoExecute
+        key: infra
+        value: reserved
+      metadata:
+        labels:
+          node-role.kubernetes.io/infra: ""
+      providerSpec:
+        value:
+          apiVersion: awsprovider.openshift.io/v1beta1
+          credentialsSecret:
+            name: aws-cloud-credentials
+          kind: AWSMachineProviderSpec
+          userDataSecret:
+            name: worker-user-data
+          placement:
+            availabilityZone: {{ . }}
+            region: {{ $.Values.aws.region }}
+          instanceType: {{ $.Values.aws.storageNodes.instanceType }}
+          blockDevices:
+          - ebs:
+              iops: 0
+              volumeSize: {{ $.Values.aws.storageNodes.volumeSize }}
+              volumeType: {{ $.Values.aws.storageNodes.volumeType }}
+          ami:
+            id: {{ $.Values.aws.image }}
+          subnet:
+            filters:
+            - name: tag:Name
+              values:
+              - {{ $.Values.infrastructureId }}-private-{{ . }}
+          iamInstanceProfile:
+            id: {{ $.Values.infrastructureId }}>-worker-profile
+          securityGroups:
+          - filters:
+            - name: tag:Name
+              values:
+              - {{ $.Values.infrastructureId }}-worker-sg
+          tags:
+          - name: kubernetes.io/cluster/{{ $.Values.infrastructureId }}
+            value: owned
+{{- end }}
+{{- end }}

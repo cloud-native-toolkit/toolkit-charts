@@ -1,3 +1,4 @@
+{{- if eq $.Values.cloudProvider "vsphere" }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -13,7 +14,8 @@ spec:
   resources:
     requests:
       storage: 100Gi
-  storageClassName: {{ .Values.registry.storageClassName }}
+  storageClassName: {{ $.Values.registry.storageClassName }}
+{{- end }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -34,7 +36,11 @@ spec:
             - configs.imageregistry.operator.openshift.io/cluster
             - --type=merge
             - -p
-            - '{"spec": {"storage": {"pvc": {"claim": ""}}, "replicas": {{ .Values.registry.replicas | int }}, "managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule","key": "infra","value": "reserved"},{"effect": "NoExecute","key": "infra","value": "reserved"}]}}'
+            {{- if eq $.Values.cloudProvider "vsphere" }}
+            - '{"spec": {"storage": {"pvc": {"claim": ""}}, "replicas": {{ $.Values.registry.replicas | int }}, "managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule","key": "infra","value": "reserved"},{"effect": "NoExecute","key": "infra","value": "reserved"}]}}'
+            {{- else }}
+            - '{"spec": {"managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule","key": "infra","value": "reserved"},{"effect": "NoExecute","key": "infra","value": "reserved"}]}}'
+            {{- end }}
       restartPolicy: Never
       serviceAccountName: {{ .Values.argo.serviceAccount | default "argocd-server" }}
   backoffLimit: 4
