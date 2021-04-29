@@ -1,0 +1,125 @@
+{{- if eq .Values.cloudProvider "aws" }}
+{{ $infraid:= required "You need to provide the infrastructureID of your cluster in your values.yaml file" .Values.infrastructureId }}
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfigPool
+metadata:
+  name: cp4x
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  machineConfigSelector:
+    matchExpressions:
+      - {key: machineconfiguration.openshift.io/role, operator: In, values: [worker,cp4x]}
+  nodeSelector:
+    matchLabels:
+      node-role.kubernetes.io/cp4x: ""
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: ContainerRuntimeConfig
+metadata:
+  name: cp4x-containerruntimeconfig
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      limits-crio: cp4x-containerruntimeconfig
+  containerRuntimeConfig:
+    pidsLimit: 12288
+---
+apiVersion: tuned.openshift.io/v1
+kind: Tuned
+metadata:
+  name: cp4x-tuned
+  namespace: openshift-cluster-node-tuning-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  profile:
+  - name: cp4x-tuned
+    data: |
+      [main]
+      summary=Tune IKernel parameters on OpenShift Worker Nodes running CloudPak workloads
+      [sysctl]
+      kernel.shmall = 33554432
+      kernel.shmmax = 68719476736
+      kernel.shmmni = 16384
+      kernel.sem = 250 1024000 100 16384
+      kernel.msgmax = 65536
+      kernel.msgmnb = 65536
+      kernel.msgmni = 32768
+      vm.max_map_count = 262144
+  recommend:
+  - match:
+    - label: node-role.kubernetes.io/cp4x
+    priority: 10
+    profile: cp4x-tuned
+{{- range .Values.aws.zones }}
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+  name: {{ $.Values.infrastructureId }}-cp4x-{{ . }}
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    helm.sh/hook-weight: "1"
+spec:
+  replicas: {{ $.Values.aws.cloudpakNodes.nodeCount }}
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x-{{ . }}
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x-{{ . }}
+    spec:
+      metadata:
+        labels:
+          node-role.kubernetes.io/cp4x: ""
+      providerSpec:
+        value:
+          apiVersion: awsprovider.openshift.io/v1beta1
+          credentialsSecret:
+            name: aws-cloud-credentials
+          kind: AWSMachineProviderSpec
+          userDataSecret:
+            name: worker-user-data
+          placement:
+            availabilityZone: {{ . }}
+            region: {{ $.Values.aws.region }}
+          instanceType: {{ $.Values.aws.cloudpakNodes.instanceType }}
+          blockDevices:
+          - ebs:
+              iops: 0
+              volumeSize: {{ $.Values.aws.cloudpakNodes.volumeSize }}
+              volumeType: {{ $.Values.aws.cloudpakNodes.volumeType }}
+          ami:
+            id: {{ $.Values.aws.image }}
+          subnet:
+            filters:
+            - name: tag:Name
+              values:
+              - {{ $.Values.infrastructureId }}-private-{{ . }}
+          iamInstanceProfile:
+            id: {{ $.Values.infrastructureId }}-worker-profile
+          securityGroups:
+          - filters:
+            - name: tag:Name
+              values:
+              - {{ $.Values.infrastructureId }}-worker-sg
+          tags:
+          - name: kubernetes.io/cluster/{{ $.Values.infrastructureId }}
+            value: owned
+{{- end }}
+{{- end }}
