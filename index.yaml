@@ -1030,6 +1030,39 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/nexus-operator-0.1.0.tgz
     version: 0.1.0
+  ocp-console-cli-download:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-04-30T20:47:53.505601864Z"
+    description: Chart to create a ConsoleCLIDownload resource in an OpenShift cluster
+    digest: 198f6eeddba1bbae67f4c715ae64215af7896251ece5752de341e01116a04f96
+    name: ocp-console-cli-download
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-console-cli-download-0.1.0/ocp-console-cli-download-0.1.0.tgz
+    version: 0.1.0
+  ocp-console-link:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-04-30T20:47:53.646334068Z"
+    description: Chart to create a ConsoleLink resource in an OpenShift cluster
+    digest: d87aa58ec8b6f89f32dd21373b386455726acd5aa3c57fffe377ea1c4605840d
+    name: ocp-console-link
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-console-link-0.1.0/ocp-console-link-0.1.0.tgz
+    version: 0.1.0
+  ocp-console-notification:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-04-30T20:47:53.781896599Z"
+    description: Chart to create a ConsoleNotification resource in an OpenShift cluster
+    digest: ad67eb62acab8f9af7028f69857f616a81a94095ec2b8b49007ca4037c90de47
+    name: ocp-console-notification
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-console-notification-0.1.0/ocp-console-notification-0.1.0.tgz
+    version: 0.1.0
   ocp-route:
   - apiVersion: v2
     appVersion: 1.16.0
