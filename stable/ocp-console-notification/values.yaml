@@ -15,5 +15,5 @@ backgroundColor: purple
 color: "#fff"
 ## The location of the banner. Options: BannerTop, BannerBottom, BannerTopBottom
 location: BannerTop
-## The text that should be displayed in the banner. This value is required (and the whole point of creating a ConsoleNotification in the first place)
+## The text that should be displayed in the banner. This value is required for the banner to be created
 text: ""

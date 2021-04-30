@@ -1,4 +1,4 @@
-{{- if or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4") }}
+{{- if and .Values.text (or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4")) }}
 apiVersion: console.openshift.io/v1
 kind: ConsoleNotification
 metadata:
@@ -9,5 +9,5 @@ spec:
   backgroundColor: {{ .Values.backgroundColor }}
   color: {{ .Values.color }}
   location: {{ include "ocp-console-notification.location" . }}
-  text: {{ required "A value for 'text' is required." .Values.text }}
+  text: {{ .Values.text }}
 {{- end }}
