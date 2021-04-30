@@ -1055,6 +1055,16 @@ entries:
   ocp-console-notification:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-04-30T21:24:32.706897065Z"
+    description: Chart to create a ConsoleNotification resource in an OpenShift cluster
+    digest: 10af0f2af5a9bef4bc8cdfecedf252dcc343b91cdc1aaf48f1d4265b0ff119e4
+    name: ocp-console-notification
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-console-notification-0.2.0/ocp-console-notification-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2021-04-30T20:47:53.781896599Z"
     description: Chart to create a ConsoleNotification resource in an OpenShift cluster
     digest: ad67eb62acab8f9af7028f69857f616a81a94095ec2b8b49007ca4037c90de47
