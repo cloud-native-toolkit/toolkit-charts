@@ -1,0 +1,22 @@
+# Default values for ocp-console-link.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  ## The type of cluster. If the value is empty string or ocp4 the ConsoleNotification will be created
+  clusterType: ""
+
+## The name of the ConaoleLink resource in the cluster
+name: ""
+
+## The display text for the menu item
+displayName: ""
+
+## The url that should be included in the menu.
+url: ""
+## The location of the menu. Options: UserMenu, HelpMenu, ApplicationMenu
+location: ApplicationMenu
+## The section where the ApplicationMenu should be displayed. Only used if location is ApplicationMenu
+section: ""
+## The imageUrl for the ApplicationMenu. Only used if location is ApplicationMenu
+imageUrl: ""
