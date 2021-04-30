@@ -1033,6 +1033,16 @@ entries:
   ocp-console-cli-download:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-04-30T21:37:05.705812991Z"
+    description: Chart to create a ConsoleCLIDownload resource in an OpenShift cluster
+    digest: dc40dc8d19171fa18bd1613d1436536440267d524503ac523a0ca62d55a2b31b
+    name: ocp-console-cli-download
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-console-cli-download-0.2.0/ocp-console-cli-download-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2021-04-30T20:47:53.505601864Z"
     description: Chart to create a ConsoleCLIDownload resource in an OpenShift cluster
     digest: 198f6eeddba1bbae67f4c715ae64215af7896251ece5752de341e01116a04f96
