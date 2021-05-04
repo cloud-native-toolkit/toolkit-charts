@@ -1,0 +1,41 @@
+allowHostPorts: true
+priority: null
+requiredDropCapabilities: null
+allowPrivilegedContainer: true
+runAsUser:
+  type: RunAsAny
+users:
+  - 'system:serviceaccount:{{ .Values.namespace }}:{{ .Values.serviceaccount }}'
+allowHostDirVolumePlugin: true
+seccompProfiles:
+  - '*'
+allowHostIPC: true
+seLinuxContext:
+  type: RunAsAny
+readOnlyRootFilesystem: false
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
+    argocd.argoproj.io/hook: {{ .Values.hooktype }}  
+    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy }}      
+  name: {{ .Values.name }}-privileged
+fsGroup:
+  type: RunAsAny
+groups:
+  - 'system:cluster-admins'
+  - 'system:nodes'
+  - 'system:masters'
+kind: SecurityContextConstraints
+defaultAddCapabilities: null
+allowedUnsafeSysctls:
+  - '*'
+supplementalGroups:
+  type: RunAsAny
+volumes:
+  - '*'
+allowHostPID: true
+allowHostNetwork: true
+allowPrivilegeEscalation: true
+apiVersion: security.openshift.io/v1
+allowedCapabilities:
+  - '*'

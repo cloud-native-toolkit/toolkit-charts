@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: {{ .Values.name }}-
+  namespace: {{ .Values.namespace }}
+  annotations:
+    argocd.argoproj.io/hook: {{ .Values.hooktype }}
+    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy }}
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ .Values.serviceaccount }}
+      {{- if .Values.init.enabled }}
+      initContainers:
+        - name: init
+          image: {{ .Values.init.image }}:{{ .Values.init.tag }}
+          imagePullPolicy: IfNotPresent
+          command: ["{{ .Values.init.command}}"]
+          args:
+          {{- toYaml .Values.init.args | nindent 12 }}   
+      {{- end }}
+      containers:
+        - name: job
+          image: {{ .Values.container.image }}:{{ .Values.container.tag }}
+          command: ["{{ .Values.container.command}}"]
+          args: 
+          {{- toYaml .Values.container.args | nindent 12 }}          
+      restartPolicy: Never
+  backoffLimit: 4
