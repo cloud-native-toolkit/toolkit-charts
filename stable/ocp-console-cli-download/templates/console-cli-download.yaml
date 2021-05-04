@@ -1,0 +1,15 @@
+{{- if or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4") }}
+apiVersion: console.openshift.io/v1
+kind: ConsoleCLIDownload
+metadata:
+  name: {{ include "ocp-console-cli-download.name" . }}
+  labels:
+    {{- include "ocp-console-cli-download.labels" . | nindent 4 }}
+spec:
+  description: {{ .Values.description | toJson }}
+  displayName: {{ .Values.displayName }}
+  links:
+    {{- range .Values.links }}
+    - href: {{ . }}
+    {{- end }}
+{{- end }}

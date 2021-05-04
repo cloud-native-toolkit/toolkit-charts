@@ -1,0 +1,19 @@
+{{- if or (eq .Values.global.clusterType "") (eq .Values.global.clusterType "ocp4") }}
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: {{ include "ocp-console-link.name" . }}
+  labels:
+    {{- include "ocp-console-link.labels" . | nindent 4 }}
+spec:
+  href: {{ required "The url is required" .Values.url | quote }}
+  location: {{ include "ocp-console-link.location" . }}
+  text: {{ include "ocp-console-link.display-name" . }}
+  {{- if eq (include "ocp-console-link.location" .) "ApplicationMenu" }}
+  applicationMenu:
+    section: {{ include "ocp-console-link.section" . }}
+    {{- if .Values.imageUrl }}
+    imageUrl: {{ .Values.imageUrl }}
+    {{- end }}
+  {{- end }}
+{{- end }}

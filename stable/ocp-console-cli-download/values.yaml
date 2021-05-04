@@ -1,0 +1,17 @@
+# Default values for ocp-console-cli-download.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  ## clusterType is the type of cluster. If the value is empty string or ocp4 the ConsoleNotification will be created
+  clusterType: ""
+
+## name is the name of the ConsoleNotification resource in the cluster
+name: ""
+
+## displayName is the name that will be shown for the cli
+displayName: ""
+## description is the description of the cli
+description: ""
+## links is the list of string providing links for the cli
+links: []
