@@ -1,0 +1,26 @@
+# Default values for argocd-hook-job.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+name: argocd-hook-job
+namespace: replace
+# ArgoCD Hook types - https://argoproj.github.io/argo-cd/user-guide/resource_hooks/
+hooktype: replace
+hookdeletepolicy: replace
+serviceaccount: default
+roleaccess:
+  - replace
+init:
+  enabled: true
+  image: replace
+  tag: replace
+  command: replace
+  args:
+    - replace
+container:
+  image: replace
+  tag: replace
+  command: replace
+  args:
+    - replace
