@@ -6,9 +6,13 @@
 name: argocd-hook-job
 namespace: replace
 # ArgoCD Hook types - https://argoproj.github.io/argo-cd/user-guide/resource_hooks/
-hooktype: replace
-hookdeletepolicy: replace
-serviceaccount: default
+hook:
+  enabled: true
+  hooktype: PostSync
+hookdeletepolicy:
+  enabled: true
+  hookdeletepolicytype: HookSucceeded
+serviceaccount: argocd-hook-job
 roleaccess:
   - replace
 init:
