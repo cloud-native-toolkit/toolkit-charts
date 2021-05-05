@@ -4,8 +4,12 @@ metadata:
   generateName: {{ .Values.name }}-
   namespace: {{ .Values.namespace }}
   annotations:
-    argocd.argoproj.io/hook: {{ .Values.hooktype }}
-    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy }}
+    {{- if .Values.hook.enabled }}
+    argocd.argoproj.io/hook: {{ .Values.hook.hooktype }}
+    {{- end }}
+    {{- if .Values.hookdeletepolicy.enabled }}
+    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy.hookdeletepolicytype }}
+    {{- end }}
 spec:
   template:
     spec:
@@ -17,13 +21,13 @@ spec:
           imagePullPolicy: IfNotPresent
           command: ["{{ .Values.init.command}}"]
           args:
-          {{- toYaml .Values.init.args | nindent 12 }}   
+          {{- toYaml .Values.init.args | nindent 12 }}
       {{- end }}
       containers:
         - name: job
           image: {{ .Values.container.image }}:{{ .Values.container.tag }}
           command: ["{{ .Values.container.command}}"]
-          args: 
-          {{- toYaml .Values.container.args | nindent 12 }}          
+          args:
+          {{- toYaml .Values.container.args | nindent 12 }}
       restartPolicy: Never
   backoffLimit: 4
