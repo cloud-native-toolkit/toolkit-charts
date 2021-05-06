@@ -3,7 +3,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ .Values.name }}
   annotations:
-    argocd.argoproj.io/hook: {{ .Values.hooktype }}  
-    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy }}
+    {{- if .Values.hook.enabled }}
+    argocd.argoproj.io/hook: {{ .Values.hook.hooktype }}
+    {{- end }}
+    {{- if .Values.hookdeletepolicy.enabled }}
+    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy.hookdeletepolicytype }}
+    {{- end }}
 rules:
-{{- toYaml .Values.roleaccess | nindent 2 }} 
+{{- toYaml .Values.roleaccess | nindent 2 }}
