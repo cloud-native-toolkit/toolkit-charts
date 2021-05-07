@@ -16,8 +16,12 @@ readOnlyRootFilesystem: false
 metadata:
   annotations:
     argocd.argoproj.io/sync-options: Validate=false
-    argocd.argoproj.io/hook: {{ .Values.hooktype }}  
-    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy }}      
+    {{- if .Values.hook.enabled }}
+    argocd.argoproj.io/hook: {{ .Values.hook.hooktype }}
+    {{- end }}
+    {{- if .Values.hookdeletepolicy.enabled }}
+    argocd.argoproj.io/hook-delete-policy: {{ .Values.hookdeletepolicy.hookdeletepolicytype }}
+    {{- end }}   
   name: {{ .Values.name }}-privileged
 fsGroup:
   type: RunAsAny
