@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 subscriptions:
-  commonservice:
+  subscription:
     channel: stable-v1
     config:
       resources: {}
