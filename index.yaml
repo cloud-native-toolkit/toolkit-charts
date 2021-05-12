@@ -649,7 +649,61 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/elasticsearch-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-ace-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:33.185339855Z"
+    description: A Helm chart for Kubernetes
+    digest: a997dfbacb5a3ab4efc4caf7aaff2aef5db0c01fdf20797b5805e00362f5f6c4
+    name: ibm-ace-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-ace-operator-0.2.2/ibm-ace-operator-0.2.2.tgz
+    version: 0.2.2
+  ibm-apic-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:33.303953637Z"
+    description: A Helm chart for Kubernetes
+    digest: 0488a359715598938c30f700447a8111c354099823baa7291ee76b24bb13f31a
+    name: ibm-apic-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-operator-0.1.0/ibm-apic-operator-0.1.0.tgz
+    version: 0.1.0
+  ibm-aspera-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:33.410830612Z"
+    description: A Helm chart for Kubernetes
+    digest: 4c485b5bdb90d5e949a128d5c0b9086870dda2931a33a08bd2c15a44b4cd09d8
+    name: ibm-aspera-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-aspera-operator-0.1.0/ibm-aspera-operator-0.1.0.tgz
+    version: 0.1.0
+  ibm-assetrepository-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:33.531321284Z"
+    description: A Helm chart for Kubernetes
+    digest: 5a95f3cd5e4bb9b326b2490fb84aab0b588440d7215424ef2d23a882a1e04438
+    name: ibm-assetrepository-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-assetrepository-operator-0.1.0/ibm-assetrepository-operator-0.1.0.tgz
+    version: 0.1.0
   ibm-catalogs:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-05-12T19:18:33.646856294Z"
+    description: A Helm chart for Kubernetes
+    digest: 8fcfc13f6d23d43f937052f93b305b8b8506ce7e454bf70d27498c1332507196
+    name: ibm-catalogs
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-catalogs-0.2.1/ibm-catalogs-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: "1.0"
     created: "2021-04-20T20:44:19.680746066Z"
@@ -663,6 +717,16 @@ entries:
   ibm-common-services:
   - apiVersion: v2
     appVersion: "1.0"
+    created: "2021-05-12T19:18:33.773060622Z"
+    description: A Helm chart for Kubernetes
+    digest: b6760fb52a067e7365c28e4734caa480cefeff9a4e8d4b04f364789f9c00753c
+    name: ibm-common-services
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-common-services-0.2.1/ibm-common-services-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: "1.0"
     created: "2021-04-20T20:44:19.774359182Z"
     description: A Helm chart for Kubernetes
     digest: 0879f813ebe9ee494fcd9a8df70764d155e01ed9cdd2c8df2f02399f7cc65ec6
@@ -672,6 +736,16 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-common-services-0.2.0/ibm-common-services-0.2.0.tgz
     version: 0.2.0
   ibm-cp4i-operators:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:33.895178981Z"
+    description: A Helm chart for Kubernetes
+    digest: 562e617608ad90a896e00e2681815899ddcd5024140b66b5d89a1579f16ffdcf
+    name: ibm-cp4i-operators
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4i-operators-0.2.2/ibm-cp4i-operators-0.2.2.tgz
+    version: 0.2.2
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2021-04-20T21:01:03.269693989Z"
@@ -692,7 +766,39 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4i-operators-0.2.0/ibm-cp4i-operators-0.2.0.tgz
     version: 0.2.0
+  ibm-datapower-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:34.025472278Z"
+    description: A Helm chart for Kubernetes
+    digest: e5ca4e5e648a656b0c1323c563979604ce0daa879b2b2980a27fa238981f6edf
+    name: ibm-datapower-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-datapower-operator-0.1.0/ibm-datapower-operator-0.1.0.tgz
+    version: 0.1.0
+  ibm-eventstreams-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:34.146720344Z"
+    description: A Helm chart for Kubernetes
+    digest: b77634470b4a4489c4b5f782081d678543a2f86d54649c4eafa52db2fc240159
+    name: ibm-eventstreams-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-eventstreams-operator-0.1.0/ibm-eventstreams-operator-0.1.0.tgz
+    version: 0.1.0
   ibm-mq-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:34.26794561Z"
+    description: A Helm chart for Kubernetes
+    digest: 274a89b08bb7a59df0e979079c745a5e6868d3301ce318e3213443bf515c49f9
+    name: ibm-mq-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-mq-operator-0.2.4/ibm-mq-operator-0.2.4.tgz
+    version: 0.2.4
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2021-04-20T20:44:19.980836246Z"
@@ -703,7 +809,28 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-mq-operator-0.2.3/ibm-mq-operator-0.2.3.tgz
     version: 0.2.3
+  ibm-opsdashboard-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:34.385177307Z"
+    description: A Helm chart for Kubernetes
+    digest: b8b89e60e1bdc2a0057badb3573cb8bce855df2641d997108b642ea3f4bae8e9
+    name: ibm-opsdashboard-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-opsdashboard-operator-0.1.0/ibm-opsdashboard-operator-0.1.0.tgz
+    version: 0.1.0
   ibm-platform-navigator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-05-12T19:18:34.494189868Z"
+    description: A Helm chart for Kubernetes
+    digest: b082e2a96756473b1d4fa54999385cbad8da1517ff0f8dbeb88d25cd0ff1343c
+    name: ibm-platform-navigator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-platform-navigator-0.2.1/ibm-platform-navigator-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2021-04-20T20:44:20.079315563Z"
