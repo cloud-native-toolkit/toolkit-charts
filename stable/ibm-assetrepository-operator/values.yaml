@@ -1,0 +1,13 @@
+# Default values for ibm-assetrepository-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  ibmassetrepo:
+    name: ibm-assetrepo
+    subscription:
+      channel: v1.1-eus
+      installPlanApproval: Automatic
+      name: ibm-integration-asset-repository
+      source: ibm-operator-catalog
+      sourceNamespace: openshift-marketplace

@@ -1,0 +1,13 @@
+# Default values for ibm-apic-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  ibmapic:
+    name: ibm-apic
+    subscription:
+      channel: v2.1-eus
+      installPlanApproval: Automatic
+      name: ibm-apiconnect
+      source: ibm-operator-catalog
+      sourceNamespace: openshift-marketplace
