@@ -1,0 +1,120 @@
+{{- if eq .Values.cloudProvider "azure" }}
+{{ $infraid:= required "You need to provide the infrastructureID of your cluster in your values.yaml file" .Values.infrastructureId }}
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfigPool
+metadata:
+  name: cp4x
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  machineConfigSelector:
+    matchExpressions:
+      - {key: machineconfiguration.openshift.io/role, operator: In, values: [worker,cp4x]}
+  nodeSelector:
+    matchLabels:
+      node-role.kubernetes.io/cp4x: ""
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: ContainerRuntimeConfig
+metadata:
+  name: cp4x-containerruntimeconfig
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      limits-crio: cp4x-containerruntimeconfig
+  containerRuntimeConfig:
+    pidsLimit: 12288
+---
+apiVersion: tuned.openshift.io/v1
+kind: Tuned
+metadata:
+  name: cp4x-tuned
+  namespace: openshift-cluster-node-tuning-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  profile:
+  - name: cp4x-tuned
+    data: |
+      [main]
+      summary=Tune IKernel parameters on OpenShift Worker Nodes running CloudPak workloads
+      [sysctl]
+      kernel.shmall = 33554432
+      kernel.shmmax = 68719476736
+      kernel.shmmni = 16384
+      kernel.sem = 250 1024000 100 16384
+      kernel.msgmax = 65536
+      kernel.msgmnb = 65536
+      kernel.msgmni = 32768
+      vm.max_map_count = 262144
+  recommend:
+  - match:
+    - label: node-role.kubernetes.io/cp4x
+    priority: 10
+    profile: cp4x-tuned
+{{- range .Values.azure.zones }}
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  annotations:
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
+  name: {{ $.Values.infrastructureId }}-cp4x-{{ $.Values.azure.region }}{{ . }}
+  namespace: openshift-machine-api
+spec:
+  replicas: {{ $.Values.azure.cloudpakNodes.nodeCount }}
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x-{{ $.Values.azure.region }}{{ . }}
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-cp4x-{{ $.Values.azure.region }}{{ . }}
+    spec:
+      providerSpec:
+        value:
+          apiVersion: azureproviderconfig.openshift.io/v1beta1
+          credentialsSecret:
+            name: azure-cloud-credentials
+            namespace: openshift-machine-api
+          image:
+            offer: ""
+            publisher: ""
+            resourceID: /resourceGroups/{{ $.Values.infrastructureId }}-rg/providers/Microsoft.Compute/images/{{ $.Values.infrastructureId }}
+            sku: ""
+            version: ""
+          kind: AzureMachineProviderSpec
+          location: {{ $.Values.azure.region }}
+          managedIdentity: {{ $.Values.infrastructureId }}-identity
+          metadata:
+            creationTimestamp: null
+          networkResourceGroup: {{ $.Values.infrastructureId }}-rg
+          osDisk:
+            diskSizeGB: {{ $.Values.azure.cloudpakNodes.volumeSize }}
+            managedDisk:
+              storageAccountType: {{ $.Values.azure.cloudpakNodes.volumeType }}
+            osType: Linux
+          publicIP: false
+          publicLoadBalancer: {{ $.Values.infrastructureId }}
+          resourceGroup: {{ $.Values.infrastructureId }}-rg
+          subnet: {{ $.Values.infrastructureId }}-worker-subnet
+          userDataSecret:
+            name: worker-user-data
+          vmSize: {{ $.Values.azure.cloudpakNodes.instanceType}}
+          vnet: {{ $.Values.infrastructureId }}-vnet
+          zone: "{{ . }}"
+{{- end }}
+{{- end }}
