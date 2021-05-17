@@ -6,6 +6,8 @@ apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
   annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
   labels:
     machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
     machine.openshift.io/cluster-api-machine-role: infra
