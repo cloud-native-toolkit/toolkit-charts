@@ -1,0 +1,28 @@
+# Default values for refarch-ocp4-gitops.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+infrastructureId: ""
+
+cloudProvider: "azure"
+
+azure:
+  region: eastus
+  zones:
+    - 1
+    - 2
+    - 3
+  infraNodes:
+    nodeCount: 1
+    volumeSize: 128
+    volumeType: Premium_LRS
+    instanceType: Standard_D4s_v3
+  storageNodes:
+    nodeCount: 1
+    volumeSize: 128
+    volumeType: Premium_LRS
+    instanceType: Standard_D16s_v3
+  cloudpakNodes:
+    nodeCount: 0
+    volumeSize: 128
+    volumeType: Premium_LRS
+    instanceType: Standard_D8s_v3
