@@ -1,6 +1,6 @@
 {{ $globalDestinations := include "argocd.destinations" .Values.global.destinations  }}
-{{ $localDestinations := include "argocd.destinations" .Values.applicationTargets  }}
-{{/*{{ $destinations := concat $globalDestinations $localDestinations | uniq }}*/}}
+{{ $localDestinations := include "argocd.destinations" .Values.destinations  }}
+{{ $appDestinations := include "argocd.destinations" .Values.applicationTargets  }}
 {{- if .Values.project }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -19,9 +19,10 @@ spec:
   clusterResourceWhitelist:
     {{- .Values.clusterResourceWhitelist | toYaml | nindent 4 }}
   {{- end }}
-  {{- if or $globalDestinations $localDestinations }}
+  {{- if or (or $globalDestinations $localDestinations) $appDestinations }}
   destinations:
   {{- $globalDestinations | nindent 4 -}}
   {{- $localDestinations | nindent 4 -}}
+  {{- $appDestinations | nindent 4 -}}
   {{- end }}
 {{- end }}
