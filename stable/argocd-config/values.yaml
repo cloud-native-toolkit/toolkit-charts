@@ -47,6 +47,7 @@ applicationTargets: []
 #   - name: app4
 #     type: kustomize
 #     path: app4/overlay
+#     syncWave: "" (optional)
 
 ## Flag indicating that roles should be created for the
 ## argocd-application-controller service account in the
