@@ -28,6 +28,10 @@ metadata:
   namespace: {{ $releaseNamespace }}
   labels:
 {{ $labels  | indent 4 }}
+{{- if .syncWave }}
+  annotations:
+    argocd.argoproj.io/sync-wave: {{ .syncWave | quote }}
+{{- end }}
 spec:
   destination:
     namespace: {{ $targetNamespace }}
