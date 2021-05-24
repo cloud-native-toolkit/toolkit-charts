@@ -1,14 +1,27 @@
-# The url of the gitops repo that contains the applications
+global:
+  ## List of destinations (server and namespace) that should be added to the project
+  ## to allow deployments. Will be provided in addition to those listed in the
+  ## application targets.
+  destinations: []
+  #  - server: https://kubernetes.default.svc
+  #    targetNamespace: test
+
+## The url of the gitops repo that contains the applications
 repoUrl: ""
 
-# The name of the project. If left empty then will use 'default'
+## The name of the project. If left empty then will use 'default'
 project: ""
 
-# Lists the target environments and the names of the applications that should be created. 
-# The helm chart will loop over each `applicationTarget` and create an application for 
-# each `applicationName` (i.e. if there are 2 application targets each having 3 application
-# names then 6 applications will be created)
-applicationTargets: {}
+## The cluster resources that should be whitelisted in the project
+clusterResourceWhitelist: []
+# - group: ""
+#   kind: ""
+
+## Lists the target environments and the names of the applications that should be created.
+## The helm chart will loop over each `applicationTarget` and create an application for
+## each `applicationName` (i.e. if there are 2 application targets each having 3 application
+## names then 6 applications will be created)
+applicationTargets: []
 # - targetRevision: ""
 #   targetNamespace: ""
 #   createNamespace: true
@@ -32,9 +45,9 @@ applicationTargets: {}
 #     type: kustomize
 #     path: app4/overlay
 
-# Flag indicating that roles should be created for the 
-# argocd-application-controller service account in the 
-# target namespaces. Not sure why this is necessary...
+## Flag indicating that roles should be created for the
+## argocd-application-controller service account in the
+## target namespaces. Not sure why this is necessary...
 controllerRbac: false
 
 clusterType: ""
