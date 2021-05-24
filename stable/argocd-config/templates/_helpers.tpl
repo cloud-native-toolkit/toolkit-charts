@@ -81,3 +81,7 @@ Create the name of the service account to use
 - values.yaml
 {{- end -}}
 {{- end -}}
+
+{{- define "argocd.repoUrl" -}}
+{{ default .Values.global.repoUrl .Values.repoUrl }}
+{{- end -}}

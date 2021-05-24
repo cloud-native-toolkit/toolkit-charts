@@ -14,7 +14,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "-5"
 spec:
   sourceRepos:
-    - {{ .Values.repoUrl }}
+    - {{ include "argocd.repoUrl" . }}
   {{- if .Values.clusterResourceWhitelist }}
   clusterResourceWhitelist:
     {{- .Values.clusterResourceWhitelist | toYaml | nindent 4 }}

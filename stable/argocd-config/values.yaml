@@ -6,6 +6,9 @@ global:
   #  - server: https://kubernetes.default.svc
   #    targetNamespace: test
 
+  ## The url of the gitops repo that contains the applications
+  repoUrl: ""
+
 ## The url of the gitops repo that contains the applications
 repoUrl: ""
 

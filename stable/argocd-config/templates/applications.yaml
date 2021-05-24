@@ -1,6 +1,6 @@
-{{- if .Values.repoUrl -}}
+{{- if include "argocd.repoUrl" . -}}
 {{- $releaseNamespace := .Release.Namespace -}}
-{{- $targetRepo := .Values.repoUrl -}}
+{{- $targetRepo := include "argocd.repoUrl" . -}}
 {{- $project := default "default" .Values.project -}}
 {{- $labels := include "argocd.labels" . -}}
 {{- range .Values.applicationTargets }}
@@ -40,7 +40,7 @@ spec:
     {{- if eq $type "helm" }}
     helm:
       valueFiles:
-        {{ $valueFile | nindent 8 }}
+        {{- $valueFile | nindent 8 }}
     {{- end }}
     {{- if eq $type "plugin" }}
     plugin:
