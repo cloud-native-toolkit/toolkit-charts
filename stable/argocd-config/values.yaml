@@ -12,6 +12,11 @@ global:
 ## The url of the gitops repo that contains the applications
 repoUrl: ""
 
+## List of destinations (server and namespace) that should be added to the project
+## to allow deployments. Will be provided in addition to those listed in the
+## application targets.
+destinations: []
+
 ## The name of the project. If left empty then will use 'default'
 project: ""
 
