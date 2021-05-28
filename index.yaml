@@ -1332,6 +1332,17 @@ entries:
   ocs-operator:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2021-05-28T13:52:27.013101972Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 432c52226d7146fe08acd3c06b069c3a74acc036498d20446417b5a6877206ec
+    name: ocs-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocs-operator-0.2.0/ocs-operator-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2021-03-16T19:27:36.654420405Z"
     description: A Helm chart for deploying infrastrucure reference architecture to
       OpenShift 4.x clusters
@@ -1387,6 +1398,17 @@ entries:
   refarch-infraconfig:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2021-05-28T13:52:27.17646498Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: e5d32afed0c033fad82d31fbc9735948e64699a9b371fadf5d4f8586f7a6ed61
+    name: refarch-infraconfig
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-infraconfig-0.2.0/refarch-infraconfig-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2021-04-29T18:59:30.585027405Z"
     description: A Helm chart for deploying infrastrucure reference architecture to
       OpenShift 4.x clusters
@@ -1419,6 +1441,17 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-infraconfig-0.1.0/refarch-infraconfig-0.1.0.tgz
     version: 0.1.0
   refarch-machinesets:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-05-28T13:52:27.313003218Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 0abf7cc661d54813e2e8e14e0cc41154716d67a5dc2b231ccab28e352613acc5
+    name: refarch-machinesets
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-machinesets-0.2.0/refarch-machinesets-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2021-05-18T15:05:40.174943093Z"
