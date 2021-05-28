@@ -20,7 +20,7 @@ spec:
             - ingresscontroller.operator.openshift.io/default
             - --type=merge
             - -p
-            - '{"spec": {"replicas": {{ .Values.ingress.replicas | int }}, "nodePlacement": {"nodeSelector": {"matchLabels": {"node-role.kubernetes.io/infra": ""}},"tolerations": [{"effect":"NoSchedule","key": "infra","value": "reserved"},{"effect":"NoExecute","key": "infra","value": "reserved"}]}}}'
+            - '{"spec": {"replicas": {{ $.Values.ingress.replicas }}, "nodePlacement": {"nodeSelector": {"matchLabels": {"node-role.kubernetes.io/infra": ""}},"tolerations": [{"effect":"NoSchedule", "key": "infra", "value": ""}]}}}'
       restartPolicy: Never
       serviceAccountName: {{ .Values.argo.serviceAccount | default "argocd-server" }}
   backoffLimit: 4

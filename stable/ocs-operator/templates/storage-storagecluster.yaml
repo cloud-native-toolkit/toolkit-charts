@@ -1,9 +1,7 @@
-{{- if .Values.ocs.installOCS }}
 apiVersion: ocs.openshift.io/v1
 kind: StorageCluster
 metadata:
   name: ocs-storagecluster
-  namespace: openshift-storage
   annotations:
     argocd.argoproj.io/sync-wave: "103"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
@@ -21,8 +19,8 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: {{ .Values.ocs.sizeGiB }}Gi
-        storageClassName: {{ .Values.ocs.storageClass }}
+            storage: {{ .Values.sizeGiB }}Gi
+        storageClassName: {{ .Values.storageClass }}
         volumeMode: Block
       status: {}
     name: ocs-deviceset
@@ -30,4 +28,3 @@ spec:
     portable: true
     replica: 3
     resources: {}
-{{- end }}

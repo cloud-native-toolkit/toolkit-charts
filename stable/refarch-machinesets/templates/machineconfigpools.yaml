@@ -1,0 +1,37 @@
+{{- $machinesets := tuple "storage" "infra" "cp4x" -}}
+{{- if and (eq $.Values.cloudProvider.name "aws") (eq $.Values.cloudProvider.managed true) -}}
+  {{- $machinesets := tuple "storage" "cp4x" -}}
+{{- end -}}
+{{- range $n, $name := $machinesets -}}
+{{ printf "\n---\n"}}
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfigPool
+metadata:
+  name: {{ $name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  machineConfigSelector:
+    matchExpressions:
+    - key: machineconfiguration.openshift.io/role
+      operator: In
+      values: 
+      - worker
+      - {{ $name }}
+{{- if and (eq $name "storage") (or $.Values.cloud.storageNodes.labels $.Values.global.storageNodes.labels) }}
+  nodeSelector:
+    matchLabels:
+{{- toYaml (default $.Values.global.storageNodes.labels $.Values.cloud.storageNodes.labels) | nindent 6 -}}
+{{- end -}}
+{{- if and (eq $name "infra") (or $.Values.cloud.infraNodes.labels $.Values.global.infraNodes.labels) }}
+  nodeSelector:
+    matchLabels:
+{{- toYaml (default $.Values.global.infraNodes.labels $.Values.cloud.infraNodes.labels) | nindent 6 -}}
+{{- end -}}
+{{- if and (eq $name "cp4x") (or $.Values.cloud.cloudpakNodes.labels $.Values.global.cloudpakNodes.labels) }}
+  nodeSelector:
+    matchLabels:
+{{- toYaml (default $.Values.global.cloudpakNodes.labels $.Values.cloud.cloudpakNodes.labels) | nindent 6 -}}
+{{- end -}}
+{{- end -}}

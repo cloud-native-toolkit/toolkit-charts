@@ -1,0 +1,13 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: ContainerRuntimeConfig
+metadata:
+  name: cp4x-containerruntimeconfig
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      limits-crio: cp4x-containerruntimeconfig
+  containerRuntimeConfig:
+    pidsLimit: 12288
