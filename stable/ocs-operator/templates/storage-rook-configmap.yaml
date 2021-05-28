@@ -1,8 +1,6 @@
-{{- if .Values.ocs.installOCS }}
 kind: ConfigMap
 metadata:
   name: rook-ceph-operator-config
-  namespace: openshift-storage
   annotations:
     argocd.argoproj.io/sync-wave: "101"
     helm.sh/hook-weight: "101"
@@ -26,4 +24,3 @@ data:
       operator: Equal
       value: "true"
       effect: NoSchedule
-{{- end }}

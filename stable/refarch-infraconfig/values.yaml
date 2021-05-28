@@ -1,7 +1,10 @@
 # Default values for refarch-ocp4-gitops.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-cloudProvider: "aws"
+cloudProvider:
+  name: "aws"
+  managed: "false" #set to true for ARO or ROSA
+
 argo:
   namespace: argocd
   serviceAccount: argocd-server
@@ -12,3 +15,36 @@ registry:
 
 ingress:
   replicas: 2
+
+taints:
+  # - effect: "NoSchedule"
+  #   key: "infra"
+  #   value: ""
+
+labels:
+  # node-role.kubernetes.io/infra: ""
+
+global:
+  argo:
+    namespace: openshift-gitops
+    serviceAccount: something
+  registry:
+    replicas: 2
+  ingress:
+    replicas: 2
+  taints:
+    - effect: "NoSchedule"
+      key: "infra"
+      value: ""
+  labels:
+    node-role.kubernetes.io/infra: ""
+
+image-registry-hook-job:
+  name: infraconfig-postsync
+  namespace: tools
+  hook:
+    enabled: true
+    hooktype: infraconfig-postsync
+  hookdeletepolicy:
+    enabled: true
+    hookdeletepolicytype: HookSucceeded

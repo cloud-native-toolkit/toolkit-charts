@@ -2,12 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-ocs:
-  installOCS: true
-  channel: stable-4.6
-  version: 4.6.3
-  sizeGiB: 512
-  storageClass: thin
-
-
-
+channel: stable-4.6
+sizeGiB: 512
+storageClass: thin
