@@ -16,22 +16,7 @@ registry:
 ingress:
   replicas: 2
 
-taints:
-  # - effect: "NoSchedule"
-  #   key: "infra"
-  #   value: ""
-
-labels:
-  # node-role.kubernetes.io/infra: ""
-
-global:
-  argo:
-    namespace: openshift-gitops
-    serviceAccount: something
-  registry:
-    replicas: 2
-  ingress:
-    replicas: 2
+infraNodes:
   taints:
     - effect: "NoSchedule"
       key: "infra"
@@ -48,3 +33,31 @@ image-registry-hook-job:
   hookdeletepolicy:
     enabled: true
     hookdeletepolicytype: HookSucceeded
+
+global:
+  argo:
+    namespace: openshift-gitops
+    serviceAccount: something
+  registry:
+    replicas: 2
+  ingress:
+    replicas: 2
+  infraNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "infra"
+        value: ""
+    labels:
+      node-role.kubernetes.io/infra: ""
+  storageNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "node.ocs.openshift.io/storage"
+        value: "true"
+    labels:
+      node-role.kubernetes.io/storage: ""
+      cluster.ocs.openshift.io/openshift-storage: ""
+  cloudpakNodes:
+    taints:
+    labels:
+      node-role.kubernetes.io/cp4x: ""

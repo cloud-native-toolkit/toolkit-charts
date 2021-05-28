@@ -39,9 +39,8 @@ spec:
             - configs.imageregistry.operator.openshift.io/cluster
             - --type=merge
             - -p
-            - $CONFIG_STRING
             {{- if eq $.Values.cloudProvider.name "vsphere" }}
-            - '{"spec": {"storage": {"pvc": {"claim": ""}}, "replicas": {{ $.Values.registry.replicas | int }}, "managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule", "key": "infra", "value": ""}]}}'
+            - '{"spec": {"storage": {"pvc": {"claim": ""}}, "replicas": {{ $.Values.registry.replicas }}, "managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule", "key": "infra", "value": ""}]}}'
             {{- else }}
             - '{"spec": {"nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule", "key": "infra", "value": ""}]}}'
             {{- end }}
