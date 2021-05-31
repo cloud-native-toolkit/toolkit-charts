@@ -2,12 +2,33 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-ocs:
-  installOCS: true
-  channel: stable-4.6
-  version: 4.6.3
-  sizeGiB: 512
-  storageClass: thin
+channel: stable-4.6
+sizeGiB: 512
+storageClass: thin
 
+infraNodes:
+  taints: {}
 
+storageNodes:
+  taints: {}
 
+global:
+  infraNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "infra"
+        value: ""
+    labels:
+      node-role.kubernetes.io/infra: ""
+  storageNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "node.ocs.openshift.io/storage"
+        value: "true"
+    labels:
+      node-role.kubernetes.io/storage: ""
+      cluster.ocs.openshift.io/openshift-storage: ""
+  cloudpakNodes:
+    taints:
+    labels:
+      node-role.kubernetes.io/cp4x: ""

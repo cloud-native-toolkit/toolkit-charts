@@ -1,3 +1,6 @@
+{{ $globalDestinations := include "argocd.destinations" .Values.global.destinations  }}
+{{ $localDestinations := include "argocd.destinations" .Values.destinations  }}
+{{ $appDestinations := include "argocd.destinations" .Values.applicationTargets  }}
 {{- if .Values.project }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -7,22 +10,19 @@ metadata:
   labels:
 {{ include "argocd.labels" . | indent 4 }}
   annotations:
-    "helm.sh/hook": pre-install
+    helm.sh/hook: pre-install
+    argocd.argoproj.io/sync-wave: "-5"
 spec:
   sourceRepos:
-  - '*'
+    - {{ include "argocd.repoUrl" . }}
+  {{- if .Values.clusterResourceWhitelist }}
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
-  {{- if .Values.applicationTargets }}
-  destinations:
-  - namespace: openshift-operators
-    server: "https://kubernetes.default.svc"
-  - namespace: operators
-    server: "https://kubernetes.default.svc"
-  {{- range .Values.applicationTargets }}
-  - namespace: {{ .targetNamespace }}
-    server: {{ default "https://kubernetes.default.svc" .server }}
+    {{- .Values.clusterResourceWhitelist | toYaml | nindent 4 }}
   {{- end }}
+  {{- if or (or $globalDestinations $localDestinations) $appDestinations }}
+  destinations:
+  {{- $globalDestinations | nindent 4 -}}
+  {{- $localDestinations | nindent 4 -}}
+  {{- $appDestinations | nindent 4 -}}
   {{- end }}
 {{- end }}

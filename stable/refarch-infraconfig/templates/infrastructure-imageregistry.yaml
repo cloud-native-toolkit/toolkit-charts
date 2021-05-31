@@ -1,4 +1,4 @@
-{{- if eq $.Values.cloudProvider "vsphere" }}
+{{- if eq $.Values.cloudProvider.name "vsphere" }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -31,15 +31,18 @@ spec:
         - name: config
           image: quay.io/openshift/origin-cli:latest
           command: ["oc"]
+          envFrom:
+            configMapRef:
+            prefix: INFRACONFIG_
           args:
             - patch
             - configs.imageregistry.operator.openshift.io/cluster
             - --type=merge
             - -p
-            {{- if eq $.Values.cloudProvider "vsphere" }}
-            - '{"spec": {"storage": {"pvc": {"claim": ""}}, "replicas": {{ $.Values.registry.replicas | int }}, "managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule","key": "infra","value": "reserved"},{"effect": "NoExecute","key": "infra","value": "reserved"}]}}'
+            {{- if eq $.Values.cloudProvider.name "vsphere" }}
+            - '{"spec": {"storage": {"pvc": {"claim": ""}}, "replicas": {{ $.Values.registry.replicas }}, "managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule", "key": "infra", "value": ""}]}}'
             {{- else }}
-            - '{"spec": {"managementState": "Managed", "nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule","key": "infra","value": "reserved"},{"effect": "NoExecute","key": "infra","value": "reserved"}]}}'
+            - '{"spec": {"nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule", "key": "infra", "value": ""}]}}'
             {{- end }}
       restartPolicy: Never
       serviceAccountName: {{ .Values.argo.serviceAccount | default "argocd-server" }}

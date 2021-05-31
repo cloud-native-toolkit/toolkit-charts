@@ -6,95 +6,12 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "100"
     helm.sh/hook-weight: "100"
+{{- if or (default $.Values.global.labels $.Values.labels) (default $.Values.global.taints $.Values.taints) }}
 data:
   config.yaml: |+
-    alertmanagerMain:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    prometheusK8s:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    prometheusOperator:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    grafana:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    k8sPrometheusAdapter:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    kubeStateMetrics:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    telemeterClient:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    openshiftStateMetrics:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
-    thanosQuerier:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoSchedule
-      - key: infra
-        value: reserved
-        effect: NoExecute
+{{- $components := tuple "alertmanagerMain" "prometheusK8s" "prometheusOperator" "grafana" "k8sPrometheusAdapter" "kubeStateMetrics" "telemeterClient" "openshiftStateMetrics" "thanosQuerier" -}}
+{{- range $key, $component := $components -}}
+{{- $params := dict "Values" $.Values "Component" $component -}}
+{{- include "monitoring.placement" $params | nindent 4 -}}
+{{- end -}}
+{{- end -}}

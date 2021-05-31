@@ -1,0 +1,33 @@
+apiVersion: tuned.openshift.io/v1
+kind: Tuned
+metadata:
+  name: cp4x-tuned
+  namespace: openshift-cluster-node-tuning-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "0"
+spec:
+  profile:
+  - name: cp4x-tuned
+    data: |
+      [main]
+      summary=Tune Kernel parameters on OpenShift Worker Nodes running CloudPak workloads
+      [sysctl]
+      kernel.shmall = 33554432
+      kernel.shmmax = 68719476736
+      kernel.shmmni = 16384
+      kernel.sem = 250 1024000 100 16384
+      kernel.msgmax = 65536
+      kernel.msgmnb = 65536
+      kernel.msgmni = 32768
+      vm.max_map_count = 262144
+{{- if (default $.Values.global.cloudpakNodes.labels $.Values.cloud.cloudpakNodes.labels) }}
+  recommend:
+  - match:
+{{- range $key, $label := (default $.Values.global.cloudpakNodes.labels $.Values.cloud.cloudpakNodes.labels) -}}
+{{ printf "- label: %s" $key | nindent 4 }}
+{{- end }}    
+    priority: 10
+    profile: cp4x-tuned
+{{- end -}}
+

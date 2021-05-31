@@ -1,0 +1,79 @@
+infrastructureId: "csantana-47-8l6dl"
+
+cloudProvider:
+  name: "azure"
+  managed: false
+
+vsphere:
+  networkName: vdpg-192.168.100
+  datacenter: dc01
+  datastore: openshift
+  cluster: cluster01
+  server: vcsa67.rtp.raleigh.ibm.com
+  zones:
+    - 1
+  infraNodes:
+    nodeCount:
+    diskGiB:
+    memoryMiB:
+    numCPUs:
+    numCoresPerSocket:
+  storageNodes:
+    nodeCount:
+    diskGiB:
+    memoryMiB:
+    numCPUs:
+    numCoresPerSocket:
+  cloudpakNodes:
+    nodeCount:
+    diskGiB:
+    memoryMiB:
+    numCPUs:
+    numCoresPerSocket:
+
+cloud:
+  region: eastus
+  zones: {}
+  image: ami-04a16d506e5b0e246
+  infraNodes:
+    nodeCount:
+    volumeSize:
+    volumeType:
+    instanceType:
+    taints:
+    labels:
+  storageNodes:
+    nodeCount:
+    volumeSize:
+    volumeType:
+    instanceType:
+    taints:
+    labels:
+  cloudpakNodes:
+    nodeCount:
+    volumeSize:
+    volumeType:
+    instanceType:
+    taints:
+    labels:
+
+global:
+  infraNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "infra"
+        value: ""
+    labels:
+      node-role.kubernetes.io/infra: ""
+  storageNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "node.ocs.openshift.io/storage"
+        value: "true"
+    labels:
+      node-role.kubernetes.io/storage: ""
+      cluster.ocs.openshift.io/openshift-storage: ""
+  cloudpakNodes:
+    taints:
+    labels:
+      node-role.kubernetes.io/cp4x: ""

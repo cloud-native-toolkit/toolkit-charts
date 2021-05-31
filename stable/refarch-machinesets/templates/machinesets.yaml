@@ -1,0 +1,13 @@
+{{- $zones := include "cloud.zones" . | replace "[" ""|replace "]" ""|split " " -}}
+{{- $machinesets := tuple "storage" "infra" "cp4x" -}}
+{{- if and (eq $.Values.cloudProvider.name "aws") (eq $.Values.cloudProvider.managed true) -}}
+  {{- $machinesets := tuple "storage" "cp4x" -}}
+{{- end -}}
+{{- range $z, $zone := $zones -}}
+  {{- range $n, $name := $machinesets -}}
+    {{- $params := dict "Values" $.Values "Name" $name "Zone" $zone -}}
+    {{ printf "\n---\n" }}
+    {{- include "machineset.header" $params -}}
+    {{- include "machineset.providerspec" $params | nindent 6 -}}
+  {{- end -}}
+{{- end -}}
