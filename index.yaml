@@ -1040,6 +1040,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/ibmcloud-service-0.1.0.tgz
     version: 0.1.0
+  instana-agent-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-01T21:37:35.730393351Z"
+    description: A Helm chart for Kubernetes
+    digest: 5e025c35fccc729bcc541869e6797669cb312b9d95ab7e6dd2bfb724cfd96a21
+    name: instana-agent-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/instana-agent-operator-0.1.2/instana-agent-operator-0.1.2.tgz
+    version: 0.1.2
   iteration-zero:
   - apiVersion: v2
     appVersion: 0.7.0-lite
