@@ -1,0 +1,47 @@
+{{- if .Values.createInstance -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: openshift-gitops
+  name: job-{{ include "operator.name" . }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-{{ include "operator.name" . }}
+  namespace: openshift-gitops
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: job-{{ include "operator.name" . }}
+      labels:
+        {{- include "operator.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: job-{{ include "operator.name" . }}
+      restartPolicy: Never
+      volumes:
+        - name: config-yaml
+          configMap:
+            name: config-{{ include "operator.name" . }}
+      containers:
+        - name: create-instance
+          image: "quay.io/ibmgaragecloud/cli-tools:v13"
+          volumeMounts:
+            - mountPath: /tmp/config
+              name: config-yaml
+          env:
+            - name: INSTANCE_NAME
+              value: {{ include "operator.argocd-name" . }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - cp /tmp/config/apply.sh /tmp/apply.sh;
+              chmod +x /tmp/apply.sh;
+              /tmp/apply.sh $INSTANCE_NAME /tmp/config/instance.yaml /tmp/config/patch.yaml
+{{- end -}}
