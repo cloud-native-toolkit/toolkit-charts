@@ -116,3 +116,19 @@ Operator channel
 {{ .Values.operatorHub.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "operator.tls-secret-name" -}}
+{{ .Values.global.tlsSecretName }}
+{{- end -}}
+
+{{- define "operator.ingress-subdomain" -}}
+{{ .Values.global.ingressSubdomain }}
+{{- end -}}
+
+{{- define "operator.host" -}}
+{{ printf "%s-%s.%s" "argocd-cluster" .Release.Namespace (include "operator.ingress-subdomain" .) -}}
+{{- end -}}
+
+{{- define "operator.grpc-host" -}}
+{{ printf "%s-%s.%s" "argocd-cluster-grpc" .Release.Namespace (include "operator.ingress-subdomain" .) -}}
+{{- end -}}
