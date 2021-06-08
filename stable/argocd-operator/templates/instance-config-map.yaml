@@ -15,55 +15,55 @@ data:
     apiVersion: argoproj.io/v1alpha1
     kind: ArgoCD
     metadata:
-      name: ${NAME}
+      name: argocd-cluster
     spec:
       server:
         grpc:
-          host: ${GRPC_HOST}
+          host: {{ include "operator.grpc-host" . }}
           ingress:
             enabled: true
             annotations:
               kubernetes.io/ingress.class: public-iks-k8s-nginx
             path: /
             tls:
-              - secretName: ${TLS_SECRET_NAME}
+              - secretName: {{ include "operator.tls-secret-name" . }}
                 hosts:
-                  - ${GRPC_HOST}
-        host: ${HOST}
+                  - {{ include "operator.grpc-host" . }}
+        host: {{ include "operator.host" . }}
         ingress:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: public-iks-k8s-nginx
           path: /
           tls:
-            - secretName: ${TLS_SECRET_NAME}
+            - secretName: {{ include "operator.tls-secret-name" . }}
               hosts:
-                - ${HOST}
+                - {{ include "operator.host" . }}
         insecure: true
   patch.yaml: |
     spec:
       server:
         grpc:
-          host: ${GRPC_HOST}
+          host: {{ include "operator.grpc-host" . }}
           ingress:
             enabled: true
             annotations:
               kubernetes.io/ingress.class: public-iks-k8s-nginx
             path: /
             tls:
-              - secretName: ${TLS_SECRET_NAME}
+              - secretName: {{ include "operator.tls-secret-name" . }}
                 hosts:
-                  - ${GRPC_HOST}
-        host: ${HOST}
+                  - {{ include "operator.grpc-host" . }}
+        host: {{ include "operator.host" . }}
         ingress:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: public-iks-k8s-nginx
           path: /
           tls:
-            - secretName: ${TLS_SECRET_NAME}
+            - secretName: {{ include "operator.tls-secret-name" . }}
               hosts:
-                - ${HOST}
+                - {{ include "operator.host" . }}
         insecure: true
   apply.sh: |
     INSTANCE_NAME="$1"
@@ -90,7 +90,7 @@ data:
     apiVersion: argoproj.io/v1alpha1
     kind: ArgoCD
     metadata:
-      name: ${NAME}
+      name: argocd-cluster
     spec:
       dex:
         image: quay.io/ablock/dex
@@ -103,7 +103,7 @@ data:
         scopes: '[groups]'
       server:
         route:
-          enabled: ${ROUTE}
+          enabled: true
           tls:
             termination: passthrough
             insecureEdgeTerminationPolicy: Redirect
@@ -121,7 +121,7 @@ data:
         scopes: '[groups]'
       server:
         route:
-          enabled: ${ROUTE}
+          enabled: true
           tls:
             termination: passthrough
             insecureEdgeTerminationPolicy: Redirect
