@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: openshift-gitops
+  namespace: {{ include "operator.operator-namespace" . }}
   name: job-{{ include "operator.name" . }}
   labels:
     {{- include "operator.labels" . | nindent 4 }}
@@ -11,7 +11,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: job-{{ include "operator.name" . }}
-  namespace: openshift-gitops
+  namespace: {{ include "operator.operator-namespace" . }}
   labels:
     {{- include "operator.labels" . | nindent 4 }}
   annotations:
@@ -37,11 +37,13 @@ spec:
             - mountPath: /tmp/config
               name: config-yaml
           env:
+            - name: NAMESPACE
+              value: openshift-gitops
             - name: INSTANCE_NAME
               value: {{ include "operator.argocd-name" . }}
           command: ["/bin/sh", "-c"]
           args:
             - cp /tmp/config/apply.sh /tmp/apply.sh;
               chmod +x /tmp/apply.sh;
-              /tmp/apply.sh $INSTANCE_NAME /tmp/config/instance.yaml /tmp/config/patch.yaml
+              /tmp/apply.sh $NAMESPACE $INSTANCE_NAME /tmp/config/instance.yaml /tmp/config/patch.yaml
 {{- end -}}
