@@ -370,6 +370,16 @@ entries:
     version: 0.1.0
   argocd-operator:
   - apiVersion: v2
+    appVersion: 0.3.2
+    created: "2021-06-08T07:06:56.496375493Z"
+    description: A Helm chart to install ArgoCD via the operator
+    digest: 309b6363c6f5c08154852412668420debdd0c1657ac6ad266d70f489fde7d9f0
+    name: argocd-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/argocd-operator-0.3.2/argocd-operator-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
     appVersion: 0.3.1
     created: "2021-06-08T06:11:46.610481819Z"
     description: A Helm chart to install ArgoCD via the operator
