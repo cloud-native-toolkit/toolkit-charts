@@ -1,0 +1,140 @@
+{{- $releaseNamespace := .Release.Namespace -}}
+{{- if .Values.createInstance -}}
+{{- if eq (include "operator.cluster-type" .) "kubernetes" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-{{ include "operator.name" . }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+data:
+  instance.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ArgoCD
+    metadata:
+      name: ${NAME}
+    spec:
+      server:
+        grpc:
+          host: ${GRPC_HOST}
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public-iks-k8s-nginx
+            path: /
+            tls:
+              - secretName: ${TLS_SECRET_NAME}
+                hosts:
+                  - ${GRPC_HOST}
+        host: ${HOST}
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: public-iks-k8s-nginx
+          path: /
+          tls:
+            - secretName: ${TLS_SECRET_NAME}
+              hosts:
+                - ${HOST}
+        insecure: true
+  patch.yaml: |
+    spec:
+      server:
+        grpc:
+          host: ${GRPC_HOST}
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public-iks-k8s-nginx
+            path: /
+            tls:
+              - secretName: ${TLS_SECRET_NAME}
+                hosts:
+                  - ${GRPC_HOST}
+        host: ${HOST}
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: public-iks-k8s-nginx
+          path: /
+          tls:
+            - secretName: ${TLS_SECRET_NAME}
+              hosts:
+                - ${HOST}
+        insecure: true
+  apply.sh: |
+    INSTANCE_NAME="$1"
+    CONFIG_FILE="$2"
+    PATCH_FILE="$3"
+
+    if oc get argocd $INSTANCE_NAME 1> /dev/null 2> /dev/null; then
+      kubectl patch argocd $INSTANCE_NAME --type merge -p "$(cat $PATCH_FILE)"
+    else
+      kubectl apply -f $CONFIG_FILE
+    fi
+{{- else -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-{{ include "operator.name" . }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+  {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+data:
+  instance.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ArgoCD
+    metadata:
+      name: ${NAME}
+    spec:
+      dex:
+        image: quay.io/ablock/dex
+        openShiftOAuth: true
+        version: openshift-connector
+      rbac:
+        defaultPolicy: 'role:admin'
+        policy: |
+          g, argocd-admins, role:admin
+        scopes: '[groups]'
+      server:
+        route:
+          enabled: ${ROUTE}
+          tls:
+            termination: passthrough
+            insecureEdgeTerminationPolicy: Redirect
+          wildcardPolicy: None
+  patch.yaml: |
+    spec:
+      dex:
+        image: quay.io/ablock/dex
+        openShiftOAuth: true
+        version: openshift-connector
+      rbac:
+        defaultPolicy: 'role:admin'
+        policy: |
+          g, argocd-admins, role:admin
+        scopes: '[groups]'
+      server:
+        route:
+          enabled: ${ROUTE}
+          tls:
+            termination: passthrough
+            insecureEdgeTerminationPolicy: Redirect
+          wildcardPolicy: None
+  apply.sh: |
+    INSTANCE_NAME="$1"
+    CONFIG_FILE="$2"
+    PATCH_FILE="$3"
+
+    if oc get argocd $INSTANCE_NAME 1> /dev/null 2> /dev/null; then
+      kubectl patch argocd $INSTANCE_NAME --type merge -p "$(cat $PATCH_FILE)"
+    else
+      kubectl apply -f $CONFIG_FILE
+    fi
+{{- end -}}
+{{- end -}}
