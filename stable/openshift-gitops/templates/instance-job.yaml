@@ -32,7 +32,7 @@ spec:
             name: config-{{ include "operator.name" . }}
       containers:
         - name: create-instance
-          image: "quay.io/ibmgaragecloud/cli-tools:v13"
+          image: "quay.io/bitnami/kubectl:latest"
           volumeMounts:
             - mountPath: /tmp/config
               name: config-yaml
