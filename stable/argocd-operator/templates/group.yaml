@@ -1,0 +1,9 @@
+{{- if ne (include "operator.cluster-type" .) "kubernetes" }}
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: argocd-admins
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+users: []
+{{- end -}}
