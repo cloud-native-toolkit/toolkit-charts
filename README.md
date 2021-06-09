@@ -2,10 +2,11 @@
 
 A collection of helm charts used by and/or provided for the Garage Cloud Native Toolkit artifacts
 
-This GitHub repository also serves as a Helm repository, hosting the helm charts via GitHub pages. The url
-for the Helm repository is https://ibm-garage-cloud.github.io/toolkit-charts/
+This GitHub [cloud-native-toolkit/toolkit-charts](https://github.com/cloud-native-toolkit/toolkit-charts) repository also serves as a Helm repository, hosting the helm charts via GitHub pages.
 
-To view the helm repo metadata see [index.yaml](https://ibm-garage-cloud.github.io/toolkit-charts/index.yaml)
+The url for the Helm repository is [charts.cloudnativetoolkit.dev](https://charts.cloudnativetoolkit.dev)
+
+To view the helm repo metadata see [index.yaml](https://charts.cloudnativetoolkit.dev/index.yaml)
 
 ## Usage
 
@@ -14,7 +15,7 @@ The following commands assume Helm 3. The helm charts can be used with Helm 2 bu
 ### Register the helm repository
 
 ```
-helm repo add toolkit-charts https://ibm-garage-cloud.github.io/toolkit-charts/
+helm repo add toolkit-charts https://charts.cloudnativetoolkit.dev
 ```
 
 ### List the charts in the helm repository
@@ -41,6 +42,6 @@ helm install mychart toolkit-charts/{chart} --namespace {namespace} ...
 Alternatively, the helm repo can be inlined with the `--repo` argument, skipping the `helm repo add` step
 
 ```
-helm template mychart {chart} --namespace {namespace} --repo https://ibm-garage-cloud.github.io/toolkit-charts/ ... | kubectl apply -n {namespace} -f -
+helm template mychart {chart} --namespace {namespace} --repo https://charts.cloudnativetoolkit.dev ... | kubectl apply -n {namespace} -f -
 ```
 hello
