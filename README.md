@@ -4,7 +4,7 @@ A collection of helm charts used by and/or provided for the Garage Cloud Native 
 
 This GitHub [cloud-native-toolkit/toolkit-charts](https://github.com/cloud-native-toolkit/toolkit-charts) repository also serves as a Helm repository, hosting the helm charts via GitHub pages.
 
-The url for the Helm repository is https://charts.cloudnativetoolkit.dev
+The url for the Helm repository is [charts.cloudnativetoolkit.dev](https://charts.cloudnativetoolkit.dev)
 
 To view the helm repo metadata see [index.yaml](https://charts.cloudnativetoolkit.devindex.yaml)
 
