@@ -33,6 +33,6 @@ subjects:
   namespace: {{ $releaseNamespace }}
 - kind: ServiceAccount
   name: job-{{ include "operator.name" . }}
-  namespace: {{ $releaseNamespace }}
+  namespace: {{ include "operator.operator-namespace" . }}
 ---
 {{- end -}}
