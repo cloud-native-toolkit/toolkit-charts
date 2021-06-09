@@ -6,7 +6,7 @@ This GitHub [cloud-native-toolkit/toolkit-charts](https://github.com/cloud-nativ
 
 The url for the Helm repository is [charts.cloudnativetoolkit.dev](https://charts.cloudnativetoolkit.dev)
 
-To view the helm repo metadata see [index.yaml](https://charts.cloudnativetoolkit.devindex.yaml)
+To view the helm repo metadata see [index.yaml](https://charts.cloudnativetoolkit.dev/index.yaml)
 
 ## Usage
 
