@@ -10,7 +10,6 @@ metadata:
   labels:
 {{ include "argocd.labels" . | indent 4 }}
   annotations:
-    helm.sh/hook: pre-install
     argocd.argoproj.io/sync-wave: "-5"
 spec:
   sourceRepos:
