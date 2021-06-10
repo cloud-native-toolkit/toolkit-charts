@@ -9,8 +9,10 @@ Expand the name of the chart.
 {{- define "argocd.destinations" -}}
 {{- if . -}}
 {{- range . }}
+{{- if .targetNamespace -}}
 - namespace: {{ .targetNamespace }}
   server: {{ default "https://kubernetes.default.svc" .server }}
+{{- end -}}
 {{- end -}}
 {{- else -}}
 {{- "" -}}
