@@ -1,11 +1,13 @@
 {{- if include "argocd.repoUrl" . -}}
+{{- $globalNamespace := .Values.global.targetNamespace -}}
+{{- $globalRevision := .Values.global.targetRevision -}}
 {{- $releaseNamespace := .Release.Namespace -}}
 {{- $targetRepo := include "argocd.repoUrl" . -}}
 {{- $project := default "default" .Values.project -}}
 {{- $labels := include "argocd.labels" . -}}
 {{- range .Values.applicationTargets }}
-{{- $targetNamespace := default $.Values.global.targetNamespace .targetNamespace -}}
-{{- $targetRevision := default $.Values.global.targetRevision .targetRevision -}}
+{{- $targetNamespace := default $globalNamespace .targetNamespace -}}
+{{- $targetRevision := default $globalRevision .targetRevision -}}
 {{- $server := default "https://kubernetes.default.svc" .server | quote -}}
 {{- $valueFile := include "argocd.valueFiles" .valueFiles -}}
 {{- $createNamespace := .createNamespace }}
