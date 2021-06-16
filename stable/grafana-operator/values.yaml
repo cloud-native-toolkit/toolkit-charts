@@ -1,0 +1,13 @@
+# Default values for ibm-ace-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  grafana:
+    name: grafana-operator
+    subscription:
+      channel: alpha
+      installPlanApproval: Automatic
+      name: grafana-operator
+      source: community-operators
+      sourceNamespace: openshift-marketplace
