@@ -9,6 +9,12 @@ global:
   ## The url of the gitops repo that contains the applications
   repoUrl: ""
 
+  ## The targetNamespace to use if one is not provided for the application
+  targetNamespace: ""
+
+  ## The targetRevision to use if one is not provided for the application
+  targetRevision: ""
+
 ## The url of the gitops repo that contains the applications
 repoUrl: ""
 

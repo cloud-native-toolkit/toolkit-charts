@@ -1,0 +1,51 @@
+{{- if .Values.createInstance -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-{{ include "operator.name" . }}
+  namespace: {{ include "operator.operator-namespace" . }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+data:
+  instance.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ArgoCD
+    metadata:
+      name: {{ include "operator.argocd-name" . }}
+    spec:
+      dex:
+        openShiftOAuth: true
+      rbac:
+        defaultPolicy: 'role:readonly'
+        policy: |
+          g, argocd-admins, role:admin
+        scopes: '[groups]'
+      server:
+        route:
+          enabled: true
+  patch.yaml: |
+    spec:
+      dex:
+        openShiftOAuth: true
+      rbac:
+        defaultPolicy: 'role:readonly'
+        policy: |
+          g, argocd-admins, role:admin
+        scopes: '[groups]'
+      server:
+        route:
+          enabled: true
+  apply.sh: |
+    NAMESPACE="$1"
+    INSTANCE_NAME="$2"
+    CONFIG_FILE="$3"
+    PATCH_FILE="$4"
+
+    if oc get argocd $INSTANCE_NAME -n $NAMESPACE 1> /dev/null 2> /dev/null; then
+      kubectl patch argocd $INSTANCE_NAME -n $NAMESPACE --type merge -p "$(cat $PATCH_FILE)"
+    else
+      kubectl apply -n $NAMESPACE -f $CONFIG_FILE
+    fi
+{{- end -}}

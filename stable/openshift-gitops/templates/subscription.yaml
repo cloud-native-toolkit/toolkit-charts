@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: argocd-operator
+  name: {{ include "operator.catalog-name" . }}
   namespace: {{ include "operator.operator-namespace" . }}
   labels:
     {{- include "operator.labels" . | nindent 4 }}
@@ -11,3 +11,7 @@ spec:
   name: {{ include "operator.catalog-name" . }}
   source: {{ include "operator.source" . }}
   sourceNamespace: {{ include "operator.olm-namespace" . }}
+  config:
+    env:
+      - name: DISABLE_DEX
+        value: "false"

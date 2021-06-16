@@ -1,5 +1,5 @@
 apiVersion: v2
-name: argocd-operator
+name: openshift-gitops
 description: A Helm chart to install ArgoCD via the operator
 
 # A chart can be either an 'application' or a 'library' chart.

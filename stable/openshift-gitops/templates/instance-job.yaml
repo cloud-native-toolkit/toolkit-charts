@@ -1,0 +1,49 @@
+{{- if .Values.createInstance -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: {{ include "operator.operator-namespace" . }}
+  name: job-{{ include "operator.name" . }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-{{ include "operator.name" . }}
+  namespace: {{ include "operator.operator-namespace" . }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: job-{{ include "operator.name" . }}
+      labels:
+        {{- include "operator.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: job-{{ include "operator.name" . }}
+      restartPolicy: Never
+      volumes:
+        - name: config-yaml
+          configMap:
+            name: config-{{ include "operator.name" . }}
+      containers:
+        - name: create-instance
+          image: "quay.io/bitnami/kubectl:latest"
+          volumeMounts:
+            - mountPath: /tmp/config
+              name: config-yaml
+          env:
+            - name: NAMESPACE
+              value: openshift-gitops
+            - name: INSTANCE_NAME
+              value: {{ include "operator.argocd-name" . }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - cp /tmp/config/apply.sh /tmp/apply.sh;
+              chmod +x /tmp/apply.sh;
+              /tmp/apply.sh $NAMESPACE $INSTANCE_NAME /tmp/config/instance.yaml /tmp/config/patch.yaml
+{{- end -}}

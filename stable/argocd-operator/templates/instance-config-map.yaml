@@ -1,0 +1,140 @@
+{{- $releaseNamespace := .Release.Namespace -}}
+{{- if .Values.createInstance -}}
+{{- if eq (include "operator.cluster-type" .) "kubernetes" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-{{ include "operator.name" . }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+data:
+  instance.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ArgoCD
+    metadata:
+      name: argocd-cluster
+    spec:
+      server:
+        grpc:
+          host: {{ include "operator.grpc-host" . }}
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public-iks-k8s-nginx
+            path: /
+            tls:
+              - secretName: {{ include "operator.tls-secret-name" . }}
+                hosts:
+                  - {{ include "operator.grpc-host" . }}
+        host: {{ include "operator.host" . }}
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: public-iks-k8s-nginx
+          path: /
+          tls:
+            - secretName: {{ include "operator.tls-secret-name" . }}
+              hosts:
+                - {{ include "operator.host" . }}
+        insecure: true
+  patch.yaml: |
+    spec:
+      server:
+        grpc:
+          host: {{ include "operator.grpc-host" . }}
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public-iks-k8s-nginx
+            path: /
+            tls:
+              - secretName: {{ include "operator.tls-secret-name" . }}
+                hosts:
+                  - {{ include "operator.grpc-host" . }}
+        host: {{ include "operator.host" . }}
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: public-iks-k8s-nginx
+          path: /
+          tls:
+            - secretName: {{ include "operator.tls-secret-name" . }}
+              hosts:
+                - {{ include "operator.host" . }}
+        insecure: true
+  apply.sh: |
+    INSTANCE_NAME="$1"
+    CONFIG_FILE="$2"
+    PATCH_FILE="$3"
+
+    if oc get argocd $INSTANCE_NAME 1> /dev/null 2> /dev/null; then
+      kubectl patch argocd $INSTANCE_NAME --type merge -p "$(cat $PATCH_FILE)"
+    else
+      kubectl apply -f $CONFIG_FILE
+    fi
+{{- else -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-{{ include "operator.name" . }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+  {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+data:
+  instance.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ArgoCD
+    metadata:
+      name: argocd-cluster
+    spec:
+      dex:
+        image: quay.io/ablock/dex
+        openShiftOAuth: true
+        version: openshift-connector
+      rbac:
+        defaultPolicy: 'role:admin'
+        policy: |
+          g, argocd-admins, role:admin
+        scopes: '[groups]'
+      server:
+        route:
+          enabled: true
+          tls:
+            termination: passthrough
+            insecureEdgeTerminationPolicy: Redirect
+          wildcardPolicy: None
+  patch.yaml: |
+    spec:
+      dex:
+        image: quay.io/ablock/dex
+        openShiftOAuth: true
+        version: openshift-connector
+      rbac:
+        defaultPolicy: 'role:admin'
+        policy: |
+          g, argocd-admins, role:admin
+        scopes: '[groups]'
+      server:
+        route:
+          enabled: true
+          tls:
+            termination: passthrough
+            insecureEdgeTerminationPolicy: Redirect
+          wildcardPolicy: None
+  apply.sh: |
+    INSTANCE_NAME="$1"
+    CONFIG_FILE="$2"
+    PATCH_FILE="$3"
+
+    if oc get argocd $INSTANCE_NAME 1> /dev/null 2> /dev/null; then
+      kubectl patch argocd $INSTANCE_NAME --type merge -p "$(cat $PATCH_FILE)"
+    else
+      kubectl apply -f $CONFIG_FILE
+    fi
+{{- end -}}
+{{- end -}}

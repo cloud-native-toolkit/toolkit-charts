@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "operator.name" -}}
-{{- default .Release.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{ include "operator.catalog-name" . }}
 {{- end -}}
 
 {{- define "operator.argocd-name" -}}
@@ -48,11 +48,7 @@ Selector labels
 Default OLM Namespace
 */}}
 {{- define "operator.default-olm-namespace" -}}
-{{- if eq (include "operator.cluster-type" .) "ocp4" -}}
 {{ default "openshift-marketplace" .Values.global.olmNamespace }}
-{{- else -}}
-{{ default "olm" .Values.global.olmNamespace }}
-{{- end -}}
 {{- end -}}
 
 {{/*
@@ -66,11 +62,7 @@ OLM Namespace
 Operator Namespace
 */}}
 {{- define "operator.default-operator-namespace" -}}
-{{- if eq (include "operator.cluster-type" .) "ocp4" -}}
 {{ default "openshift-operators" .Values.global.operatorNamespace }}
-{{- else -}}
-{{ default "operators" .Values.global.operatorNamespace }}
-{{- end -}}
 {{- end -}}
 
 {{/*
@@ -88,47 +80,19 @@ Operator Namespace
 Operator Source
 */}}
 {{- define "operator.source" -}}
-{{- if eq (include "operator.cluster-type" .) "ocp4" -}}
-{{ .Values.ocpCatalog.source }}
-{{- else -}}
-{{ .Values.operatorHub.source }}
-{{- end -}}
+{{ .Values.subscription.source }}
 {{- end -}}
 
 {{/*
 Operator channel
 */}}
 {{- define "operator.channel" -}}
-{{- if eq (include "operator.cluster-type" .) "ocp4" -}}
-{{ .Values.ocpCatalog.channel }}
-{{- else -}}
-{{ .Values.operatorHub.channel }}
-{{- end -}}
+{{ .Values.subscription.channel }}
 {{- end -}}
 
 {{/*
-Operator channel
+Operator catalog name
 */}}
 {{- define "operator.catalog-name" -}}
-{{- if eq (include "operator.cluster-type" .) "ocp4" -}}
-{{ .Values.ocpCatalog.name }}
-{{- else -}}
-{{ .Values.operatorHub.name }}
-{{- end -}}
-{{- end -}}
-
-{{- define "operator.tls-secret-name" -}}
-{{ .Values.global.tlsSecretName }}
-{{- end -}}
-
-{{- define "operator.ingress-subdomain" -}}
-{{ .Values.global.ingressSubdomain }}
-{{- end -}}
-
-{{- define "operator.host" -}}
-{{ printf "%s-%s.%s" "argocd-cluster" .Release.Namespace (include "operator.ingress-subdomain" .) -}}
-{{- end -}}
-
-{{- define "operator.grpc-host" -}}
-{{ printf "%s-%s.%s" "argocd-cluster-grpc" .Release.Namespace (include "operator.ingress-subdomain" .) -}}
+{{ .Values.subscription.name }}
 {{- end -}}
