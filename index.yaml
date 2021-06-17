@@ -783,6 +783,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/elasticsearch-operator-0.1.0.tgz
     version: 0.1.0
+  grafana-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-17T15:09:54.464441296Z"
+    description: A Helm chart for Kubernetes
+    digest: 6c8d0f3c3dd08adbca70a97ba56a6b099accc6139d26ac0dedaf27255e899204
+    name: grafana-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/grafana-operator-0.1.0/grafana-operator-0.1.0.tgz
+    version: 0.1.0
   ibm-ace-operator:
   - apiVersion: v2
     appVersion: 1.16.0
