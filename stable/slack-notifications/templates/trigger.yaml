@@ -1,0 +1,21 @@
+{{- if .Values.triggers }}
+{{- $fullname := include "slack-notifications.fullname" . -}}
+{{- $top := . -}}
+{{- range $index, $trigger := .Values.triggers }}
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: {{ $trigger.name }}
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: {{ $trigger.type }}
+  subscriber:
+    ref:
+     apiVersion: v1
+     kind: Service
+     name: {{ $fullname }}
+{{- end }}
+{{- end }}
