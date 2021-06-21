@@ -16,7 +16,10 @@ data:
       name: {{ include "operator.argocd-name" . }}
     spec:
       dex:
-        openShiftOAuth: true
+        openShiftOAuth: {{ .Values.instance.dex.openShiftOAuth }}
+        {{- if .Values.instance.dex.image }}
+        image: {{ .Values.instance.dex.image }}
+        {{- end }}
       rbac:
         defaultPolicy: 'role:readonly'
         policy: |
@@ -28,7 +31,10 @@ data:
   patch.yaml: |
     spec:
       dex:
-        openShiftOAuth: true
+        openShiftOAuth: {{ .Values.instance.dex.openShiftOAuth }}
+        {{- if .Values.instance.dex.image }}
+        image: {{ .Values.instance.dex.image }}
+        {{- end }}
       rbac:
         defaultPolicy: 'role:readonly'
         policy: |
