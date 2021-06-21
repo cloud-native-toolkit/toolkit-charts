@@ -15,6 +15,11 @@ operatorNamespace: ""
 
 createInstance: true
 
+instance:
+  dex:
+    openShiftOAuth: true
+    image: ""
+
 controllerRbac: true
 
 subscription:
