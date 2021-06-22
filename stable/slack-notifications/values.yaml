@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: lsteck/slack-notifications
+  repository: quay.io/ibmgaragecloud/slack-notifications
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
