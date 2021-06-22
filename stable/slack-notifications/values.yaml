@@ -5,11 +5,7 @@
 replicaCount: 1
 
 image:
-<<<<<<< HEAD
   repository: quay.io/ibmgaragecloud/slack-notifications
-=======
-  repository: lsteck/slack-notifications
->>>>>>> 927ba0e (add slack-notification chart)
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
