@@ -15,9 +15,14 @@ operatorNamespace: ""
 
 createInstance: true
 
+instance:
+  dex:
+    openShiftOAuth: true
+    image: ""
+
 controllerRbac: true
 
 subscription:
   source: redhat-operators
-  channel: preview
+  channel: stable
   name: openshift-gitops-operator
