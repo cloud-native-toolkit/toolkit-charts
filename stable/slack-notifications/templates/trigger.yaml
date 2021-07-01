@@ -8,7 +8,7 @@ kind: Trigger
 metadata:
   name: {{ $trigger.name }}
 spec:
-  broker: {{ .Values.broker.name }}
+  broker: {{ $.Values.broker.name }}
   filter:
     attributes:
       type: {{ $trigger.type }}
