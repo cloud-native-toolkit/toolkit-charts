@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "console-link-cronjob.fullname" . }}
+  labels:
+  {{- include "console-link-cronjob.labels" . | nindent 4 }}
+data:
+  reconcile-console-links.sh: |
+    #!/bin/bash
+
+    DEFAULT_SECTION="Cloud-Native Toolkit"
+    DEFAULT_LOCATION="ApplicationMenu"
+
+    # list all routes with console-link.cloud-native-toolkit.dev/enabled annotation
+    ROUTES=$(kubectl get routes -A -l console-link.cloud-native-toolkit.dev/enabled=true -o yaml | yq eval -j '.' - | jq -c '.items[]')
+
+    if [[ -z "${ROUTES}" ]]; then
+      echo "No routes found with 'console-link.cloud-native-toolkit.dev/enabled=true' annotation"
+      exit 0
+    fi
+
+    # for each route create/update a console link
+    echo "${ROUTES}" | while read route; do
+      section=$(echo "${route}" | jq -r --arg DEFAULT "${DEFAULT_SECTION}" '.metadata.annotations["console-link.cloud-native-toolkit.dev/section"] // $DEFAULT')
+      location=$(echo "${route}" | jq -r --arg DEFAULT "${DEFAULT_LOCATION}" '.metadata.annotations["console-link.cloud-native-toolkit.dev/location"] // $DEFAULT')
+      imageURL=$(echo "${route}" | jq -r '.metadata.annotations["console-link.cloud-native-toolkit.dev/imageUrl"] // empty')
+      name=$(echo "${route}" | jq -r '.metadata.name')
+      text=$(echo "${route}" | jq -r --arg DEFAULT "$name" '.metadata.annotations["console-link.cloud-native-toolkit.dev/displayName"] // $DEFAULT')
+      host=$(echo "${route}" | jq -r '.spec.host')
+
+      cat > ./tmp.console-link.yaml << EOL
+    apiVersion: console.openshift.io/v1
+    kind: ConsoleLink
+    metadata:
+      name: $name
+    spec:
+      applicationMenu:
+        imageURL: "$imageURL"
+        section: "$section"
+      href: "https://$host"
+      location: "$location"
+      text: "$text"
+    EOL
+
+      echo "Creating/updating consolelink: ${name}"
+      kubectl apply -f ./tmp.console-link.yaml
+    done

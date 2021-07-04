@@ -1,0 +1,14 @@
+# Default values for console-link-cronjob.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+rbac: true
+
+schedule: "*/5 * * * *"
+
+serviceAccount:
+  create: true
+  name: ""
+
+image: quay.io/cloudnativetoolkit/console-link-cronjob
+imageTag: ""
