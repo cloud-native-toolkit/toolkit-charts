@@ -1,4 +1,4 @@
-{{-if .Values.config }}
+{{- if .Values.config }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,5 +7,5 @@ metadata:
   labels:
   {{- include "ibm-toolkit-install.labels" . | nindent 4 }}
 data:
-  {{ .Values.config | toYaml | nindent 2 }}
-{{-end }}
+  {{- .Values.config | toYaml | nindent 2 }}
+{{- end }}
