@@ -2,6 +2,9 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ include "ibm-toolkit-install.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "ibm-toolkit-install.labels" . | nindent 4 }}
 spec:
   template:
     metadata:
