@@ -1053,6 +1053,16 @@ entries:
   ibm-toolkit-install:
   - apiVersion: v2
     appVersion: v14
+    created: "2021-07-06T21:46:30.247811816Z"
+    description: A Helm chart for Kubernetes
+    digest: d347d7e665997860514bda9565ba252fe7657f5d66fbb5c405f9401a5179bb00
+    name: ibm-toolkit-install
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-toolkit-install-0.2.1/ibm-toolkit-install-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: v14
     created: "2021-07-06T18:00:56.770387884Z"
     description: A Helm chart for Kubernetes
     digest: 18debb582c52ca64d9f380302d1ef18609189ffa865879e77bbda2ba012510f7
