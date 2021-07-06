@@ -28,7 +28,7 @@ data:
       text=$(echo "${route}" | jq -r --arg DEFAULT "$name" '.metadata.annotations["console-link.cloud-native-toolkit.dev/displayName"] // $DEFAULT')
       host=$(echo "${route}" | jq -r '.spec.host')
 
-      cat > ./tmp.console-link.yaml << EOL
+      cat > /tmp/console-link.yaml << EOL
     apiVersion: console.openshift.io/v1
     kind: ConsoleLink
     metadata:
@@ -43,5 +43,5 @@ data:
     EOL
 
       echo "Creating/updating consolelink: ${name}"
-      kubectl apply -f ./tmp.console-link.yaml
+      kubectl apply -f /tmp/console-link.yaml
     done
