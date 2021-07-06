@@ -6,13 +6,14 @@ metadata:
   name: {{ .Values.host }}
   labels:
     app: {{ include "developer-dashboard.name" . }}
-    console-link.cloud-native-toolkit.dev/enabled: {{ .Values.consoleLink.enabled }}
-  {{- if .Values.consoleLink.enabled -}}
+    console-link.cloud-native-toolkit.dev/enabled: {{ .Values.consoleLink.enabled | quote }}
+  {{- if .Values.consoleLink.enabled }}
   annotations:
+    console-link.cloud-native-toolkit.dev/enabled: {{ .Values.consoleLink.enabled | quote }}
     console-link.cloud-native-toolkit.dev/section: {{ .Values.consoleLink.section }}
     console-link.cloud-native-toolkit.dev/imageUrl: {{ .Values.consoleLink.imageUrl }}
     console-link.cloud-native-toolkit.dev/displayName: {{ .Values.consoleLink.displayName }}
-  {{- end -}}
+  {{- end }}
 spec:
   port:
     targetPort: {{ include "developer-dashboard.route-port" . }}
