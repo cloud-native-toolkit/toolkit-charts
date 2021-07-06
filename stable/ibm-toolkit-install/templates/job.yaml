@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ibm-toolkit-install.name" . }}
+spec:
+  template:
+    metadata:
+      labels:
+        run: {{ include "ibm-toolkit-install.name" . }}
+    spec:
+      serviceAccountName: {{ include "ibm-toolkit-install.serviceAccountName" . }}
+      volumes:
+        - name: source
+          emptyDir: {}
+      containers:
+        - image: {{ printf "%s:%s" .Values.image.imageName .Values.image.imageTag }}
+          name: toolkit
+          env:
+            - name: REPO_URL
+              value: {{ default "https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero.git" .Values.repo.url }}
+            - name: REPO_BRANCH
+              value: {{ .Values.repo.branch }}
+            - name: REPO_PATH
+              value: {{ .Values.repo.path }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "ibm-toolkit-install.name" . }}
+                optional: true
+              prefix: TF_VAR_
+          volumeMounts:
+            - mountPath: /source
+              name: source
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -ex
+              if [[ -n "$REPO_BRANCH" ]]; then
+                git clone -b $REPO_BRANCH --depth=1 $REPO_URL /source
+              else
+                git clone --depth=1 $REPO_URL /source
+              fi
+
+              cd /source
+
+              if [[ -n "$REPO_PATH" ]]; then
+                cd $REPO_PATH
+              fi
+
+              export TF_VAR_server_url=$(oc whoami --show-server)
+              set +x
+              export TF_VAR_login_token=$(oc whoami -t)
+
+              echo "Installing from $REPO_URL/$REPO_PATH#$REPO_BRANCH"
+
+              STARTTIME=$(date +%s)
+
+              terraform init
+              terraform apply -auto-approve
+
+              DURATION=$(($(date +%s) - $STARTTIME))
+              echo -e "\033[0;92m Toolkit install took: $(($DURATION / 60))m$(($DURATION % 60))s \033[0m"
+      restartPolicy: Never
