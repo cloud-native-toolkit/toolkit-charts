@@ -22,6 +22,9 @@ container:
 service:
   port: 80
 
+broker:
+  name: default
+
 secret:
   encryptedSlackUrl: encrypted_slack_url
 
