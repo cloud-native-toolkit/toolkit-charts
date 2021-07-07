@@ -23,7 +23,7 @@ service:
   port: 80
 
 secret:
-  slackUrl: Create Encrypted secret
+  encryptedSlackUrl: encrypted_slack_url
 
 triggers: 
   - name: taskrun-success-trigger
