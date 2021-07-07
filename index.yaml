@@ -2045,6 +2045,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/setup-job-0.1.0.tgz
     version: 0.1.0
+  slack-notifications:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-07-07T17:39:00.629590648Z"
+    description: A Helm chart for Kubernetes
+    digest: 4770b098a41541e98e2c589d3ff12517e0bf1616188f504645e0fd841244f04d
+    name: slack-notifications
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/slack-notifications-0.1.5/slack-notifications-0.1.5.tgz
+    version: 0.1.5
   starter-kit:
   - apiVersion: v2
     appVersion: 0.6.0
