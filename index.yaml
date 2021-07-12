@@ -1630,6 +1630,16 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openshift-gitops-0.3.0/openshift-gitops-0.3.0.tgz
     version: 0.3.0
   pact-broker:
+  - apiVersion: v2
+    appVersion: 2.50.1-1
+    created: "2021-07-12T18:15:00.90801673Z"
+    description: A Helm chart for Kubernetes
+    digest: f58916d173d8b72c8bfc94074b19e45f7b4c7fc899acb37af8c9e9b4fd223e54
+    name: pact-broker
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/pact-broker-0.2.0/pact-broker-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
     created: "2021-04-23T17:35:57.747289535Z"
