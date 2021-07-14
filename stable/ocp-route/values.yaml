@@ -14,3 +14,9 @@ app: ""
 serviceName: ""
 termination: edge
 insecurePolicy: Redirect
+
+consoleLink:
+  enabled: false
+  section: Cloud-Native Toolkit
+  displayName: ""
+  imageUrl: ""
