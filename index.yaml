@@ -1504,6 +1504,16 @@ entries:
   ocp-route:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-07-14T06:20:30.119438526Z"
+    description: A Helm chart for Kubernetes
+    digest: 54965f623dd1d6d8bd6b30966c818d64f2738fbd2c79d5b3fa0b076ed6a72174
+    name: ocp-route
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-route-0.4.0/ocp-route-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-10-28T17:25:17.888084316Z"
     description: A Helm chart for Kubernetes
     digest: b1dfa1fc0a54dba418d9a0be460cb8ac66c8f21cb4802da8526658517486de67
