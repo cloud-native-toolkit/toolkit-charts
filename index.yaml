@@ -2100,6 +2100,16 @@ entries:
   slack-notifications:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-07-15T16:03:18.889026521Z"
+    description: A Helm chart for Kubernetes
+    digest: 9eff97703defc907de3e1adbcd8118cd2788157717da0faea75098aa59da63d2
+    name: slack-notifications
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/slack-notifications-0.1.6/slack-notifications-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2021-07-07T17:39:00.629590648Z"
     description: A Helm chart for Kubernetes
     digest: 4770b098a41541e98e2c589d3ff12517e0bf1616188f504645e0fd841244f04d
