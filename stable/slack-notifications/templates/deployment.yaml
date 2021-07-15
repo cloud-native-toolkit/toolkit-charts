@@ -26,8 +26,8 @@ spec:
             - name: SLACK_URL
               valueFrom:
                 secretKeyRef:
-                  name: slack-url
-                  key: SLACK.URL
+                  name: {{ .Values.secret.name }}
+                  key: {{ .Values.secret.key }}
           ports:
             - name: http
               containerPort: {{ .Values.container.port }}
