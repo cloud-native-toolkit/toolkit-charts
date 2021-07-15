@@ -26,7 +26,10 @@ broker:
   name: default
 
 secret:
-  encryptedSlackUrl: encrypted_slack_url
+  # provide name of the secret that contains slack url
+  name: slack_url
+  # provide key of the secret that contains slack url
+  key: SLACK.URL
 
 triggers: 
   - name: taskrun-success-trigger
