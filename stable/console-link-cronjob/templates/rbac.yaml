@@ -6,6 +6,9 @@ metadata:
   labels:
   {{- include "console-link-cronjob.labels" . | nindent 4 }}
 rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["*"]
   - apiGroups: ["route.openshift.io"]
     resources: ["routes"]
     verbs: ["list", "get"]
