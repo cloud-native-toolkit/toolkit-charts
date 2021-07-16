@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.subscriptions.openshiftserverless.name }}
+  labels:
+    {{- toYaml .Values.subscriptions.openshiftserverless.labels | nindent 4 }}
+spec:
+  {{- toYaml .Values.subscriptions.openshiftserverless.subscription | nindent 2 }}
