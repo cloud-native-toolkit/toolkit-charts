@@ -1,0 +1,7 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: iaf-core-operators
+  namespace: openshift-marketplace
+spec:
+  {{- toYaml .Values.catalogs.automationfoundation.catalog | nindent 2 }}
