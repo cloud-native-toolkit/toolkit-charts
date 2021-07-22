@@ -1,0 +1,13 @@
+# Default values for ibm-ace-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  ibmprocessmining:
+    name: ibm-process-mining
+    subscription:
+      channel: v1.0
+      installPlanApproval: Automatic
+      name: ibm-automation-processmining
+      source: ibm-automation-processminings
+      sourceNamespace: openshift-marketplace
