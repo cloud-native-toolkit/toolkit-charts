@@ -1072,6 +1072,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-platform-navigator-0.2.0/ibm-platform-navigator-0.2.0.tgz
     version: 0.2.0
+  ibm-process-mining-operator:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-07-22T16:22:05.723520365Z"
+    description: A Helm chart for Kubernetes
+    digest: 62972957d4008e44e8809136c0a9060f7bb7b820852829c5dad5cf8494618340
+    name: ibm-process-mining-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-process-mining-operator-0.1.0/ibm-process-mining-operator-0.1.0.tgz
+    version: 0.1.0
   ibm-toolkit-install:
   - apiVersion: v2
     appVersion: v14
