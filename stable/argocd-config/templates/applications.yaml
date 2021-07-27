@@ -26,7 +26,7 @@ metadata:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ printf "%s-%s" (lower $targetRevision) $name }}
+  name: {{ printf "%s-%s" (lower $targetRevision | replace "_" "-") $name }}
   namespace: {{ $releaseNamespace }}
   labels:
 {{ $labels  | indent 4 }}
