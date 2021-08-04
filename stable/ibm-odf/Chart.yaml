@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ocs-operator
+description: A Helm chart for deploying OpenShift Data Foundation to OpenShift 4.x clusters
+type: application
+version: 0.2.8
+appVersion: 0.2.8
