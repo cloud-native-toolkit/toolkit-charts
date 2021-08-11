@@ -658,6 +658,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/cloud-setup-0.1.0.tgz
     version: 0.1.0
+  console-link-configmap:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-11T20:19:03.96431831Z"
+    description: A Helm chart for Kubernetes
+    digest: 9025e7998fa90767bf34a80829ecd3b2b279049e500da7a49a7674f01206644c
+    name: console-link-configmap
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/console-link-configmap-0.1.0/console-link-configmap-0.1.0.tgz
+    version: 0.1.0
   console-link-cronjob:
   - apiVersion: v2
     appVersion: v0.1.0
