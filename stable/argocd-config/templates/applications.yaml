@@ -1,6 +1,7 @@
 {{- if include "argocd.repoUrl" . -}}
 {{- $globalNamespace := .Values.global.targetNamespace -}}
 {{- $globalRevision := .Values.global.targetRevision -}}
+{{- $globalPathSuffix := .Values.global.pathSuffix -}}
 {{- $releaseNamespace := .Release.Namespace -}}
 {{- $targetRepo := include "argocd.repoUrl" . -}}
 {{- $project := default "default" .Values.project -}}
@@ -14,6 +15,7 @@
 {{- range .applications -}}
 {{- $name := .name -}}
 {{- $path := default .name .path -}}
+{{- $pathSuffix := default $globalPathSuffix .pathSuffix -}}
 {{- $type := default "helm" .type -}}
 {{- $plugin := .plugin }}
 {{- if $createNamespace }}
@@ -40,7 +42,11 @@ spec:
     server: {{ $server }}
   project: {{ $project }}
   source:
+    {{- if $pathSuffix }}
+    path: {{ "%s/%s" $path $pathSuffix }}
+    {{- else }}
     path: {{ $path }}
+    {{- end }}
     repoURL: {{ $targetRepo }}
     targetRevision: {{ $targetRevision }}
     {{- if eq $type "helm" }}
