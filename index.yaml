@@ -1045,6 +1045,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-common-services-0.2.0/ibm-common-services-0.2.0.tgz
     version: 0.2.0
+  ibm-common-services-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-11T21:11:58.429849307Z"
+    description: A Helm chart for Kubernetes
+    digest: 6612d54216e33e71f0472e4ecb1c512a2a56a536ddd9bc42bf4ce6425361dc5c
+    name: ibm-common-services-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-common-services-instance-0.1.0/ibm-common-services-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-cp4i-operators:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -1151,6 +1162,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-platform-navigator-0.2.0/ibm-platform-navigator-0.2.0.tgz
     version: 0.2.0
+  ibm-platform-navigator-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-11T21:11:58.562937339Z"
+    description: A Helm chart for Kubernetes
+    digest: c17e7457d12dc6943f21f827b55a6be8ce43461d93f93331d9b021e77e545d37
+    name: ibm-platform-navigator-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-platform-navigator-instance-0.1.0/ibm-platform-navigator-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-process-mining-operator:
   - apiVersion: v2
     appVersion: 1.0.0
