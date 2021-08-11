@@ -1,0 +1,15 @@
+# Default values for ibm-cp4i-operators.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  openshiftserverless:
+    name: openshift-serverless-operator-rh
+    labels:
+      gitops.tier.group: serverless
+    subscription:
+      channel: stable
+      installPlanApproval: Automatic
+      name: serverless-operator
+      source: redhat-operators
+      sourceNamespace: openshift-marketplace

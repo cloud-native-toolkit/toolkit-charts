@@ -1,0 +1,17 @@
+# Default values for console-link-cronjob.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+rbac: true
+
+schedule: "*/5 * * * *"
+
+serviceAccount:
+  create: true
+  name: ""
+
+image: quay.io/cloudnativetoolkit/console-link-cronjob
+imageTag: ""
+
+loggingImageUrl: "data:image/svg+xml,%3Csvg id='Build_icon_here' data-name='Build icon here' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='linear-gradient' x1='8' y1='5' x2='21' y2='5' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-opacity='0'/%3E%3Cstop offset='0.7'/%3E%3C/linearGradient%3E%3Cmask id='mask' x='0' y='0' width='32' height='32' maskUnits='userSpaceOnUse'%3E%3Cg%3E%3Cpath d='M28,16v6H4V6H20V4H4A2,2,0,0,0,2,6V22a2,2,0,0,0,2,2h8v4H8v2H24V28H20V24h8a2,2,0,0,0,2-2V16ZM18,28H14V24h4Z' style='fill: %23fff'/%3E%3Crect x='8' y='3' width='13' height='4' style='fill: url(%23linear-gradient)'/%3E%3C/g%3E%3C/mask%3E%3ClinearGradient id='linear-gradient-2' x1='-3503.824' y1='32' x2='-3533.941' gradientTransform='matrix(1.063, 0, 0, -1, 3754.813, 32)' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0.1' stop-color='%2308bdba'/%3E%3Cstop offset='0.9' stop-color='%230f62fe'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg%3E%3Cg style='mask: url(%23mask)'%3E%3Crect width='32' height='32' transform='translate(32 32) rotate(180)' style='fill: url(%23linear-gradient-2)'/%3E%3C/g%3E%3Crect x='18' y='4' width='12' height='2' style='fill: %23001d6c'/%3E%3Crect x='18' y='8' width='12' height='2' style='fill: %23001d6c'/%3E%3Crect x='18' y='12' width='6' height='2' style='fill: %23001d6c'/%3E%3C/g%3E%3C/svg%3E%0A"
+monitoringImageUrl: "data:image/svg+xml,%3Csvg id='Build_icon_here' data-name='Build icon here' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='linear-gradient' x1='8' y1='5' x2='21' y2='5' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-opacity='0'/%3E%3Cstop offset='0.7'/%3E%3C/linearGradient%3E%3Cmask id='mask' x='0' y='0' width='32' height='32' maskUnits='userSpaceOnUse'%3E%3Cg%3E%3Cpath d='M28,16v6H4V6H20V4H4A2,2,0,0,0,2,6V22a2,2,0,0,0,2,2h8v4H8v2H24V28H20V24h8a2,2,0,0,0,2-2V16ZM18,28H14V24h4Z' style='fill: %23fff'/%3E%3Crect x='8' y='3' width='13' height='4' style='fill: url(%23linear-gradient)'/%3E%3C/g%3E%3C/mask%3E%3ClinearGradient id='linear-gradient-2' x1='-3503.824' y1='32' x2='-3533.941' gradientTransform='matrix(1.063, 0, 0, -1, 3754.813, 32)' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0.1' stop-color='%23ee5396'/%3E%3Cstop offset='0.9' stop-color='%238a3ffc'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg%3E%3Cg style='mask: url(%23mask)'%3E%3Crect width='32' height='32' transform='translate(32 32) rotate(180)' style='fill: url(%23linear-gradient-2)'/%3E%3C/g%3E%3Cpath d='M11,10.938h4.891l1.693,5.906a1,1,0,0,0,1.881,0l2.822-9.938.941,3.375a1.133,1.133,0,0,0,.94.657H30l0-1.126,0-.75H24.921L23.228,3.156a.935.935,0,0,0-.941-.656,1.022,1.022,0,0,0-.94.656l-2.822,9.938-.941-3.375a1.133,1.133,0,0,0-.941-.657H11v1.876Z' style='fill: %23001d6c'/%3E%3C/g%3E%3C/svg%3E%0A"

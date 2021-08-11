@@ -1,0 +1,27 @@
+# Default values for ibm-toolkit-install.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+rbac:
+  create: true
+
+image:
+  imageName: quay.io/ibmgaragecloud/cli-tools
+  imageTag: v14
+
+repo:
+  url: https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero.git
+  branch: master
+  path: terraform/stages-ocp4
+
+config:
+  tools_namespace: tools

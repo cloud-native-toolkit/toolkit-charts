@@ -1,0 +1,32 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "console-link-cronjob.fullname" . }}
+  labels:
+  {{- include "console-link-cronjob.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: scripts
+              configMap:
+                name: {{ include "console-link-cronjob.fullname" . }}
+                defaultMode: 0777
+          serviceAccountName: {{ include "console-link-cronjob.serviceAccountName" . }}
+          containers:
+            - name: job
+              image: {{ printf "%s:%s" .Values.image (include "console-link-cronjob.imageTag" .) | quote }}
+              volumeMounts:
+                - mountPath: /scripts
+                  name: scripts
+              env:
+                - name: LOGGING_IMAGE
+                  value: {{ .Values.loggingImageUrl }}
+                - name: MONITORING_IMAGE
+                  value: {{ .Values.monitoringImageUrl }}
+              command:
+                - /scripts/reconcile-route-console-links.sh || echo "Route error"; /scripts/reconcile-ibm-observe-console-links.sh

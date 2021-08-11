@@ -3,11 +3,7 @@ kind: Service
 metadata:
   name: {{ include "pact-broker.fullname" . }}
   labels:
-    app: {{ include "pact-broker.name" . }}
-    app.kubernetes.io/name: {{ include "pact-broker.name" . }}
-    helm.sh/chart: {{ include "pact-broker.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "pact-broker.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -16,5 +12,4 @@ spec:
       protocol: TCP
       name: {{ .Values.service.portName }}
   selector:
-    app.kubernetes.io/name: {{ include "pact-broker.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "pact-broker.selectorLabels" . | nindent 4 }}

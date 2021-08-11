@@ -10,8 +10,8 @@ Expand the name of the chart.
 {{- if . -}}
 {{- range . }}
 {{- if .targetNamespace -}}
-- namespace: {{ .targetNamespace }}
-  server: {{ default "https://kubernetes.default.svc" .server }}
+- namespace: {{ .targetNamespace | quote }}
+  server: {{ default "https://kubernetes.default.svc" .server | quote }}
 {{- end -}}
 {{- end -}}
 {{- else -}}

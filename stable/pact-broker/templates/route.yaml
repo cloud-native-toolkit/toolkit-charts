@@ -2,8 +2,17 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
+  labels:
+    {{- include "pact-broker.labels" . | nindent 4 }}
+    console-link.cloud-native-toolkit.dev/enabled: {{ .Values.consoleLink.enabled | quote }}
   annotations:
     openshift.io/host.generated: "true"
+    {{- if .Values.consoleLink.enabled }}
+    console-link.cloud-native-toolkit.dev/enabled: {{ .Values.consoleLink.enabled | quote }}
+    console-link.cloud-native-toolkit.dev/section: {{ .Values.consoleLink.section }}
+    console-link.cloud-native-toolkit.dev/imageUrl: {{ .Values.consoleLink.imageUrl }}
+    console-link.cloud-native-toolkit.dev/displayName: {{ .Values.consoleLink.displayName }}
+  {{- end }}
   name: {{ include "pact-broker.name" . }}
 spec:
   port:

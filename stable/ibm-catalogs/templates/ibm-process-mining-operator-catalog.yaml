@@ -1,0 +1,7 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: ibm-automation-processminings
+  namespace: openshift-marketplace
+spec:
+  {{- toYaml .Values.catalogs.processmining.catalog | nindent 2 }}

@@ -26,6 +26,12 @@ roleRef:
   name: {{ printf "%s-argocd" $releaseNamespace }}
 subjects:
 - kind: ServiceAccount
+  name: openshift-gitops-argocd-application-controller
+  namespace: {{ $releaseNamespace }}
+- kind: ServiceAccount
+  name: argocd-cluster-argocd-application-controller
+  namespace: {{ $releaseNamespace }}
+- kind: ServiceAccount
   name: argocd-application-controller
   namespace: {{ $releaseNamespace }}
 - kind: ServiceAccount

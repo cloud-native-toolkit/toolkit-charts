@@ -1,0 +1,11 @@
+{{- if .Values.config }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ibm-toolkit-install.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "ibm-toolkit-install.labels" . | nindent 4 }}
+data:
+  {{- .Values.config | toYaml | nindent 2 }}
+{{- end }}
