@@ -15,6 +15,9 @@ global:
   ## The targetRevision to use if one is not provided for the application
   targetRevision: ""
 
+  ## Provides a suffix value (usually a path) that should be added to each path
+  pathSuffix: ""
+
 ## The url of the gitops repo that contains the applications
 repoUrl: ""
 
@@ -50,6 +53,7 @@ applicationTargets: []
 #   - name: app1
 #     type: helm
 #     path: app1
+#     pathSuffix: test
 #   - name: app2
 #     type: directory
 #   - name: app3
