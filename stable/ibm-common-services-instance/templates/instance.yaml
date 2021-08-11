@@ -1,0 +1,6 @@
+apiVersion: operator.ibm.com/v3
+kind: CommonService
+metadata:
+  name: {{ .Values.ibmcommonservices.name }}  
+spec:
+  {{- toYaml .Values.ibmcommonservices.spec | nindent 2 }}

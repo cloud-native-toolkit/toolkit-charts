@@ -1,0 +1,6 @@
+apiVersion: integration.ibm.com/v1beta1
+kind: PlatformNavigator
+metadata:
+  name: {{ .Values.ibmplatformnavigator.name }}  
+spec:
+  {{- toYaml .Values.ibmplatformnavigator.spec | nindent 2 }}
