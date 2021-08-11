@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "required": [
+    "enable",
+    "url",
+    "name"
+  ],
+  "properties": {
+    "global": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "enum": ["ApplicationMenu", "HelpMenu", "UserMenu", "NamespaceDashboard", ""]
+        },
+        "section": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        }
+      }
+    },
+    "enable": {
+      "type": "boolean"
+    },
+    "url": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "enum": ["ApplicationMenu", "HelpMenu", "UserMenu", "NamespaceDashboard", ""]
+    },
+    "section": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    }
+  }
+}
