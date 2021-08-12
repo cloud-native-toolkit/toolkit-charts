@@ -1,0 +1,17 @@
+apiVersion: ocs.ibm.io/v1
+kind: OcsCluster
+metadata:
+  annotations:    
+  name: ocscluster-vpc
+spec:
+  monStorageClassName:  {{ .Values.ocs.storageClass }}
+  monSize: 20Gi
+  osdStorageClassName: {{ .Values.ocs.storageClass }}
+  osdSize: {{ .Values.ocs.sizeOSD }} 
+  numOfOsd: 3
+  billingType: {{ .Values.ocs.billingType }} 
+  ocsUpgrade: false
+  workerNodes: 
+    - {{ .Values.ocs.worker_ip_1 }} 
+    - {{ .Values.ocs.worker_ip_2 }}
+    - {{ .Values.ocs.worker_ip_3 }}

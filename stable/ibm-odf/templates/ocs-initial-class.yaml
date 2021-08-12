@@ -1,0 +1,32 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: ocs-initial
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+    app: ibm-vpc-block-csi-driver
+    razee/force-apply: 'true'
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+    helm.sh/hook-weight: "100"
+    armada-service: addon-vpc-block-csi-driver
+    razee.io/build-url: >-
+      https://travis.ibm.com/alchemy-containers/addon-vpc-block-csi-driver/builds/47974436
+    razee.io/source-url: >-
+      https://github.ibm.com/alchemy-containers/addon-vpc-block-csi-driver/commit/22ecdf738449e5f902ab97194f29beb4dfcad049
+    version: 3.0.0_521
+provisioner: vpc.block.csi.ibm.io
+parameters:
+  classVersion: '1'
+  csi.storage.k8s.io/fstype: ext4
+  encrypted: 'false'
+  profile: 10iops-tier
+  zone: ''
+  resourceGroup: ''
+  region: ''
+  billingType: hourly
+  tags: ''
+  sizeRange: '[10-2000]GiB'
+  encryptionKey: ''
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
