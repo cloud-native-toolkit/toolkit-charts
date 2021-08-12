@@ -28,7 +28,11 @@ metadata:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  {{- if or (eq $targetRevision "main") (eq $targetRevision "master") }}
+  name: {{ $name }}
+  {{- else }}
   name: {{ printf "%s-%s" (lower $targetRevision | replace "_" "-") $name }}
+  {{- end }}
   namespace: {{ $releaseNamespace }}
   labels:
 {{ $labels  | indent 4 }}
