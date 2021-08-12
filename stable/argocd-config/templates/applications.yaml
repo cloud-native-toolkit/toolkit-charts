@@ -16,7 +16,7 @@
 {{- $name := .name -}}
 {{- $path := default .name .path -}}
 {{- $pathSuffix := default $globalPathSuffix .pathSuffix -}}
-{{- $type := .type -}}
+{{- $type := default "" .type -}}
 {{- $plugin := .plugin }}
 {{- if $createNamespace }}
 apiVersion: v1
