@@ -43,7 +43,7 @@ spec:
   project: {{ $project }}
   source:
     {{- if $pathSuffix }}
-    path: {{ "%s/%s" $path $pathSuffix }}
+    path: {{ printf "%s/%s" $path $pathSuffix }}
     {{- else }}
     path: {{ $path }}
     {{- end }}
