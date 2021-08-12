@@ -1,0 +1,6 @@
+apiVersion: processmining.ibm.com/v1beta1
+kind: ProcessMining
+metadata:
+  name: {{ .Values.ibmprocessmininginstance.name }}
+spec:
+  {{- toYaml .Values.ibmprocessmininginstance.spec | nindent 2 }}
