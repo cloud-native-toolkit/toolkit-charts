@@ -1,0 +1,13 @@
+# Default values for ibm-cp4a-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  ibmcp4a:
+    name: ibm-cp4a
+    subscription:
+      channel: v21.1
+      installPlanApproval: Automatic
+      name: ibm-cp4a-operator
+      source: ibm-operator-catalog
+      sourceNamespace: openshift-marketplace
