@@ -1224,6 +1224,16 @@ entries:
   ibm-process-mining-instance:
   - apiVersion: v2
     appVersion: 1.11.1
+    created: "2021-08-13T00:38:04.0389929Z"
+    description: A Helm chart for Kubernetes
+    digest: fd0017c16674624393a15fb10e9e610d0af13f7f5523ec3126a4208546c4f410
+    name: ibm-process-mining-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-process-mining-instance-1.0.1/ibm-process-mining-instance-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.11.1
     created: "2021-08-12T21:37:35.71638942Z"
     description: A Helm chart for Kubernetes
     digest: 9e40b8fbce1abbe60b7a1905a5c6d8405e4d71053129fad94fc907c4b4a126f9
