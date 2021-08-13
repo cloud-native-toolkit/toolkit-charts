@@ -1167,6 +1167,28 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4i-operators-0.2.0/ibm-cp4i-operators-0.2.0.tgz
     version: 0.2.0
+  ibm-cpd-platform-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-13T21:13:44.45139409Z"
+    description: A Helm chart for Kubernetes
+    digest: 0bd89eb195389a8ccf621942ffa668d2d1900bd3502621cce1ab22770e0eb6ec
+    name: ibm-cpd-platform-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cpd-platform-operator-0.1.0/ibm-cpd-platform-operator-0.1.0.tgz
+    version: 0.1.0
+  ibm-cpd-scheduling-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-13T21:13:44.634265776Z"
+    description: A Helm chart for Kubernetes
+    digest: ec0cdfdc9234489bcaac6f332906d3a261ea82de22cf315484974bd8a5dd27c9
+    name: ibm-cpd-scheduling-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cpd-scheduling-operator-0.1.1/ibm-cpd-scheduling-operator-0.1.1.tgz
+    version: 0.1.1
   ibm-datapower-operator:
   - apiVersion: v2
     appVersion: 1.16.0
