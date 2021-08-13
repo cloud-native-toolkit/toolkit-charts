@@ -1,0 +1,16 @@
+global:
+  location: ""
+  section: ""
+  category: ""
+
+enable: true
+
+url: ""
+name: ""
+
+location: "ApplicationMenu"
+section: "Cloud-Native Toolkit"
+category: ""
+
+imageUrl: ""
+displayName: ""

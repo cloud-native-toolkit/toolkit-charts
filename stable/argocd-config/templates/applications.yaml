@@ -16,7 +16,7 @@
 {{- $name := .name -}}
 {{- $path := default .name .path -}}
 {{- $pathSuffix := default $globalPathSuffix .pathSuffix -}}
-{{- $type := default "helm" .type -}}
+{{- $type := default "" .type -}}
 {{- $plugin := .plugin }}
 {{- if $createNamespace }}
 apiVersion: v1
@@ -28,7 +28,11 @@ metadata:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  {{- if or (eq $targetRevision "main") (eq $targetRevision "master") }}
+  name: {{ $name }}
+  {{- else }}
   name: {{ printf "%s-%s" (lower $targetRevision | replace "_" "-") $name }}
+  {{- end }}
   namespace: {{ $releaseNamespace }}
   labels:
 {{ $labels  | indent 4 }}
@@ -43,7 +47,7 @@ spec:
   project: {{ $project }}
   source:
     {{- if $pathSuffix }}
-    path: {{ "%s/%s" $path $pathSuffix }}
+    path: {{ printf "%s/%s" $path $pathSuffix }}
     {{- else }}
     path: {{ $path }}
     {{- end }}

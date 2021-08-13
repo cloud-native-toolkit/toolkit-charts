@@ -1,0 +1,12 @@
+# Default values for ibm-platform-navigator-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ibmprocessmininginstance:
+  name: processmining
+  spec:
+    license:
+      accept: true
+      cloudPak: IBM Cloud Pak for Business Automation
+    version: 1.11.1
+

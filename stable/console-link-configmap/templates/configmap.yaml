@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "console-link-configmap.name" . }}
+  labels:
+    console-link.cloud-native-toolkit.dev/enabled: {{ .Values.enable | quote }}
+    {{- include "console-link-configmap.labels" . | nindent 4 }}
+  annotations:
+    console-link.cloud-native-toolkit.dev/section: {{ include "console-link-configmap.section" .}}
+    console-link.cloud-native-toolkit.dev/location: {{ include "console-link-configmap.location" . }}
+    console-link.cloud-native-toolkit.dev/displayName: {{ include "console-link-configmap.displayName" . }}
+    {{- if .Values.imageUrl }}
+    console-link.cloud-native-toolkit.dev/imageUrl: {{ .Values.imageUrl }}
+    {{- end }}
+    {{- if include "console-link-configmap.category" . }}
+    console-link.cloud-native-toolkit.dev/category: {{ include "console-link-configmap.category" . }}
+    {{- end }}
+data:
+  url: {{ required "A value is required for the `url` variable" .Values.url }}
