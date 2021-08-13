@@ -1051,6 +1051,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-assetrepository-operator-0.1.0/ibm-assetrepository-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-automation-foundation-core-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-13T21:12:50.773789187Z"
+    description: A Helm chart for Kubernetes
+    digest: 198dec6ba8116a977ddfc846cfbd366279ddaa1bda78d3badb2227b755f2a57e
+    name: ibm-automation-foundation-core-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-automation-foundation-core-operator-0.1.0/ibm-automation-foundation-core-operator-0.1.0.tgz
+    version: 0.1.0
   ibm-catalogs:
   - apiVersion: v2
     appVersion: "1.0"
@@ -1113,6 +1124,17 @@ entries:
     type: application
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-common-services-instance-0.1.0/ibm-common-services-instance-0.1.0.tgz
+    version: 0.1.0
+  ibm-cp4a-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-13T21:12:50.965358733Z"
+    description: A Helm chart for Kubernetes
+    digest: 6f59c0fb5b74fc353696d0ca1aefbe9857a46f76092d099c86adcb3f36d26bad
+    name: ibm-cp4a-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4a-operator-0.1.0/ibm-cp4a-operator-0.1.0.tgz
     version: 0.1.0
   ibm-cp4i-operators:
   - apiVersion: v2
