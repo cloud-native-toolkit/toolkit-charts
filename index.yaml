@@ -730,6 +730,17 @@ entries:
   console-link-cronjob:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2021-08-18T20:58:07.741863813Z"
+    description: A Helm chart to generate a cron job that watches Routes for annotations
+      and generates ConsoleLinks if they are present
+    digest: 4cd707ba95292f1b320574dd623481246b80a6c0ad25cca86e9bae75b12d1a98
+    name: console-link-cronjob
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/console-link-cronjob-0.4.2/console-link-cronjob-0.4.2.tgz
+    version: 0.4.2
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2021-08-18T20:55:58.792033698Z"
     description: A Helm chart to generate a cron job that watches Routes for annotations
       and generates ConsoleLinks if they are present
