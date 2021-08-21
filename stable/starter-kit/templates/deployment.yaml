@@ -63,9 +63,13 @@ spec:
             {{- toYaml .Values.envFrom | nindent 12 }}
             {{- end }}
           {{- end }}
-          {{- if .Values.env }}
           env:
-            {{- toYaml .Values.env | nindent 12 }}
+            - name: JAEGER_SERVICE_NAME
+              value: {{ include "starter-kit.fullname" . }}
+            - name: IMAGE_NAME
+              value: {{ include "starter-kit.fullname" . }}
+          {{- if .Values.env }}
+          {{- toYaml .Values.env | nindent 12 }}
           {{- end }}
           ports:
             - name: http
