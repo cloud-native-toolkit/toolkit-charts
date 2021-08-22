@@ -130,3 +130,27 @@ requests:
   memory: 128Mi
 {{- end -}}
 {{- end -}}
+
+
+{{- define "starter-kit.initialDelaySeconds" -}}
+{{- if .Values.initialDelaySeconds -}}
+{{ .Values.initialDelaySeconds }}
+{{- else -}}
+{{ include "starter-kit.default-initialDelaySeconds" . }}
+{{- end -}}
+{{- end -}}
+
+{{- define "starter-kit.default-initialDelaySeconds" -}}
+{{- $runtime := .Values.runtime -}}
+{{- if eq $runtime "golang" -}}
+5
+{{- else if or (eq $runtime "js") (eq $runtime "nodejs") -}}
+5
+{{- else if or (or (eq $runtime "openjdk") (eq $runtime "spring")) (eq $runtime "openliberty") -}}
+60
+{{- else if eq $runtime "python" -}}
+5
+{{- else -}}
+60
+{{- end -}}
+{{- end -}}
