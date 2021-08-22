@@ -2441,6 +2441,16 @@ entries:
   starter-kit:
   - apiVersion: v2
     appVersion: 0.6.0
+    created: "2021-08-22T03:58:55.054733016Z"
+    description: A Helm chart for Kubernetes
+    digest: 93794a54e351433455eed6f4847d79e3cc5d31400f9e5b359176f2b520a78a25
+    name: starter-kit
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/starter-kit-0.6.2/starter-kit-0.6.2.tgz
+    version: 0.6.2
+  - apiVersion: v2
+    appVersion: 0.6.0
     created: "2021-08-21T14:46:10.222428621Z"
     description: A Helm chart for Kubernetes
     digest: 8014addb70ff2b46795f36d92de6c806a92e9204528a63843b4d7edeb1606b71
