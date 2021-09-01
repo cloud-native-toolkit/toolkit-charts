@@ -41,6 +41,10 @@ spec:
             {{- else }}
             - '{"spec": {"nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule", "key": "infra", "value": ""}]}}'
             {{- end }}
+          resources:
+            requests:
+              cpu: "2500m"
+              memory: "64Mi"
       restartPolicy: Never
       serviceAccountName: {{ .Values.argo.serviceAccount | default "argocd-server" }}
   backoffLimit: 4
