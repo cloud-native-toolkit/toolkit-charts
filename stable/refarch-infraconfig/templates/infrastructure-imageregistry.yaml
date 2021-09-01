@@ -31,9 +31,6 @@ spec:
         - name: config
           image: quay.io/openshift/origin-cli:latest
           command: ["oc"]
-          envFrom:
-            configMapRef:
-            prefix: INFRACONFIG_
           args:
             - patch
             - configs.imageregistry.operator.openshift.io/cluster
