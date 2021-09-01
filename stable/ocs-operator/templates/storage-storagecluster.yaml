@@ -12,8 +12,6 @@ spec:
   - config: {}
     count: 1
     dataPVCTemplate:
-      metadata:
-        creationTimestamp: null
       spec:
         accessModes:
         - ReadWriteOnce
