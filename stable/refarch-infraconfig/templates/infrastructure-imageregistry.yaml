@@ -31,9 +31,6 @@ spec:
         - name: config
           image: quay.io/openshift/origin-cli:latest
           command: ["oc"]
-          envFrom:
-            configMapRef:
-            prefix: INFRACONFIG_
           args:
             - patch
             - configs.imageregistry.operator.openshift.io/cluster
@@ -44,6 +41,13 @@ spec:
             {{- else }}
             - '{"spec": {"nodeSelector": {"node-role.kubernetes.io/infra": ""},"tolerations": [{"effect": "NoSchedule", "key": "infra", "value": ""}]}}'
             {{- end }}
+          resources:
+            requests:
+              cpu: "2500m"
+              memory: "64Mi"
+            limits:
+              cpu: "2500m"
+              memory: "256Mi"
       restartPolicy: Never
       serviceAccountName: {{ .Values.argo.serviceAccount | default "argocd-server" }}
   backoffLimit: 4
