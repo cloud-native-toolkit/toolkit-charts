@@ -1855,6 +1855,17 @@ entries:
   ocs-operator:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2021-09-08T20:18:22.669260583Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 2c232b91be189cd1b305661dceefdb9c2c99385448e00578b1d5567707138531
+    name: ocs-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocs-operator-0.2.1/ocs-operator-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2021-05-28T13:52:27.013101972Z"
     description: A Helm chart for deploying infrastrucure reference architecture to
       OpenShift 4.x clusters
@@ -2002,6 +2013,17 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/pact-broker-0.1.0/pact-broker-0.1.0.tgz
     version: 0.1.0
   refarch-infraconfig:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-09-08T20:18:22.832763436Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 5eb8e1adb1b5524e9f436a0b9781fc61a0fdf52e414d5322f0118b5dce56272c
+    name: refarch-infraconfig
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-infraconfig-0.2.1/refarch-infraconfig-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2021-05-28T13:52:27.17646498Z"
