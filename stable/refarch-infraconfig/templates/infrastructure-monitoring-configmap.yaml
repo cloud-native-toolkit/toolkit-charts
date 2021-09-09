@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "100"
     helm.sh/hook-weight: "100"
-{{- if or (default $.Values.global.labels $.Values.labels) (default $.Values.global.taints $.Values.taints) }}
+{{- if or (default $.Values.global.infraNodes.labels $.Values.infraNodes.labels) (default $.Values.global.infraNodes.taints $.Values.infraNodes.taints) }}
 data:
   config.yaml: |+
 {{- $components := tuple "alertmanagerMain" "prometheusK8s" "prometheusOperator" "grafana" "k8sPrometheusAdapter" "kubeStateMetrics" "telemeterClient" "openshiftStateMetrics" "thanosQuerier" -}}
