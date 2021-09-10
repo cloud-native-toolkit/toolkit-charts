@@ -1855,6 +1855,17 @@ entries:
   ocs-operator:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2021-09-10T17:13:49.416716571Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 5a8ff5dd3f13191589f3ec14f4a3539f43acb751dc60a3b9553ddf904a2844b4
+    name: ocs-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocs-operator-0.2.4/ocs-operator-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2021-09-10T00:24:11.461221994Z"
     description: A Helm chart for deploying infrastrucure reference architecture to
       OpenShift 4.x clusters
