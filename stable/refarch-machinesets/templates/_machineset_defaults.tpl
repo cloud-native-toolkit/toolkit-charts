@@ -34,7 +34,7 @@ Default MachineSet Replica Count
 {{- default "3" .Values.vsphere.infraNodes.nodeCount }}
 {{- end -}}
 {{- if eq .Name "cp4x" -}}
-{{- default "3" .Values.vsphere.cloudpakNodes.nodeCount }}
+{{- default "0" .Values.vsphere.cloudpakNodes.nodeCount }}
 {{- end -}}
 {{- end -}}
 {{- end -}}
