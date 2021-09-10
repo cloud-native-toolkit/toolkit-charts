@@ -2,9 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-channel: stable-4.6
-sizeGiB: 512
-storageClass: thin
+channel: ""
+sizeGiB: ""
+storageClass: ""
 
 infraNodes:
   taints: {}
@@ -13,13 +13,10 @@ storageNodes:
   taints: {}
 
 argo:
-  namespace: openshift-gitops
-  serviceAccount: something
+  namespace: ""
+  serviceAccount: ""
 
 global:
-  argo:
-    namespace: openshift-gitops
-    serviceAccount: something
   infraNodes:
     taints:
       - effect: "NoSchedule"
