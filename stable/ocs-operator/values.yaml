@@ -12,6 +12,10 @@ infraNodes:
 storageNodes:
   taints: {}
 
+argo:
+  namespace: openshift-gitops
+  serviceAccount: something
+
 global:
   argo:
     namespace: openshift-gitops
