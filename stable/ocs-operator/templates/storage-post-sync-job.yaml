@@ -14,7 +14,7 @@ spec:
           image: quay.io/openshift/origin-cli:latest
           command: ["/bin/sh", "-c"]
           args:
-            - "oc annotate sc $(oc get sc|grep default|awk '{print $1}') storageclass.kubernetes.io/is-default-class- && oc annotate sc ocs-storagecluster-ceph-rbd storageclass.kubernetes.io/is-default-class=true"
+            - "while ! oc get sc ocs-storagecluster-ceph-rbd > /dev/null 2>&1;do sleep 30;done && oc annotate sc $(oc get sc|grep default|awk '{print $1}') storageclass.kubernetes.io/is-default-class- && oc annotate sc ocs-storagecluster-ceph-rbd storageclass.kubernetes.io/is-default-class=true"
           resources:
             requests:
               cpu: "2500m"
