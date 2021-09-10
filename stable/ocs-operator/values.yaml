@@ -13,6 +13,9 @@ storageNodes:
   taints: {}
 
 global:
+  argo:
+    namespace: openshift-gitops
+    serviceAccount: something
   infraNodes:
     taints:
       - effect: "NoSchedule"
@@ -32,3 +35,4 @@ global:
     taints:
     labels:
       node-role.kubernetes.io/cp4x: ""
+    
