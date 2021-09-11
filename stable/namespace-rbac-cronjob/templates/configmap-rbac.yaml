@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-rbac" (include "console-link-cronjob.fullname" .) }}
+  labels:
+  {{- include "console-link-cronjob.labels" . | nindent 4 }}
+data:
+  default-role.yaml: |
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: {{ printf "%s-%s" .Values.targetNamespace .Values.targetServiceAccount }}
+    rules:
+    {{- .Values.defaultRules | toYaml | nindent 4 | toString }}

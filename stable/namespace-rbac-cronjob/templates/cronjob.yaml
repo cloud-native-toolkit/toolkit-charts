@@ -1,0 +1,44 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "console-link-cronjob.fullname" . }}
+  labels:
+  {{- include "console-link-cronjob.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: scripts
+              configMap:
+                name: {{ include "console-link-cronjob.fullname" . }}
+                defaultMode: 0777
+            - name: config
+              configMap:
+                name: {{ printf "%s-rbac" (include "console-link-cronjob.fullname" .) }}
+          serviceAccountName: {{ include "console-link-cronjob.serviceAccountName" . }}
+          containers:
+            - name: job
+              image: {{ printf "%s:%s" .Values.image (include "console-link-cronjob.imageTag" .) | quote }}
+              volumeMounts:
+                - mountPath: /scripts
+                  name: scripts
+                - mountPath: /config
+                  name: config
+              command:
+                - /bin/sh
+              args:
+                - -c
+                - /scripts/reconcile-namespace-rbac.sh
+              env:
+                - name: NAME
+                  value: {{ printf "%s-%s" .Values.targetNamespace .Values.targetServiceAccount }}
+                - name: TARGET_LABEL
+                  value: {{ required "targetLabel is required" .Values.targetLabel | quote }}
+                - name: TARGET_NAMESPACE
+                  value: {{ required "targetNamespace is required" .Values.targetNamespace | quote }}
+                - name: TARGET_SERVICE_ACCOUNT
+                  value: {{ required "targetServiceAccount is required" .Values.targetServiceAccount | quote }}
