@@ -1107,6 +1107,16 @@ entries:
   ibm-automation-foundation-core-operator:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-09-13T18:39:59.61013626Z"
+    description: A Helm chart for Kubernetes
+    digest: 03b1f5589f6662c2c3ab659a918c590b3e3b772941865c5504c2cfd26c3867bf
+    name: ibm-automation-foundation-core-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-automation-foundation-core-operator-0.1.1/ibm-automation-foundation-core-operator-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2021-08-13T21:12:50.773789187Z"
     description: A Helm chart for Kubernetes
     digest: 198dec6ba8116a977ddfc846cfbd366279ddaa1bda78d3badb2227b755f2a57e
@@ -1864,6 +1874,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/ocp-route-0.1.0.tgz
     version: 0.1.0
+  ocp-subscription:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-09-13T18:39:59.764078636Z"
+    description: A Helm chart for Kubernetes
+    digest: 4301438df02b248dc85827a21f22dd9c19478b35b7397567e185829edae69e5a
+    name: ocp-subscription
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-subscription-1.0.0/ocp-subscription-1.0.0.tgz
+    version: 1.0.0
   ocs-operator:
   - apiVersion: v2
     appVersion: 0.1.0
