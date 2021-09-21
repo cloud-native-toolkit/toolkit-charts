@@ -1,0 +1,6 @@
+dependencies:
+- name: service-account
+  repository: https://charts.cloudnativetoolkit.dev/
+  version: 0.6.0
+digest: sha256:a417b9e1d4ae3ff9107841cc1987c4ea51b6bff2f4401d25b9a851b5162c61cd
+generated: "2021-09-20T14:12:33.110879-05:00"
