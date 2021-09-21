@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "ocp-userspaces-daemonset.fullname" . }}
+  labels:
+    {{- include "ocp-userspaces-daemonset.labels" . | nindent 4 }}
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "ocp-userspaces-daemonset.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ocp-userspaces-daemonset.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ocp-userspaces-daemonset.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "ocp-userspaces-daemonset.fullname" . }}
+            defaultMode: 0777
+        - hostPath:
+            path: /
+            type: Directory
+          name: host
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ default (printf "%s:%s" .Values.image.repository (.Values.image.tag | default .Chart.AppVersion)) .Values.image.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          command:
+            - /bin/sh
+          args:
+            - -c
+            - /scripts/update-userspace.sh
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+            - mountPath: /host
+              name: host
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /host/proc/sys/user/max_user_namespaces
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /host/proc/sys/user/max_user_namespaces
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
