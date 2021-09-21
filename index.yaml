@@ -1885,6 +1885,22 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-subscription-1.0.0/ocp-subscription-1.0.0.tgz
     version: 1.0.0
+  ocp-userspaces-daemonset:
+  - apiVersion: v2
+    appVersion: v0.14
+    created: "2021-09-21T03:50:11.376165824Z"
+    dependencies:
+    - name: service-account
+      repository: https://charts.cloudnativetoolkit.dev/
+      version: 0.6.0
+    description: A chart to create a daemonset that will increase the max userspaces
+      limit for
+    digest: a98460bd8682a8bd1b4f4cb2b0b3dd01b37512174d8610c42c425482f3001eb4
+    name: ocp-userspaces-daemonset
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-userspaces-daemonset-0.1.0/ocp-userspaces-daemonset-0.1.0.tgz
+    version: 0.1.0
   ocs-operator:
   - apiVersion: v2
     appVersion: 0.1.0
