@@ -4,7 +4,7 @@
 
 rbac: true
 
-schedule: "*/5 * * * *"
+schedule: "*/1 * * * *"
 
 serviceAccount:
   create: true
@@ -29,4 +29,7 @@ defaultRules:
     verbs: ["*"]
   - apiGroups: ["route.openshift.io"]
     resources: ["routes"]
+    verbs: ["*"]
+  - apiGroups: ["bitnami.com"]
+    resources: ["sealedsecrets"]
     verbs: ["*"]
