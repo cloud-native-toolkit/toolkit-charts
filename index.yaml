@@ -1071,6 +1071,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-ace-operator-0.2.2/ibm-ace-operator-0.2.2.tgz
     version: 0.2.2
+  ibm-apic-instance:
+  - apiVersion: v2
+    appVersion: 10.0.3.0-ifix1
+    created: "2021-09-27T16:54:47.984320869Z"
+    description: A Helm chart for Kubernetes
+    digest: 2e776a3a9dc11fa1f08209984a43e28edaa98058039e481c7c3bf9a38ed1bcd7
+    name: ibm-apic-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-instance-1.0.0/ibm-apic-instance-1.0.0.tgz
+    version: 1.0.0
   ibm-apic-operator:
   - apiVersion: v2
     appVersion: 1.16.0
