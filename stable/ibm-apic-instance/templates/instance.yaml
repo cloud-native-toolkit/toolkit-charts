@@ -1,0 +1,6 @@
+apiVersion: apiconnect.ibm.com/v1beta1
+kind: APIConnectCluster
+metadata:
+  name: {{ .Values.ibmapicinstance.name }}
+spec:
+  {{- toYaml .Values.ibmapicinstance.spec | nindent 2 }}

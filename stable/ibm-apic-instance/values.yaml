@@ -1,0 +1,13 @@
+# Default values for ibm-platform-navigator-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ibmapicinstance:
+  name: apic-cluster
+  spec:
+    license:
+      accept: true
+      use: production
+      license: L-RJON-BZEP9N
+    version: 10.0.3.0-ifix1
+    profile: n3xc14.m48
