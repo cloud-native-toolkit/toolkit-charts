@@ -26,8 +26,8 @@ spec:
                 - mountPath: /scripts
                   name: scripts
               env:
-                - name: GROUP_NAME
-                  value: {{ .Values.groupName }}
+                - name: GROUP_NAMES
+                  value: {{ .Values.groupNames | toJson | quote }}
                 - name: JOB_NAME
                   value: {{ include "console-link-cronjob.fullname" . }}
                 - name: NAMESPACE
