@@ -13,5 +13,5 @@ serviceAccount:
 image: quay.io/cloudnativetoolkit/console-link-cronjob
 imageTag: ""
 
-groupName: ""
+groupNames: []
 
