@@ -10,7 +10,7 @@ global:
 nameOverride: ""
 
 giteaInstance:
-  name: gitea-tools
+  name: gitea
   namespace: tools
   giteaSsl: true
   # can not use admin for giteaAdminUser
