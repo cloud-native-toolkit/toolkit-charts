@@ -4,6 +4,8 @@ kind: Gitea
 metadata:
   name: {{ .Values.giteaInstance.name }}
   namespace: {{ .Values.giteaInstance.namespace }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
 spec:
   giteaSsl: {{ .Values.giteaInstance.giteaSsl }}
   giteaAdminUser: {{ .Values.giteaInstance.giteaAdminUser }}
