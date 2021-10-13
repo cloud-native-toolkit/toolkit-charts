@@ -1,0 +1,14 @@
+# Default values for ibm-common-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+subscriptions:
+  subscription:
+    channel: alpha
+    installPlanApproval: Automatic
+    name: oadp-operator
+    source: community-operators
+    sourceNamespace: openshift-marketplace
+    startingCSV: oadp-operator.v0.2.6
+  operatorgroup:
+    name: oadp-operatorgroup
+    namespace: spp-velero
