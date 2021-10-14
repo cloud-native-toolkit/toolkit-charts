@@ -1,6 +1,0 @@
-apiVersion: operator.ibm.com/v3
-kind: CommonService
-metadata:
-  name: {{ .Values.spp.name }}  
-spec:
-  {{- toYaml .Values.spp.spec | nindent 2 }}

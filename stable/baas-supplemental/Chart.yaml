@@ -1,6 +1,6 @@
 apiVersion: v2
-name: baas
-description: A Helm chart for Kubernetes
+name: baas-supplemental
+description: Supplemental objects for Spectrum Protect Plus - Container Backup Support
 
 # A chart can be either an 'application' or a 'library' chart.
 #
