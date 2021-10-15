@@ -18,8 +18,8 @@ sso:
   enabled: true
 
 image:
-  repository: ibmgaragecloud/developer-dashboard
-  tag: 1.1.1
+  repository: quay.io/ibmgaragecloud/developer-dashboard
+  tag: v1.4.4
   pullPolicy: IfNotPresent
   port: 3000
   repoUrl: "https://github.com/ibm-garage-cloud/developer-dashboard"

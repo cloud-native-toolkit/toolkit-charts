@@ -1,0 +1,13 @@
+# Default values for ibm-automation-foundation-core-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+subscriptions:
+  ibmautomation:
+    name: ibm-automation-foundation-core
+    subscription:
+      channel: v1.1
+      installPlanApproval: Automatic
+      name: ibm-automation-core
+      source: iaf-core-operators
+      sourceNamespace: openshift-marketplace

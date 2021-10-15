@@ -2,15 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-channel: stable-4.6
-sizeGiB: 512
-storageClass: thin
+channel: ""
+sizeGiB: ""
+storageClass: ""
 
 infraNodes:
   taints: {}
 
 storageNodes:
   taints: {}
+
+argo:
+  namespace: ""
+  serviceAccount: ""
 
 global:
   infraNodes:
@@ -32,3 +36,4 @@ global:
     taints:
     labels:
       node-role.kubernetes.io/cp4x: ""
+    

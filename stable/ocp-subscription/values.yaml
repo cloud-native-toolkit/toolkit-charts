@@ -1,0 +1,19 @@
+# Default values for ocp-subscription.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+metadata:
+  name: ""
+  namespace: ""
+  annotations: {}
+  labels: {}
+spec:
+  channel: ""
+  installPlanApproval: Automatic
+  name: ""
+  source: ""
+  sourceNamespace: openshift-marketplace
+  config: {}
+  startingCSV: ""
+
+

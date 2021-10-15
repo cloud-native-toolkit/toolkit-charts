@@ -1,15 +1,15 @@
-infrastructureId: "csantana-47-8l6dl"
+infrastructureId: ""
 
 cloudProvider:
-  name: "azure"
+  name: "" # aws, azure or vsphere
   managed: false
 
 vsphere:
-  networkName: vdpg-192.168.100
-  datacenter: dc01
-  datastore: openshift
-  cluster: cluster01
-  server: vcsa67.rtp.raleigh.ibm.com
+  networkName: 
+  datacenter: 
+  datastore: 
+  cluster: 
+  server: 
   zones:
     - 1
   infraNodes:
@@ -32,9 +32,9 @@ vsphere:
     numCoresPerSocket:
 
 cloud:
-  region: eastus
+  region: 
   zones: {}
-  image: ami-04a16d506e5b0e246
+  image: 
   infraNodes:
     nodeCount:
     volumeSize:

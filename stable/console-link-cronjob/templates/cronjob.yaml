@@ -25,8 +25,11 @@ spec:
                   name: scripts
               env:
                 - name: LOGGING_IMAGE
-                  value: {{ .Values.loggingImageUrl }}
+                  value: {{ .Values.loggingImageUrl | quote }}
                 - name: MONITORING_IMAGE
-                  value: {{ .Values.monitoringImageUrl }}
+                  value: {{ .Values.monitoringImageUrl | quote }}
               command:
-                - /scripts/reconcile-route-console-links.sh || echo "Route error"; /scripts/reconcile-ibm-observe-console-links.sh
+                - /bin/sh
+              args:
+                - -c
+                - /scripts/reconcile-route-console-links.sh || echo 'Route error'; /scripts/reconcile-ibm-observe-console-links.sh

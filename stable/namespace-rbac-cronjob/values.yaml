@@ -1,0 +1,35 @@
+# Default values for console-link-cronjob.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+rbac: true
+
+schedule: "*/1 * * * *"
+
+serviceAccount:
+  create: true
+  name: ""
+
+image: quay.io/cloudnativetoolkit/console-link-cronjob
+imageTag: ""
+
+targetLabel: ""
+targetNamespace: ""
+targetServiceAccount: ""
+
+defaultRules:
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulset"]
+    verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["secrets", "configmaps", "serviceaccounts", "services"]
+    verbs: ["*"]
+  - apiGroups: ["batch"]
+    resources: ["cronjobs","jobs"]
+    verbs: ["*"]
+  - apiGroups: ["route.openshift.io"]
+    resources: ["routes"]
+    verbs: ["*"]
+  - apiGroups: ["bitnami.com"]
+    resources: ["sealedsecrets"]
+    verbs: ["*"]

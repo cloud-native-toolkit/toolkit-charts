@@ -174,7 +174,7 @@ providerSpec:
 {{- $networkName := required "Missing vsphere.networkName in your values.yaml file" $.Values.vsphere.networkName -}}
 {{- $datacenter := required "Missing vsphere.datacenter in your values.yaml file" $.Values.vsphere.datacenter -}}
 {{- $datastore := required "Missing vsphere.datastore in your values.yaml file" $.Values.vsphere.datastore -}}
-{{- $datastore := required "Missing vsphere.cluster in your values.yaml file" $.Values.vsphere.cluster -}}
+{{- $cluster := required "Missing vsphere.cluster in your values.yaml file" $.Values.vsphere.cluster -}}
 {{- $server := required "Missing vsphere.server in your values.yaml file" $.Values.vsphere.server -}}
 providerSpec:
   value:

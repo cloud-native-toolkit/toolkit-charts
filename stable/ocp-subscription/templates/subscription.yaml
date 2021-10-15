@@ -1,0 +1,63 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.metadata.name }}
+  {{- if .Values.metadata.namespace }}
+  namespace: {{ .Values.metadata.namespace }}
+  {{- end }}
+  {{- if .Values.metadata.annotations }}
+  annotations:
+    {{- toYaml .Values.metadata.annotations | nindent 4 }}
+  {{- end }}
+  {{- if .Values.metadata.labels }}
+  labels:
+    {{- toYaml .Values.metadata.labels | nindent 4 }}
+  {{- end }}
+spec:
+  channel: {{ .Values.spec.channel }}
+  installPlanApproval: {{ default "Automatic" .Values.spec.installPlanApproval }}
+  name: {{ .Values.spec.name }}
+  source: {{ .Values.spec.source }}
+  sourceNamespace: {{ .Values.spec.sourceNamespace }}
+  {{- if .Values.spec.startingCSV }}
+  startingCSV: {{ .Values.spec.startingCSV }}
+  {{- end }}
+  {{- if .Values.spec.config }}
+  config:
+    {{- if .Values.spec.config.env }}
+    env:
+    {{- toYaml .Values.spec.config.env | nindent 4 }}
+    {{- end }}
+    {{- if .Values.spec.config.envFrom }}
+    envFrom:
+    {{- toYaml .Values.spec.config.envFrom | nindent 4 }}
+    {{- end }}
+    {{- if .Values.spec.config.nodeSelector }}
+    nodeSelector:
+      {{- toYaml .Values.spec.config.nodeSelector | nindent 6 }}
+    {{- end }}
+    {{- if .Values.spec.config.resources }}
+    resources:
+      {{- toYaml .Values.spec.config.resources | nindent 6 }}
+    {{- end }}
+    {{- if .Values.spec.config.selector }}
+    selector:
+      {{- toYaml .Values.spec.config.selector | nindent 6 }}
+    {{- end }}
+    {{- if .Values.spec.config.tolerations }}
+    tolerations:
+    {{- toYaml .Values.spec.config.tolerations | nindent 4 }}
+    {{- end }}
+    {{- if .Values.spec.config.volumeMounts }}
+    volumeMounts:
+    {{- toYaml .Values.spec.config.volumeMounts | nindent 4 }}
+    {{- end }}
+    {{- if .Values.spec.config.volumes }}
+    volumes:
+    {{- toYaml .Values.spec.config.volumes | nindent 4 }}
+    {{- end }}
+  {{- end }}
+
+
+
+
