@@ -1,0 +1,6 @@
+apiVersion: management.apiconnect.ibm.com/v1beta1
+kind: ManagementCluster
+metadata:
+  name: {{ .Values.ibmapicmgmtinstance.name }}
+spec:
+  {{- toYaml .Values.ibmapicmgmtinstance.spec | nindent 2 }}

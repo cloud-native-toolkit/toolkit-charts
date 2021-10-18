@@ -1,0 +1,6 @@
+apiVersion: analytics.apiconnect.ibm.com/v1beta1
+kind: AnalyticsCluster
+metadata:
+  name: {{ .Values.ibmapica7sinstance.name }}
+spec:
+  {{- toYaml .Values.ibmapica7sinstance.spec | nindent 2 }}
