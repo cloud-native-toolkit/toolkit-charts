@@ -1,0 +1,6 @@
+apiVersion: portal.apiconnect.ibm.com/v1beta1
+kind: PortalCluster
+metadata:
+  name: {{ .Values.ibmapicptlinstance.name }}
+spec:
+  {{- toYaml .Values.ibmapicptlinstance.spec | nindent 2 }}
