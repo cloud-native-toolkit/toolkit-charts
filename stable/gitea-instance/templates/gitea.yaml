@@ -1,0 +1,15 @@
+{{- if ne (include "operator.cluster-type" .) "kubernetes" }}
+apiVersion: gpte.opentlc.com/v1
+kind: Gitea
+metadata:
+  name: {{ .Values.giteaInstance.name }}
+  namespace: {{ .Values.giteaInstance.namespace }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+spec:
+  giteaSsl: {{ .Values.giteaInstance.giteaSsl }}
+  giteaAdminUser: {{ .Values.giteaInstance.giteaAdminUser }}
+  giteaAdminPassword: {{ .Values.giteaInstance.giteaAdminPassword }}
+  giteaAdminPasswordLength: "{{ .Values.giteaInstance.giteaAdminPasswordLength }}"
+  giteaAdminEmail: {{ .Values.giteaInstance.giteaAdminEmail }}
+  {{- end -}}
