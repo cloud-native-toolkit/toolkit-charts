@@ -1,0 +1,51 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ibmapica7sinstance:
+  name: analytics
+  spec:
+    version: 10.0.3.0-ifix1
+    license:
+      accept: true
+      license: L-RJON-BZEP9N
+      use: production
+    profile: n3xc4.m16
+    microServiceSecurity: certManager
+    certManagerIssuer:
+      name: selfsigning-issuer
+      kind: Issuer
+    client:
+      clientAuthEnabled: true
+      clientSubjectDN: 'CN=analytics-client-client,O=cert-manager'
+      enabled: true
+      endpoint:
+        annotations:
+          certmanager.k8s.io/issuer: ingress-issuer
+        hosts:
+          - name: ac.<your-openshift-domain>
+            secretName: analytics-endpoint-secret
+    ingestion:
+      enabled: true
+      clientSubjectDN: 'CN=analytics-ingestion-client,O=cert-manager'
+      clientAuthEnabled: true
+      configReloadAutomatic: true
+      endpoint:
+        annotations:
+          certmanager.k8s.io/issuer: ingress-issuer
+        hosts:
+          - name: ai.<your-openshift-domain>
+            secretName: analytics-ai-endpoint-secret
+    storage:
+      clientAuthEnabled: true
+      data:
+        volumeClaimTemplate:
+          storageClassName: <your-block-storage-class>
+          volumeSize: 200Gi
+      enabled: true
+      master:
+        volumeClaimTemplate:
+          storageClassName: <your-block-storage-class>
+          volumeSize: 10Gi
+      type: unique
+    cronjobs:
+      enabled: true

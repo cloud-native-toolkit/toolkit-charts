@@ -1,0 +1,6 @@
+apiVersion: gateway.apiconnect.ibm.com/v1beta1
+kind: GatewayCluster
+metadata:
+  name: {{ .Values.ibmapicgtwinstance.name }}
+spec:
+  {{- toYaml .Values.ibmapicgtwinstance.spec | nindent 2 }}

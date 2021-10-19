@@ -1,0 +1,50 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ibmapicgtwinstance:
+  name: gateway
+  spec:
+    version: 10.0.3.0-ifix1
+    profile: n3xc4.m8
+    apicGatewayServiceV5CompatibilityMode: false
+    gatewayEndpoint:
+      annotations:
+        certmanager.k8s.io/issuer: ingress-issuer
+      hosts:
+        - name: gw.<your-openshift-domain>
+          secretName: gateway-endpoint-secret
+    gatewayManagerEndpoint:
+      annotations:
+        certmanager.k8s.io/issuer: ingress-issuer
+      hosts:
+        - name: gwmanager.<your-openshift-domain>
+          secretName: gateway-manager-endpoint-secret
+    apicGatewayServiceTLS:
+      secretName: gateway-service
+    apicGatewayPeeringTLS:
+      secretName: gateway-peering
+    datapowerLogLevel: 3
+    license:
+      accept: true
+      license: L-RJON-BZEP9N
+      use: production
+    tokenManagementService:
+      enabled: true
+      storage:
+        storageClassName: <your-block-storage-class>
+        volumeSize: 30Gi
+    adminUser:
+      secretName: admin-secret
+    microServiceSecurity: certManager
+    syslogConfig:
+      enabled: false
+      remoteHost: gateway.example.com
+      remotePort: 200
+      secretName: mySecretName
+    # podAutoScaling:
+    #   hpa:
+    #     maxReplicas: 5
+    #     minReplicas: 3
+    #     targetCPUUtilizationPercentage: 80
+    #     targetMemoryUtilizationPercentage: 80
+    #   method: HPA

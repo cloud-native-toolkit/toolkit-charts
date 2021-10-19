@@ -1,0 +1,44 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ibmapicptlinstance:
+  name: portal
+  spec:
+    version: 10.0.3.0-ifix1
+    profile: n3xc4.m8
+    portalAdminEndpoint:
+      annotations:
+        certmanager.k8s.io/issuer: ingress-issuer
+      hosts:
+        - name: padmin.<your-openshift-domain>
+          secretName: portal-admin-endpoint-secret
+    portalUIEndpoint:
+      annotations:
+        certmanager.k8s.io/issuer: ingress-issuer
+      hosts:
+        - name: portal.<your-openshift-domain>
+          secretName: portal-web-endpoint-secret
+    databaseLogsVolumeClaimTemplate:
+      storageClassName: <your-block-storage-class>
+      volumeSize: 12Gi
+    databaseVolumeClaimTemplate:
+      storageClassName: <your-block-storage-class>
+      volumeSize: 300Gi
+    backupVolumeClaimTemplate:
+      storageClassName: <your-block-storage-class>
+      volumeSize: 300Gi
+    webVolumeClaimTemplate:
+      storageClassName: <your-block-storage-class>
+      volumeSize: 200Gi
+    adminVolumeClaimTemplate:
+      storageClassName: <your-block-storage-class>
+      volumeSize: 20Gi
+    adminClientSubjectDN: 'CN=portal-admin-client,O=cert-manager'
+    microServiceSecurity: certManager
+    certManagerIssuer:
+      name: selfsigning-issuer
+      kind: Issuer  
+    license:
+      accept: true
+      license: L-RJON-BZEP9N
+      use: production
