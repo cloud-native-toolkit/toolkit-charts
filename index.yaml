@@ -581,6 +581,29 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/argocd-operator-0.1.0.tgz
     version: 0.1.0
+  assign-group-cronjob:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2021-10-20T19:33:37.209024838Z"
+    description: A Helm chart to generate a cron job that adds all users to a group
+    digest: 7b79025f4d59eb725ff997fa94cfb2743f17723cc43ab8258c9474bf766b2e0e
+    name: assign-group-cronjob
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/assign-group-cronjob-0.2.1/assign-group-cronjob-0.2.1.tgz
+    version: 0.2.1
+  baas-supplemental:
+  - apiVersion: v2
+    appVersion: 10.1.8.2
+    created: "2021-10-20T19:33:37.37528029Z"
+    description: Supplemental objects for Spectrum Protect Plus - Container Backup
+      Support
+    digest: e4e909bd1299c8cb22d4504d82b6e1b7108e98211983b39da918945f63f81d81
+    name: baas-supplemental
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/baas-supplemental-0.1.0/baas-supplemental-0.1.0.tgz
+    version: 0.1.0
   cloud-setup:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -1071,6 +1094,28 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-ace-operator-0.2.2/ibm-ace-operator-0.2.2.tgz
     version: 0.2.2
+  ibm-apic-a7s-instance:
+  - apiVersion: v2
+    appVersion: 10.0.3.0-ifix1
+    created: "2021-10-20T19:33:37.546162869Z"
+    description: A Helm chart for Kubernetes
+    digest: 45903de845712ba898848bbdf177e3edfe2c171dd0719cfe623febb1c8d045a6
+    name: ibm-apic-a7s-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-a7s-instance-1.0.0/ibm-apic-a7s-instance-1.0.0.tgz
+    version: 1.0.0
+  ibm-apic-gtw-instance:
+  - apiVersion: v2
+    appVersion: 10.0.3.0-ifix1
+    created: "2021-10-20T19:33:37.701830961Z"
+    description: A Helm chart for Kubernetes
+    digest: 84c27ad37176149bd34d87abc1c58d028fff18e17198debc2b085cda630b493b
+    name: ibm-apic-gtw-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-gtw-instance-1.0.0/ibm-apic-gtw-instance-1.0.0.tgz
+    version: 1.0.0
   ibm-apic-instance:
   - apiVersion: v2
     appVersion: 10.0.3.0-ifix1
@@ -1081,6 +1126,17 @@ entries:
     type: application
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-instance-1.0.0/ibm-apic-instance-1.0.0.tgz
+    version: 1.0.0
+  ibm-apic-mgmt-instance:
+  - apiVersion: v2
+    appVersion: 10.0.3.0-ifix1
+    created: "2021-10-20T19:33:37.891516647Z"
+    description: A Helm chart for Kubernetes
+    digest: 883c643cbb51cc429806f22f1646f5dc0fb4897f88caaf2e3d9fc4790111f74d
+    name: ibm-apic-mgmt-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-mgmt-instance-1.0.0/ibm-apic-mgmt-instance-1.0.0.tgz
     version: 1.0.0
   ibm-apic-operator:
   - apiVersion: v2
@@ -1093,6 +1149,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-operator-0.1.0/ibm-apic-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-apic-ptl-instance:
+  - apiVersion: v2
+    appVersion: 10.0.3.0-ifix1
+    created: "2021-10-20T19:33:38.05438348Z"
+    description: A Helm chart for Kubernetes
+    digest: 68760ef13a86148d64d13aa09f3268a849e56a03742097df2e2f55f1e4238ebe
+    name: ibm-apic-ptl-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-apic-ptl-instance-1.0.0/ibm-apic-ptl-instance-1.0.0.tgz
+    version: 1.0.0
   ibm-aspera-operator:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -1801,6 +1868,27 @@ entries:
     type: application
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/nexus-operator-0.1.0.tgz
+    version: 0.1.0
+  oadp-instance:
+  - apiVersion: v2
+    created: "2021-10-20T19:33:38.227467271Z"
+    description: A Helm chart for Kubernetes
+    digest: d13c555972d8d3dfd8766f602e0da1073fb3684e0f77f3f79a278465fd6bb43a
+    name: oadp-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/oadp-instance-0.1.0/oadp-instance-0.1.0.tgz
+    version: 0.1.0
+  oadp-operator:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-10-20T19:33:38.39482173Z"
+    description: A Helm chart for Kubernetes
+    digest: 8294d069199c63311200c72cb4f60ec4f9a2b62b7d4092e06ccf57abfd490f45
+    name: oadp-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/oadp-operator-0.1.0/oadp-operator-0.1.0.tgz
     version: 0.1.0
   ocp-console-cli-download:
   - apiVersion: v2
@@ -2590,6 +2678,39 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/slack-notifications-0.1.5/slack-notifications-0.1.5.tgz
     version: 0.1.5
+  spp-catalog:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-10-20T19:33:38.551773029Z"
+    description: A Helm chart for Kubernetes
+    digest: b3992ba9fe05cb37aa7e4727ff10c2624321eb62bfb3a814b25656f9ffecc288
+    name: spp-catalog
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/spp-catalog-0.1/spp-catalog-0.1.tgz
+    version: "0.1"
+  spp-instance:
+  - apiVersion: v2
+    appVersion: 10.1.8.2
+    created: "2021-10-20T19:33:38.716426672Z"
+    description: A Helm chart for Kubernetes
+    digest: 49892c112d0a52ee92c37b835f0ef1627ad158204a794c6b18c4f92c588f0f4c
+    name: spp-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/spp-instance-0.1.0/spp-instance-0.1.0.tgz
+    version: 0.1.0
+  spp-operator:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-10-20T19:33:38.895563198Z"
+    description: A Helm chart for Kubernetes
+    digest: bd80ec619a6ed7c734e00a9756eedeb7a3f7962546dd035cedfcf4a722226c21
+    name: spp-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/spp-operator-0.1.0/spp-operator-0.1.0.tgz
+    version: 0.1.0
   starter-kit:
   - apiVersion: v2
     appVersion: 0.6.0
