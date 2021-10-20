@@ -13,7 +13,7 @@ giteaInstance:
   name: gitea-tools
   namespace: tools
   giteaSsl: true
+  # can not use admin for giteaAdminUser
   giteaAdminUser: toolkit
   giteaAdminPassword: toolkit
-  giteaAdminPasswordLength: "6"
-  giteaAdminEmail: admin@email.com
+  giteaAdminEmail: toolkit@email.com
