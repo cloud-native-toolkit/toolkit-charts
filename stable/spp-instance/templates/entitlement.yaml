@@ -1,0 +1,19 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: ibmspp-image-secret
+  namespace: spp
+spec:
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: ibmspp-image-secret
+      namespace: spp
+    type: kubernetes.io/dockerconfigjson
+  encryptedData:
+  {{- toYaml .Values.ibmsppsecret.data | nindent 4 }}

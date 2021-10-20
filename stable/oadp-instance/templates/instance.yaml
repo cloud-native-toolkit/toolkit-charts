@@ -1,0 +1,6 @@
+apiVersion: konveyor.openshift.io/v1alpha1
+kind: Velero
+metadata:
+  name: {{ .Values.oadp.name }}  
+spec:
+  {{- toYaml .Values.oadp.spec | nindent 2 }}

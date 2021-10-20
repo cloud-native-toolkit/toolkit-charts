@@ -1,0 +1,6 @@
+apiVersion: ocp.spp.ibm.com/v1
+kind: IBMSPP
+metadata:
+  name: {{ .Values.spp.name }}  
+spec:
+  {{- toYaml .Values.spp.spec | nindent 2 }}

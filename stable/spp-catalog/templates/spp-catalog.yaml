@@ -1,0 +1,7 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: {{ .Values.catalogs.spp.name }}
+  namespace: openshift-marketplace
+spec:
+  {{- toYaml .Values.catalogs.spp.catalog | nindent 2 }}
