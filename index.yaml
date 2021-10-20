@@ -581,17 +581,6 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/argocd-operator-0.1.0.tgz
     version: 0.1.0
-  assign-group-cronjob:
-  - apiVersion: v2
-    appVersion: v0.1.0
-    created: "2021-10-20T10:58:31.234846115Z"
-    description: A Helm chart to generate a cron job that adds all users to a group
-    digest: eed5be6714aabc4034b9974e3b6f2386aa2704cfd393ed350e9ba2cfd3a68f5d
-    name: assign-group-cronjob
-    type: application
-    urls:
-    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/assign-group-cronjob-0.2.1/assign-group-cronjob-0.2.1.tgz
-    version: 0.2.1
   cloud-setup:
   - apiVersion: v2
     appVersion: 1.16.0
