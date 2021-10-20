@@ -1,0 +1,13 @@
+# Default values for ibm-common-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+subscriptions:
+  subscription:
+    channel: v10.18
+    installPlanApproval: Automatic
+    name: spp-operator
+    source: ibm-spp-operator
+    sourceNamespace: openshift-marketplace
+  operatorgroup:
+    name: spp-operatorgroup
+    namespace: spp

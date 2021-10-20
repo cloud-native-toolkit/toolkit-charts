@@ -1,0 +1,20 @@
+# Default values for ibm-common-services-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+oadp:
+  name: oadp-velero
+  spec:
+    default_velero_plugins:
+      - aws
+      - openshift
+    enable_restic: false
+    olm_managed: true
+    use_upstream_images: false
+    velero_resource_allocation:
+      limits:
+        cpu: '1'
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 256Mi

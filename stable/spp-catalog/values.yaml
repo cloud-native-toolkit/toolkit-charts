@@ -1,0 +1,14 @@
+# Default values for ibm-catalogs.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+catalogs:
+  spp:
+    name: ibm-spp-operator
+    catalog:
+      displayName: IBM SPP Operator
+      image: 'ibmcom/spp-operator-catalog:latest'
+      publisher: IBM
+      sourceType: grpc
+      updateStrategy:
+        registryPoll:
+          interval: 45m
