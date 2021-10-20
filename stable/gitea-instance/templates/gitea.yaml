@@ -10,6 +10,5 @@ spec:
   giteaSsl: {{ .Values.giteaInstance.giteaSsl }}
   giteaAdminUser: {{ .Values.giteaInstance.giteaAdminUser }}
   giteaAdminPassword: {{ .Values.giteaInstance.giteaAdminPassword }}
-  giteaAdminPasswordLength: "{{ .Values.giteaInstance.giteaAdminPasswordLength }}"
   giteaAdminEmail: {{ .Values.giteaInstance.giteaAdminEmail }}
   {{- end -}}
