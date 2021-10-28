@@ -107,14 +107,14 @@ providerSpec:
     image:
       offer: ""
       publisher: ""
-      resourceID: /resourceGroups/{{ $.Values.infrastructureId }}-rg/providers/Microsoft.Compute/images/{{ $.Values.infrastructureId }}
+      resourceID: /resourceGroups/{{ include "machineset.azure.resourceGroup" $params }}/providers/Microsoft.Compute/images/{{ $.Values.infrastructureId }}
       sku: ""
       version: ""
     location: {{ include "cloud.region" .}}
     managedIdentity: {{ $.Values.infrastructureId }}-identity
     metadata:
       creationTimestamp: null
-    networkResourceGroup: {{ $.Values.infrastructureId }}-rg
+    networkResourceGroup: {{ include "machineset.azure.networkResourceGroup" $params}}
     osDisk:
       diskSizeGB: {{ include "machineset.defaultNodeVolumeSize" $params }}
       managedDisk:
@@ -122,12 +122,12 @@ providerSpec:
       osType: Linux
     publicIP: false
     publicLoadBalancer: {{ $.Values.infrastructureId }}
-    resourceGroup: {{ $.Values.infrastructureId }}-rg
-    subnet: {{ $.Values.infrastructureId }}-worker-subnet
+    resourceGroup: {{ include "machineset.azure.resourceGroup" $params }}
+    subnet: {{ include "machineset.azure.workerSubnet" $params }}
     userDataSecret:
       name: worker-user-data
     vmSize: {{ include "machineset.defaultNodeSize" $params }}
-    vnet: {{ $.Values.infrastructureId }}-vnet
+    vnet: {{ include "machineset.azure.virtualNetwork" $params }}
     zone: {{ .Zone | quote }}
 {{- end -}}
 
