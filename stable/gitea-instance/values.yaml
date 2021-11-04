@@ -16,4 +16,4 @@ giteaInstance:
   # can not use admin for giteaAdminUser
   giteaAdminUser: toolkit
   giteaAdminPassword: toolkit
-  giteaAdminEmail: toolkit@email.com
+  giteaAdminEmail: toolkit@cloudnativetoolkit.dev
