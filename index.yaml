@@ -2210,6 +2210,16 @@ entries:
   pact-broker:
   - apiVersion: v2
     appVersion: 2.50.1-1
+    created: "2021-11-08T12:21:24.419326364Z"
+    description: A Helm chart for Kubernetes
+    digest: 93aa3a5810fd401c8100042b43cc60d77a453a5bffbc785278149ce784e61433
+    name: pact-broker
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/pact-broker-0.2.1/pact-broker-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 2.50.1-1
     created: "2021-07-12T18:15:00.90801673Z"
     description: A Helm chart for Kubernetes
     digest: f58916d173d8b72c8bfc94074b19e45f7b4c7fc899acb37af8c9e9b4fd223e54
