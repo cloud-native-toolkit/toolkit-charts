@@ -1081,6 +1081,28 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/elasticsearch-operator-0.1.0.tgz
     version: 0.1.0
+  gitea-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-11-08T12:27:07.348966913Z"
+    description: A Helm chart for Kubernetes
+    digest: 2834868553ba4e79028d012c6e1760e63a77dd75d980a10d4544fb4d7c631c85
+    name: gitea-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/gitea-instance-0.1.2/gitea-instance-0.1.2.tgz
+    version: 0.1.2
+  gitea-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-11-08T12:27:07.471622667Z"
+    description: A Helm chart for Kubernetes
+    digest: 93a8afc828494e2974cf6419001b184da846b8d051d39d8b492b9799a48b5053
+    name: gitea-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/gitea-operator-0.1.0/gitea-operator-0.1.0.tgz
+    version: 0.1.0
   grafana-operator:
   - apiVersion: v2
     appVersion: 1.16.0
