@@ -1,0 +1,14 @@
+{{- if ne (include "operator.cluster-type" .) "kubernetes" }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: {{ include "operator.source" . }}
+  namespace: {{ include "operator.olm-namespace" . }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+spec:
+  sourceType: grpc
+  image: quay.io/gpte-devops-automation/gitea-catalog:latest
+  displayName: Red Hat GPTE (Gitea)
+  publisher: Red Hat GPTE
+{{- end -}}

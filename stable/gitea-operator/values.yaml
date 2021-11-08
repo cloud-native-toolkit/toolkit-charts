@@ -1,0 +1,23 @@
+# Default values for gitea.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+# Default values for argocd-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  clusterType: "ocp4"
+  olmNamespace: "openshift-marketplace"
+  operatorNamespace: "openshift-operators"
+
+nameOverride: ""
+
+olmNamespace: ""
+operatorNamespace: ""
+
+namespaceScoped: false
+
+ocpCatalog:
+  source: redhat-gpte-gitea
+  channel: stable
+  name: gitea-operator
+
