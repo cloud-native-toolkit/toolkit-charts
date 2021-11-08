@@ -886,6 +886,15 @@ entries:
   developer-dashboard:
   - apiVersion: v1
     appVersion: "1.0"
+    created: "2021-11-08T05:06:04.308449985Z"
+    description: A Helm chart for Kubernetes
+    digest: 95836dfe5da662ec5cdc7abaca8c27452282eb4701eb1ba08ca5e0bfe1a40aae
+    name: developer-dashboard
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/developer-dashboard-1.4.1/developer-dashboard-1.4.1.tgz
+    version: 1.4.1
+  - apiVersion: v1
+    appVersion: "1.0"
     created: "2021-08-14T17:16:03.532474445Z"
     description: A Helm chart for Kubernetes
     digest: 3db03605cb338130ddacd75b25c626a888a349f96ebd79af4b0ca40c061aa7c1
