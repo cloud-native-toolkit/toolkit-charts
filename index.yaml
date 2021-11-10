@@ -2910,6 +2910,16 @@ entries:
   swaggereditor:
   - apiVersion: v2
     appVersion: v3.14.5
+    created: "2021-11-10T17:08:23.216635351Z"
+    description: A Helm chart for Kubernetes
+    digest: fd20637a004ebc922ee53208ada7ec36e80fd3d461707d9868c09863571d816e
+    name: swaggereditor
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/swaggereditor-2.1.0/swaggereditor-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v2
+    appVersion: v3.14.5
     created: "2020-11-04T06:30:06.277172282Z"
     description: A Helm chart for Kubernetes
     digest: 6ddd8d2051af2f8b18372ad16c524799f1d46ed55c3dd0b7d1dbd8bbd99722aa
