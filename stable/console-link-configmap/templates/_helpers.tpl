@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "console-link-configmap.name" -}}
-{{- printf "%s-config" (required "A value is required for the `name` variable" .Values.name) }}
+{{- printf "%s-config" (required "A value is required for the `name` variable" .Values.name | default "cm") }}
 {{- end }}
 
 {{/*

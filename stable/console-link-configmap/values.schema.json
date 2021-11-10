@@ -45,6 +45,9 @@
     },
     "displayName": {
       "type": "string"
+    },
+    "otherValues": {
+      "type": "object"
     }
   }
 }
