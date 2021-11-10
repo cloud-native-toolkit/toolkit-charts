@@ -1308,6 +1308,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4a-operator-0.1.0/ibm-cp4a-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-cp4d-watson-studio-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-11-10T12:34:41.075339474Z"
+    description: A Helm chart for Kubernetes
+    digest: 7bbb44cc26e8e451d9cd4dc8f4fc0a304a70055043d4b9e89599491c0be008fc
+    name: ibm-cp4d-watson-studio-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-watson-studio-instance-0.1.1/ibm-cp4d-watson-studio-instance-0.1.1.tgz
+    version: 0.1.1
   ibm-cp4i-operators:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -1339,6 +1350,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4i-operators-0.2.0/ibm-cp4i-operators-0.2.0.tgz
     version: 0.2.0
+  ibm-cp4sthreatmanagements-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-11-10T12:34:41.198143227Z"
+    description: A Helm chart for Kubernetes
+    digest: 8edeabe98e4ba2fd213324f920e4e9713050fe3688ab68826646e5a151f52a74
+    name: ibm-cp4sthreatmanagements-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4sthreatmanagements-instance-0.1.0/ibm-cp4sthreatmanagements-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-cpd-platform-operator:
   - apiVersion: v2
     appVersion: 1.16.0
