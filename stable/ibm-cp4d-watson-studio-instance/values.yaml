@@ -1,0 +1,15 @@
+# Default values for ibm-cp4d-watson-studio-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+metadata:
+  name: ws-cr
+
+spec:
+  docker_registry_prefix: cp.icr.io/cp/cpd
+  ignoreForMaintenance: "false"
+  license:
+    accept: "true"
+    license: Enterprise
+  scaleConfig: small
+  storageClass: managed-nfs-storage
