@@ -17,3 +17,6 @@ metadata:
     {{- end }}
 data:
   url: {{ required "A value is required for the `url` variable" .Values.url }}
+  {{- if .Values.otherValues }}
+  {{- .Values.otherValues | toYaml | nindent 2 }}
+  {{- end }}
