@@ -1,0 +1,12 @@
+apiVersion: ws.cpd.ibm.com/v1beta1
+kind: WS
+metadata:
+  name: {{ .Values.metadata.name }}
+spec:
+  docker_registry_prefix: {{ .Values.spec.docker_registry_prefix }}
+  ignoreForMaintenance: {{ .Values.spec.ignoreForMaintenance }}
+  license:
+    accept: {{ .Values.spec.license.accept }}
+    license: {{ .Values.spec.license.license }}
+  scaleConfig: {{ .Values.spec.scaleConfig }}
+  storageClass: {{ .Values.spec.storageClass }}
