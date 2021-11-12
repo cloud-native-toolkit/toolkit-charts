@@ -3027,6 +3027,16 @@ entries:
   tool-config:
   - apiVersion: v1
     appVersion: "1.0"
+    created: "2021-11-12T19:57:45.570182584Z"
+    description: A Helm chart to create a ConfigMap and Secret containing the configuration
+      information for a deployed tool
+    digest: 6bae4db0e34d44dec807e479bf9efe8c066c4ac0b86eb50e6ec5759e4e416428
+    name: tool-config
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/tool-config-0.12.1/tool-config-0.12.1.tgz
+    version: 0.12.1
+  - apiVersion: v1
+    appVersion: "1.0"
     created: "2021-11-12T16:26:44.844304677Z"
     description: A Helm chart to create a ConfigMap and Secret containing the configuration
       information for a deployed tool
