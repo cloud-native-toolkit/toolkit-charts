@@ -112,3 +112,11 @@ Create chart name and version as used by the chart label.
 {{- "" -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "tool-config.consoleLinkEnabled" -}}
+{{- if (and .Values.enableConsoleLink .Values.url) -}}
+true
+{{- else -}}
+false
+{{- end -}}
+{{- end -}}
