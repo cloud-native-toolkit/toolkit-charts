@@ -1,0 +1,12 @@
+metadata:
+  labels:
+    app.kubernetes.io/instance: ibm-licensing-operator
+    app.kubernetes.io/managed-by: ibm-licensing-operator
+    app.kubernetes.io/name: ibm-licensing
+  name: instance
+  namespace: ibm-common-services
+spec:
+  apiSecretToken: ibm-licensing-token
+  datasource: datacollector
+  httpsEnable: true
+  version: 1.10.0
