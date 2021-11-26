@@ -1371,6 +1371,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4sthreatmanagements-instance-0.1.0/ibm-cp4sthreatmanagements-instance-0.1.0.tgz
     version: 0.1.0
+  ibm-cpd-platform-instance:
+  - apiVersion: v2
+    appVersion: 4.0.0
+    created: "2021-11-26T15:04:50.926893638Z"
+    description: A Helm chart for Kubernetes
+    digest: 81333dba1b41517658e83453dbb262157c45d8b60ebf615db54238c85e44ae38
+    name: ibm-cpd-platform-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cpd-platform-instance-0.1.1/ibm-cpd-platform-instance-0.1.1.tgz
+    version: 0.1.1
   ibm-cpd-platform-operator:
   - apiVersion: v2
     appVersion: 1.16.0
