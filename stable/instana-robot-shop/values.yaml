@@ -14,9 +14,14 @@ payment:
 # EUM configuration
 # Provide your key and set the endpoint
 eum:
-  key: null
-  url: https://eum-eu-west-1.instana.io
-  #url: https://eum-us-west-2.instana.io
+  # eum.key is the secret token used to authenticate to Instana's server.
+  # key:
+
+  # Rather than explicitly specifying the key, you can "bring your own secret" creating it in
+  # the namespace in which you deploy "robot-shop" and specify the name in the "keysSecret" field.
+  # The secret you create must contain a field called 'key' which contains the value you'd set in `.eum.key`.
+  keysSecret:
+  url:
 
 # Pod Security Policy
 psp:
