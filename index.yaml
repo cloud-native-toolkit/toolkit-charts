@@ -1225,6 +1225,16 @@ entries:
     version: 0.1.0
   ibm-automation-foundation-core-operator:
   - apiVersion: v2
+    appVersion: "1.2"
+    created: "2021-11-26T15:45:49.40936199Z"
+    description: A Helm chart for Kubernetes
+    digest: 6d5ccaaca56b90f5618c325304b635db521f3889edf290218c67997e42a51209
+    name: ibm-automation-foundation-core-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-automation-foundation-core-operator-0.1.2/ibm-automation-foundation-core-operator-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2021-09-13T18:39:59.61013626Z"
     description: A Helm chart for Kubernetes
@@ -1245,6 +1255,16 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-automation-foundation-core-operator-0.1.0/ibm-automation-foundation-core-operator-0.1.0.tgz
     version: 0.1.0
   ibm-catalogs:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-11-26T15:45:49.557717466Z"
+    description: A Helm chart for Kubernetes
+    digest: b491e31c1f7c62cee4ff751453776ea940b8bf81b166acf22ceac16fc946b16c
+    name: ibm-catalogs
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-catalogs-0.2.3/ibm-catalogs-0.2.3.tgz
+    version: 0.2.3
   - apiVersion: v2
     appVersion: "1.0"
     created: "2021-07-30T14:30:01.9603607Z"
@@ -1415,6 +1435,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-datapower-operator-0.1.0/ibm-datapower-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-db2u-operator:
+  - apiVersion: v2
+    appVersion: "1.1"
+    created: "2021-11-26T15:45:49.722253751Z"
+    description: A Helm chart for Kubernetes
+    digest: 7345c0a4b94cf633ad4e73ea0c2f4ddceda9645f456d08f11dc3544e26866e72
+    name: ibm-db2u-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-db2u-operator-0.1.0/ibm-db2u-operator-0.1.0.tgz
+    version: 0.1.0
   ibm-eventstreams-operator:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -1503,6 +1534,16 @@ entries:
     version: 0.1.0
   ibm-process-mining-instance:
   - apiVersion: v2
+    appVersion: 1.12.0
+    created: "2021-11-26T15:45:49.8751986Z"
+    description: A Helm chart for Kubernetes
+    digest: 0424de45acadbd4ec1edf84f8f0a0a108f85c763830f1cff2061e348166b9498
+    name: ibm-process-mining-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-process-mining-instance-1.0.2/ibm-process-mining-instance-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     appVersion: 1.11.1
     created: "2021-08-13T00:38:04.0389929Z"
     description: A Helm chart for Kubernetes
@@ -1523,6 +1564,16 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-process-mining-instance-1.0.0/ibm-process-mining-instance-1.0.0.tgz
     version: 1.0.0
   ibm-process-mining-operator:
+  - apiVersion: v2
+    appVersion: "2.0"
+    created: "2021-11-26T15:45:50.027063909Z"
+    description: A Helm chart for Kubernetes
+    digest: b8e7fd8ac1a8fbc41f3932c31e8f7357b9a069008193e9357660696375fc4339
+    name: ibm-process-mining-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-process-mining-operator-0.1.1/ibm-process-mining-operator-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2021-07-22T16:22:05.723520365Z"
