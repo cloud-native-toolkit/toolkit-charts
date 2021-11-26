@@ -6,7 +6,7 @@ subscriptions:
   ibmprocessmining:
     name: ibm-process-mining
     subscription:
-      channel: v1.0
+      channel: v2.0
       installPlanApproval: Automatic
       name: ibm-automation-processmining
       source: ibm-automation-processminings
