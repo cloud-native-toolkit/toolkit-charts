@@ -1,0 +1,11 @@
+apiVersion: cpd.ibm.com/v1
+kind: Ibmcpd
+metadata:
+  name: {{ .Values.metadata.name }}
+spec:
+  license:
+    accept: {{ .Values.spec.license.accept }}
+    license: {{ .Values.spec.license.license }}
+  storageClass: {{ .Values.spec.storageClass }}
+  zenCoreMetadbStorageClass: {{ .Values.spec.zenCoreMetadbStorageClass }}
+  version: {{ .Values.spec.version }}
