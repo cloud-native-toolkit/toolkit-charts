@@ -2533,6 +2533,15 @@ entries:
     version: 0.1.0
   robot-shop:
   - apiVersion: v1
+    created: "2021-11-29T16:33:02.130206Z"
+    description: Sample micoservices application
+    digest: 466be70696deb50d894ff23fe9418e45b10493309acd7b3ef6b06a2e54eaa44b
+    home: https://github.com/instana/robot-shop
+    name: robot-shop
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/robot-shop-1.1.1/robot-shop-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
     created: "2021-11-17T16:19:51.683826137Z"
     description: Sample micoservices application
     digest: 46e436ea3ec829803a426b1ec3dd28a77adcd70ff66a651cf8b6b687460ddac1
