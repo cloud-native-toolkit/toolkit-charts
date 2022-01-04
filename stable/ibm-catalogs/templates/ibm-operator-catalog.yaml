@@ -3,5 +3,7 @@ kind: CatalogSource
 metadata:
   name: ibm-operator-catalog
   namespace: openshift-marketplace
+  annotations:
+    argocd.argoproj.io/sync-wave: {{ .Values.syncWave | default "-10" | quote }}
 spec:
   {{- toYaml .Values.catalogs.ibmoperators.catalog | nindent 2 }}
