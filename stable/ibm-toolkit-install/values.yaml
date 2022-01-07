@@ -16,7 +16,7 @@ rbac:
 
 image:
   imageName: quay.io/ibmgaragecloud/cli-tools
-  imageTag: v14
+  imageTag: v0.15
 
 repo:
   url: https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero.git
