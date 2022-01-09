@@ -5,7 +5,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: {{ .Values.project }}
+  name: {{ include "argocd.project" . }}
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "argocd.labels" . | indent 4 }}

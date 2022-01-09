@@ -18,6 +18,9 @@ global:
   ## Provides a suffix value (usually a path) that should be added to each path
   pathSuffix: ""
 
+  ## Prefix that should be added to bootstrap, application, and project names
+  prefix: ""
+
 ## The url of the gitops repo that contains the applications
 repoUrl: ""
 
@@ -28,6 +31,9 @@ destinations: []
 
 ## The name of the project. If left empty then will use 'default'
 project: ""
+
+## Prefix that should be added to bootstrap, application, and project names
+prefix: ""
 
 ## The cluster resources that should be whitelisted in the project
 clusterResourceWhitelist: []

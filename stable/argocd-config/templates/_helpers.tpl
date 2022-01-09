@@ -87,3 +87,16 @@ Create the name of the service account to use
 {{- define "argocd.repoUrl" -}}
 {{ default .Values.global.repoUrl .Values.repoUrl }}
 {{- end -}}
+
+{{- define "argocd.prefix" -}}
+{{- $prefix := default .Values.global.prefix .Values.prefix -}}
+{{- if $prefix -}}
+{{ printf "%s-" $prefix }}
+{{- else -}}
+{{ "" }}
+{{- end -}}
+{{- end -}}
+
+{{- define "argocd.project" -}}
+{{ printf "%s%s" (include "argocd.prefix" .) .Values.project }}
+{{- end -}}
