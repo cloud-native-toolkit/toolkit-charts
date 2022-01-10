@@ -98,5 +98,5 @@ Create the name of the service account to use
 {{- end -}}
 
 {{- define "argocd.project" -}}
-{{ printf "%s%s" (include "argocd.prefix" .) .Values.project }}
+{{ .Values.project }}
 {{- end -}}
