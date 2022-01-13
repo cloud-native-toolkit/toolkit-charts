@@ -1,9 +1,10 @@
 {{- if .Values.controllerRbac -}}
 {{- $releaseNamespace := .Release.Namespace -}}
+{{- $name := printf "%s-argocd" $releaseNamespace }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ printf "%s-argocd" $releaseNamespace }}
+  name: {{ $name }}
   labels:
     {{ include "operator.labels" . | nindent 4 }}
 rules:
@@ -17,22 +18,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ printf "%s-argocd" $releaseNamespace }}
+  name: {{ $name }}
   labels:
     {{ include "operator.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ printf "%s-argocd" $releaseNamespace }}
+  name: {{ $name }}
 subjects:
-- kind: ServiceAccount
-  name: argocd-application-controller
-  namespace: {{ $releaseNamespace }}
-- kind: ServiceAccount
-  name: argocd-server
-  namespace: {{ $releaseNamespace }}
-- kind: ServiceAccount
-  name: job-{{ include "operator.name" . }}
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: {{ printf "system:serviceaccounts:%s" $releaseNamespace | quote }}
   namespace: {{ $releaseNamespace }}
 ---
 {{- end -}}
