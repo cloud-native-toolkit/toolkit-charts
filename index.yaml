@@ -2338,6 +2338,16 @@ entries:
   openshift-gitops:
   - apiVersion: v2
     appVersion: 0.4.0
+    created: "2022-01-14T02:25:12.75681957Z"
+    description: A Helm chart to install ArgoCD via the operator
+    digest: f7d1bcf673a2b03c5669f52d9081f7c855e6972bc156a72c670c6b94fc178bf2
+    name: openshift-gitops
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openshift-gitops-0.8.0/openshift-gitops-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v2
+    appVersion: 0.4.0
     created: "2021-07-14T03:35:39.302474181Z"
     description: A Helm chart to install ArgoCD via the operator
     digest: 17022ed7fa1703ccb81d84ca451ded9e4ed79e48b4245bfd083889e06c4453bf
