@@ -3,6 +3,18 @@ entries:
   argocd-config:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-01-19T20:28:49.239651383Z"
+    description: Helm chart to create ArgoCD custom resources for projects and applications
+      with optional RBAC configuration to allow ArgoCD to create resources in other
+      namespaces
+    digest: 5d316a16702d65fd42748d1d1f353488d368467dbad10a46600cbe02d0a903f7
+    name: argocd-config
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/argocd-config-0.22.0/argocd-config-0.22.0.tgz
+    version: 0.22.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-01-10T22:48:03.448238796Z"
     description: Helm chart to create ArgoCD custom resources for projects and applications
       with optional RBAC configuration to allow ArgoCD to create resources in other
