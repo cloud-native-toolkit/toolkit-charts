@@ -48,10 +48,14 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "argocd.labels" -}}
+{{- $groupLabel := default .Values.global.groupLabel .Values.groupLabel -}}
 helm.sh/chart: {{ include "argocd.chart" . }}
 {{ include "argocd.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+{{- if $groupLabel }}
+app.kubernetes.io/part-of: {{ $groupLabel }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
