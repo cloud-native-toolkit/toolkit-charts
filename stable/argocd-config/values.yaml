@@ -21,6 +21,9 @@ global:
   ## Prefix that should be added to bootstrap, application, and project names
   prefix: ""
 
+  ## Label applied to all the application resources
+  groupLabel: ""
+
 ## The url of the gitops repo that contains the applications
 repoUrl: ""
 
@@ -34,6 +37,9 @@ project: ""
 
 ## Prefix that should be added to bootstrap, application, and project names
 prefix: ""
+
+## Label applied to all the application resources
+groupLabel: ""
 
 ## The cluster resources that should be whitelisted in the project
 clusterResourceWhitelist: []
