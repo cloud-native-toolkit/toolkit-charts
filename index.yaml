@@ -1428,6 +1428,16 @@ entries:
     version: 0.1.0
   ibm-cp4d-watson-studio-instance:
   - apiVersion: v2
+    appVersion: 4.0.4
+    created: "2022-01-24T15:52:59.144659617Z"
+    description: A Helm chart for Kubernetes
+    digest: 8d948f06d62083caf41c3ba22820b5217f804d8a87e8ce506794a82ebe69fd90
+    name: ibm-cp4d-watson-studio-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-watson-studio-instance-0.1.2/ibm-cp4d-watson-studio-instance-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2021-11-10T12:34:41.075339474Z"
     description: A Helm chart for Kubernetes
@@ -1480,6 +1490,16 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4sthreatmanagements-instance-0.1.0/ibm-cp4sthreatmanagements-instance-0.1.0.tgz
     version: 0.1.0
   ibm-cpd-platform-instance:
+  - apiVersion: v2
+    appVersion: 4.0.4
+    created: "2022-01-24T15:52:59.276211531Z"
+    description: A Helm chart for Kubernetes
+    digest: 7ed008e503fafd2b288c38222b2c8b862c4c5c3a333c2ec1b274b8993b35fe20
+    name: ibm-cpd-platform-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cpd-platform-instance-0.1.2/ibm-cpd-platform-instance-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: 4.0.0
     created: "2021-11-26T15:04:50.926893638Z"
