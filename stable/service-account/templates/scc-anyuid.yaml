@@ -9,7 +9,7 @@ apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   annotations:
-    "helm.sh/hook": post-install
+    "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-3"
     argocd.argoproj.io/sync-options: Validate=false
     kubernetes.io/description: anyuid provides all features of the restricted SCC
