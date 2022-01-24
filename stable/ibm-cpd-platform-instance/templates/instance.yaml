@@ -7,5 +7,3 @@ spec:
     accept: {{ .Values.spec.license.accept }}
     license: {{ .Values.spec.license.license }}
   storageClass: {{ .Values.spec.storageClass }}
-  zenCoreMetadbStorageClass: {{ .Values.spec.zenCoreMetadbStorageClass }}
-  version: {{ .Values.spec.version }}

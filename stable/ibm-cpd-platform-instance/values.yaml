@@ -9,5 +9,3 @@ spec:
     accept: true
     license: Enterprise
   storageClass: managed-nfs-storage
-  zenCoreMetadbStorageClass: managed-nfs-storage
-  version: "4.0.1"
