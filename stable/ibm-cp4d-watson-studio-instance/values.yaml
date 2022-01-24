@@ -6,10 +6,8 @@ metadata:
   name: ws-cr
 
 spec:
-  docker_registry_prefix: cp.icr.io/cp/cpd
-  ignoreForMaintenance: "false"
   license:
     accept: "true"
     license: Enterprise
-  scaleConfig: small
+  version: 4.0.4
   storageClass: managed-nfs-storage

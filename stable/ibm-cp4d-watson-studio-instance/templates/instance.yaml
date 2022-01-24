@@ -3,10 +3,8 @@ kind: WS
 metadata:
   name: {{ .Values.metadata.name }}
 spec:
-  docker_registry_prefix: {{ .Values.spec.docker_registry_prefix }}
-  ignoreForMaintenance: {{ .Values.spec.ignoreForMaintenance }}
   license:
     accept: {{ .Values.spec.license.accept }}
     license: {{ .Values.spec.license.license }}
-  scaleConfig: {{ .Values.spec.scaleConfig }}
+  version: {{ .Values.spec.version }}
   storageClass: {{ .Values.spec.storageClass }}
