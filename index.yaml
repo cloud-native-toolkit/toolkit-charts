@@ -1335,6 +1335,16 @@ entries:
   ibm-catalogs:
   - apiVersion: v2
     appVersion: "1.0"
+    created: "2022-01-28T21:15:17.481950325Z"
+    description: A Helm chart for Kubernetes
+    digest: d3818c6350110378e0cb5d01c8e463bd450123c7084a22c621ba35b8eaa0e8f2
+    name: ibm-catalogs
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-catalogs-0.3.1/ibm-catalogs-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: "1.0"
     created: "2022-01-04T19:27:33.528873137Z"
     description: A Helm chart for Kubernetes
     digest: dc68663689ee3ff4ee55e11a1aec03078493b09adbb07c1dbda0c8f93ab3dd31
