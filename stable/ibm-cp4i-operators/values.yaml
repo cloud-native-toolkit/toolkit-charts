@@ -6,8 +6,9 @@ subscriptions:
   cloudpakforintegration:
     name: ibm-cp-integration
     subscription:
-      channel: v1.1-eus
+      channel: v1.5
       installPlanApproval: Automatic
       name: ibm-cp-integration
       source: ibm-operator-catalog
       sourceNamespace: openshift-marketplace
+      startingCSV: ibm-cp-integration.v1.5.0

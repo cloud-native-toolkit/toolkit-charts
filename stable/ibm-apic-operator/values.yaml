@@ -6,8 +6,10 @@ subscriptions:
   ibmapic:
     name: ibm-apic
     subscription:
-      channel: v2.1-eus
+      channel: v2.4
       installPlanApproval: Automatic
       name: ibm-apiconnect
       source: ibm-operator-catalog
       sourceNamespace: openshift-marketplace
+      startingCSV: ibm-apiconnect.v2.4.0
+

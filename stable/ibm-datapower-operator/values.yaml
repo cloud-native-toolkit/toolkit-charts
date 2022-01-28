@@ -6,8 +6,9 @@ subscriptions:
   ibmdatapower:
     name: ibm-datapower
     subscription:
-      channel: v1.2-eus
+      channel: v1.5
       installPlanApproval: Automatic
       name: datapower-operator
       source: ibm-operator-catalog
-      sourceNamespace: openshift-marketplace
+      sourceNamespace: openshift-
+      startingCSV: datapower-operator.v1.5.0

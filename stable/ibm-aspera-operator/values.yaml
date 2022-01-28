@@ -6,8 +6,10 @@ subscriptions:
   ibmaspera:
     name: ibm-aspera
     subscription:
-      channel: v1.2-eus
+      channel: v1.4
       installPlanApproval: Automatic
       name: aspera-hsts-operator
       source: ibm-operator-catalog
       sourceNamespace: openshift-marketplace
+      startingCSV: ibm-aspera-hsts-operator.v1.4.0
+

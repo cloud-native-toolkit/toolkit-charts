@@ -6,8 +6,10 @@ subscriptions:
   ibmassetrepo:
     name: ibm-assetrepo
     subscription:
-      channel: v1.1-eus
+      channel: v1.4
       installPlanApproval: Automatic
       name: ibm-integration-asset-repository
       source: ibm-operator-catalog
       sourceNamespace: openshift-marketplace
+      startingCSV: ibm-integration-asset-repository.v1.4.2
+
