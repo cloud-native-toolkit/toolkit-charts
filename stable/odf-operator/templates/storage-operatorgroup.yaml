@@ -7,6 +7,3 @@ metadata:
 spec:
   targetNamespaces:
     - openshift-storage
-status:
-  namespaces:
-    - openshift-storage
