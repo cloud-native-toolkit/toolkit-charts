@@ -2584,6 +2584,17 @@ entries:
   refarch-machinesets:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2022-02-01T23:01:20.14552319Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 4ca9d835bcce68303bc4f221501fbb781c859a16267c881956bcd24b61ad5733
+    name: refarch-machinesets
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-machinesets-0.4.1/refarch-machinesets-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2022-02-01T22:45:53.77787032Z"
     description: A Helm chart for deploying infrastrucure reference architecture to
       OpenShift 4.x clusters
