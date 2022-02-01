@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: storage-post-sync-job-
+  namespace: {{ .Values.argo.namespace | default "openshift-gitops" }}
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: config
+          image: quay.io/openshift/origin-cli:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - "while ! oc get sc ocs-storagecluster-ceph-rbd > /dev/null 2>&1;do sleep 30;done && oc annotate sc $(oc get sc|grep default|awk '{print $1}') storageclass.kubernetes.io/is-default-class- && oc annotate sc ocs-storagecluster-ceph-rbd storageclass.kubernetes.io/is-default-class=true"
+          resources:
+            requests:
+              cpu: "2500m"
+              memory: "64Mi"
+            limits:
+              cpu: "2500m"
+              memory: "256Mi"
+      restartPolicy: Never
+      serviceAccountName: {{ .Values.argo.serviceAccount | default "openshift-gitops-cntk-argocd-application-controller" }}
+  backoffLimit: 4

@@ -83,6 +83,9 @@ MachineSet ProviderSpec1
 {{- if eq $.Values.cloudProvider.name "aws" -}}
 {{- include "machineset.providerspec.aws" $params -}}
 {{- end -}}
+{{- if eq $.Values.cloudProvider.name "ibmcloud" -}}
+{{- include "machineset.providerspec.ibmcloud" $params -}}
+{{- end -}}
 {{- if eq $.Values.cloudProvider.name "vsphere" -}}
 {{- include "machineset.providerspec.vsphere" $params -}}
 {{- end -}}
@@ -201,4 +204,29 @@ providerSpec:
       folder: /{{ .Values.vsphere.datacenter }}/vm/{{ .Values.infrastructureId }}
       resourcePool: /{{ .Values.vsphere.datacenter }}/host/{{ .Values.vsphere.cluster }}/Resources
       server: {{ $.Values.vsphere.server }}
+{{- end -}}
+
+{{- define "machineset.providerspec.ibmcloud" -}}
+{{- $params := dict "Values" .Values "Name" .Name -}}
+providerSpec:
+  value:
+    apiVersion: ibmcloudproviderconfig.openshift.io/v1beta1
+    credentialsSecret:
+      name: ibmcloud-credentials
+    image: {{ $.Values.infrastructureId }}-rhcos
+    kind: IBMCloudMachineProviderSpec
+    metadata:
+      creationTimestamp: null
+    primaryNetworkInterface:
+      securityGroups:
+      - {{ $.Values.infrastructureId }}-sg-cluster-wide
+      - {{ $.Values.infrastructureId }}-sg-openshift-net
+      subnet: {{ $.Values.infrastructureId }}-subnet-compute-{{ include "cloud.region" . }}-{{ .Zone }}
+    profile: bx2-16x64
+    region: {{ include "cloud.region" . }}
+    resourceGroup: {{ $.Values.infrastructureId }}
+    userDataSecret:
+      name: worker-user-data
+    vpc: {{ $.Values.infrastructureId }}-vpc
+    zone: {{ include "cloud.region" . }}-{{ .Zone }}
 {{- end -}}
