@@ -2356,6 +2356,18 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocs-operator-0.1.0/ocs-operator-0.1.0.tgz
     version: 0.1.0
+  odf-operator:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-02-01T22:45:53.631254134Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 1aef414fa11d9f86a112d841f050fba7f8a416c8902cabc3fc9ff428589c47ce
+    name: odf-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/odf-operator-0.1.0/odf-operator-0.1.0.tgz
+    version: 0.1.0
   openldap:
   - apiVersion: v1
     created: "2021-04-29T19:53:55.259527067Z"
@@ -2570,6 +2582,17 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-infraconfig-0.1.0/refarch-infraconfig-0.1.0.tgz
     version: 0.1.0
   refarch-machinesets:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-02-01T22:45:53.77787032Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: d3be7db25411fb8c950e0bde3608a3f39911a8acaaa60b1ab56ea266b9938282
+    name: refarch-machinesets
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-machinesets-0.4.0/refarch-machinesets-0.4.0.tgz
+    version: 0.4.0
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2021-10-29T22:37:47.364388265Z"
