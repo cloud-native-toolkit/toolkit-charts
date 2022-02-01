@@ -1,0 +1,16 @@
+{{- if or (default $.Values.global.infraNodes.taints $.Values.infraNodes.taints) (default $.Values.global.storageNodes.taints $.Values.storageNodes.taints) -}}
+kind: ConfigMap
+metadata:
+  name: rook-ceph-operator-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "101"
+    helm.sh/hook-weight: "101"
+apiVersion: v1
+data:
+  CSI_LOG_LEVEL: "5"
+  CSI_PLUGIN_TOLERATIONS: |
+    {{- include "infra.tolerations" . }}
+    {{- include "storage.tolerations" . }}
+  CSI_PROVISIONER_TOLERATIONS: |2-
+    {{- include "storage.tolerations" . }}
+{{- end -}}

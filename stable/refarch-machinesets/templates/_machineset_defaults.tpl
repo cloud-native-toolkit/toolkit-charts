@@ -37,6 +37,17 @@ Default MachineSet Replica Count
 {{- default "0" .Values.vsphere.cloudpakNodes.nodeCount }}
 {{- end -}}
 {{- end -}}
+{{- if eq $.Values.cloudProvider.name "ibmcloud" -}}
+{{- if eq .Name "storage" -}}
+{{- default "1" .Values.cloud.storageNodes.nodeCount }}
+{{- end -}}
+{{- if eq .Name "infra" -}}
+{{- default "1" .Values.cloud.infraNodes.nodeCount }}
+{{- end -}}
+{{- if eq .Name "cp4x" -}}
+{{- default "0" .Values.cloud.cloudpakNodes.nodeCount }}
+{{- end -}}
+{{- end -}}
 {{- end -}}
 
 {{/*
@@ -65,6 +76,17 @@ Default Node Sizes
 {{- end -}}
 {{- if eq .Name "cp4x" -}}
 {{- default "Standard_D8s_v3" .Values.cloud.cloudpakNodes.instanceType }}
+{{- end -}}
+{{- end -}}
+{{- if eq $.Values.cloudProvider.name "ibmcloud" -}}
+{{- if eq .Name "storage" -}}
+{{- default "bx2-16x64" .Values.cloud.storageNodes.instanceType }}
+{{- end -}}
+{{- if eq .Name "infra" -}}
+{{- default "bx2-4x16" .Values.cloud.infraNodes.instanceType }}
+{{- end -}}
+{{- if eq .Name "cp4x" -}}
+{{- default "bx2-8x32" .Values.cloud.cloudpakNodes.instanceType }}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -191,6 +213,7 @@ MachineSet AWS Check Image
 
 
 {{- define "machineset.azure.resourceGroup" -}}
+<<<<<<< HEAD
 {{- $resourceGroup := printf "%s-rg" $.Values.infrastructureId -}}
 {{ default $resourceGroup $.Values.cloud.resourceGroup }}
 {{- end -}}
@@ -208,4 +231,19 @@ MachineSet AWS Check Image
 {{- define "machineset.azure.virtualNetwork" -}}
 {{- $virtualNetwork := printf "%s-vnet" $.Values.infrastructureId -}}
 {{ default $virtualNetwork $.Values.cloud.virtualNetwork }}
+=======
+{{ default "{{ $.Values.infrastructureId }}-rg" $.Values.cloud.resourceGroup }}
+{{- end -}}
+
+{{- define "machineset.azure.networkResourceGroup" -}}
+{{ default "{{ $.Values.infrastructureId }}-rg" $.Values.cloud.networkResourceGroup }}
+{{- end -}}
+
+{{- define "machineset.azure.workerSubnet" -}}
+{{ default "{{ $.Values.infrastructureId }}-worker-subnet" $.Values.cloud.workerSubnet }}
+{{- end -}}
+
+{{- define "machineset.azure.virtualNetwork" -}}
+{{ default "{{ $.Values.infrastructureId }}-vnet" $.Values.cloud.virtualNetwork }}
+>>>>>>> 6057e7b926109dcc6335c7a6876e3e6f8245235d
 {{- end -}}

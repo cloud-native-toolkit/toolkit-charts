@@ -1,0 +1,28 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  name: ocs-storagecluster
+  annotations:
+    argocd.argoproj.io/sync-wave: "103"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    helm.sh/hook-weight: "103"
+spec:
+  externalStorage: {}
+  storageDeviceSets:
+  - config: {}
+    count: 1
+    dataPVCTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.sizeGiB }}Gi
+        storageClassName: {{ .Values.storageClass }}
+        volumeMode: Block
+      status: {}
+    name: ocs-deviceset
+    placement: {}
+    portable: true
+    replica: 3
+    resources: {}

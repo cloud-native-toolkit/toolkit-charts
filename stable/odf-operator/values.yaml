@@ -1,0 +1,39 @@
+# Default values for refarch-ocp4-gitops.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+channel: ""
+sizeGiB: ""
+storageClass: ""
+
+infraNodes:
+  taints: {}
+
+storageNodes:
+  taints: {}
+
+argo:
+  namespace: ""
+  serviceAccount: ""
+
+global:
+  infraNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "infra"
+        value: ""
+    labels:
+      node-role.kubernetes.io/infra: ""
+  storageNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "node.ocs.openshift.io/storage"
+        value: "true"
+    labels:
+      node-role.kubernetes.io/storage: ""
+      cluster.ocs.openshift.io/openshift-storage: ""
+  cloudpakNodes:
+    taints:
+    labels:
+      node-role.kubernetes.io/cp4x: ""
+    
