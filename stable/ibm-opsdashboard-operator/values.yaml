@@ -6,8 +6,10 @@ subscriptions:
   ibmopsdashboard:
     name: ibm-opsdashboard
     subscription:
-      channel: v2.1-eus
+      channel: v2.5
       installPlanApproval: Automatic
       name: ibm-integration-operations-dashboard
       source: ibm-operator-catalog
       sourceNamespace: openshift-marketplace
+      startingCSV: ibm-integration-operations-dashboard.v2.5.2
+

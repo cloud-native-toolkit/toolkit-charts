@@ -6,8 +6,9 @@ subscriptions:
   ibmeventstreams:
     name: ibm-eventstreams
     subscription:
-      channel: v2.2-eus
+      channel: v2.5
       installPlanApproval: Automatic
       name: ibm-eventstreams
       source: ibm-operator-catalog
       sourceNamespace: openshift-marketplace
+      startingCSV: ibm-eventstreams.v2.5.1
