@@ -1436,6 +1436,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4a-operator-0.1.0/ibm-cp4a-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-cp4d-watson-knowledge-catalog-instance:
+  - apiVersion: v2
+    appVersion: 4.0.4
+    created: "2022-02-10T22:37:56.639515457Z"
+    description: A Helm chart for Kubernetes
+    digest: 0750bb7993dc9ae227499db82ef5f92a29bd0766dd1906798081d0f9a89a19df
+    name: ibm-cp4d-watson-knowledge-catalog-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-watson-knowledge-catalog-instance-0.1.0/ibm-cp4d-watson-knowledge-catalog-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-cp4d-watson-studio-instance:
   - apiVersion: v2
     appVersion: 4.0.4
