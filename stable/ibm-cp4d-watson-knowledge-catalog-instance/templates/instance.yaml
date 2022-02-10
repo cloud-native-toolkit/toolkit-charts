@@ -1,0 +1,19 @@
+apiVersion: wkc.cpd.ibm.com/v1beta1
+kind: WKC
+metadata:
+  name: {{ .Values.metadata.name }}
+spec:
+  license:
+    accept: {{ .Values.spec.license.accept }}
+    license: {{ .Values.spec.license.license }}
+  version: {{ .Values.spec.version }}
+  storageClass: {{ .Values.spec.storageClass }}
+  {{- if .Values.spec.wkc_db2u_set_kernel_params }}
+  wkc_db2u_set_kernel_params: {{ .Values.spec.wkc_db2u_set_kernel_params }}
+  {{- end }}
+  {{- if .Values.spec.iis_db2u_set_kernel_params }}
+  iis_db2u_set_kernel_params: {{ .Values.spec.iis_db2u_set_kernel_params }}
+  {{- end }}
+  {{- if .Values.spec.install_wkc_core_only }}
+  install_wkc_core_only: {{ .Values.spec.install_wkc_core_only }}
+  {{- end }}
