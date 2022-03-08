@@ -1575,7 +1575,28 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-db2u-operator-0.1.0/ibm-db2u-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-eventstreams-instance:
+  - apiVersion: v2
+    appVersion: 10.5.0
+    created: "2022-03-08T23:00:18.324194939Z"
+    description: A Helm chart for Kubernetes
+    digest: ec65c24fbb74d887a6b7421e7cb5b302ab5e1c29be6cd4ebfdca01486873ba40
+    name: ibm-eventstreams-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-eventstreams-instance-1.0.0/ibm-eventstreams-instance-1.0.0.tgz
+    version: 1.0.0
   ibm-eventstreams-operator:
+  - apiVersion: v2
+    appVersion: 2.5.0
+    created: "2022-03-08T23:00:18.508908664Z"
+    description: A Helm chart for Kubernetes
+    digest: 7790e2cb41ff3e7d4323ffa893f3cfb3a42c1358229811e7610d2afd10a1e7c8
+    name: ibm-eventstreams-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-eventstreams-operator-0.2.0/ibm-eventstreams-operator-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2021-05-12T19:18:34.146720344Z"
