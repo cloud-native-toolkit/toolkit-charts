@@ -1510,6 +1510,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4sthreatmanagements-instance-0.1.0/ibm-cp4sthreatmanagements-instance-0.1.0.tgz
     version: 0.1.0
+  ibm-cpd-ds-instance:
+  - apiVersion: v2
+    appVersion: "4"
+    created: "2022-03-14T15:47:40.988249986Z"
+    description: A Helm chart for Cloud Pak for Data - DataStage service
+    digest: b470b110bd0d7de1c615e0fc310cf4a451c2e8382430bff91dfd457e9fb605c9
+    name: ibm-cpd-ds-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cpd-ds-instance-1.0.0/ibm-cpd-ds-instance-1.0.0.tgz
+    version: 1.0.0
   ibm-cpd-platform-instance:
   - apiVersion: v2
     appVersion: 4.0.4
