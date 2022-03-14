@@ -1,0 +1,10 @@
+apiVersion: ds.cpd.ibm.com/v1alpha1
+kind: DataStage
+metadata:
+  name: {{ .Values.metadata.name }}
+spec:
+  license:
+    accept: {{ .Values.spec.license.accept }}
+    license:  {{ .Values.spec.license.license }}
+  version: {{ .Values.spec.version }}
+  storageClass: {{ .Values.spec.storageClass }}
