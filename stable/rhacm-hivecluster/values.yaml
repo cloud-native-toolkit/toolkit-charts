@@ -1,13 +1,1 @@
 global: {}
-
-cluster:
-  name: "azure-hive-c1"
-  vendor: "OpenShift"
-  baseDomain: azure.ibm-gtmaa.dev
-  version: 4.9.23
-
-cloud:
-  provider: "Azure"
-  region: "eastus2"
-  azure:
-    baseDomainResourceGroupName: "ncolon-openshift4-rg"
