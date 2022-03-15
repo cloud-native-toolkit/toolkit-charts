@@ -1,0 +1,14 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  labels:
+    cloud: {{ include "cloud.provider" . }}
+    region: {{ include "cloud.region" . }}
+    name: {{ include "cluster.name" . }}
+    vendor: {{ include "cluster.vendor" . }}
+  name: {{ include "cluster.name" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "130"
+    helm.sh/hook-weight: "130"
+spec:
+  hubAcceptsClient: true
