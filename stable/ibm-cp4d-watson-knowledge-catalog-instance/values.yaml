@@ -1,0 +1,13 @@
+# Default values for ibm-cp4d-watson-studio-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+metadata:
+  name: wkc-cr
+
+spec:
+  license:
+    accept: "true"
+    license: Enterprise
+  version: 4.0.4
+  storageClass: managed-nfs-storage
