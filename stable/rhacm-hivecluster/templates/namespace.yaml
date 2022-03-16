@@ -3,11 +3,9 @@ kind: Namespace
 metadata:
   labels:
     cluster.open-cluster-management.io/managedCluster:
-      {{ include "cluster.name" . }}
-    kubernetes.io/metadata.name: {{ include "cluster.name" . }}
-  name: {{ include "cluster.name" . }}
+      { { include "cluster.name" . } }
+    kubernetes.io/metadata.name: { { include "cluster.name" . } }
+  name: { { include "cluster.name" . } }
   annotations:
     argocd.argoproj.io/sync-wave: "100"
     helm.sh/hook-weight: "100"
-spec:
-  hubAcceptsClient: true
