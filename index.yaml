@@ -1202,6 +1202,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/grafana-operator-0.1.0/grafana-operator-0.1.0.tgz
     version: 0.1.0
+  hivecluster:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-03-16T02:42:08.703375632Z"
+    description: A Helm chart for deploying OpenShift clusters via Hive/RHACM
+    digest: c14e6bdd179babd4ef8908d91d0e8982b8b516ea251fd71a01cccfceda1eef17
+    name: hivecluster
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/hivecluster-0.1.0/hivecluster-0.1.0.tgz
+    version: 0.1.0
   ibm-ace-operator:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -2656,6 +2667,17 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-infraconfig-0.1.0/refarch-infraconfig-0.1.0.tgz
     version: 0.1.0
   refarch-machinesets:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-03-16T02:42:08.814886797Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 7bc50f4435f721cdb8a92c764aee8af25e30ce2df570c922230f66c84002640e
+    name: refarch-machinesets
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-machinesets-0.4.3/refarch-machinesets-0.4.3.tgz
+    version: 0.4.3
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2022-02-01T23:23:34.767541355Z"
