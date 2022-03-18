@@ -16,7 +16,6 @@ spec:
   controlPlaneConfig:
     servingCertificates: {}
   installAttemptsLimit: 1
-  installed: false
   {{- include "clusterdeployment.platform" . | nindent 2 }}
   provisioning:
     installConfigSecretRef:
