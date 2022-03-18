@@ -28,7 +28,6 @@
   {{- end -}}
 {{- end -}}
 
-
 {{- define "clusterdeployment.platform.azure" -}}
 platform:
   azure:
@@ -81,7 +80,6 @@ platform:
   {{- end -}}
 {{- end -}}
 
-
 {{- define "cloud.master.diskSizeGB" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
     {{- include "cloud.azure.master.diskSizeGB" . | default "1024" -}}
@@ -113,7 +111,6 @@ platform:
     {{- end -}}
   {{- end -}}
 {{- end -}}
-
 
 {{- define "cluster.networking.networkType" -}}
   {{- if .Values.cluster.networking -}}
@@ -186,4 +183,34 @@ target:
     data:
       osServicePrincipal.json: |-
         {{ "{{ .osServicePrincipal | toString }}" }}
+{{- end -}}
+
+{{- define "gitops.instance.namespace" -}}
+  {{- if .Values.gitops -}}
+    {{- if .Values.gitops.instance -}}
+      {{- if .Values.gitops.instance.namespace -}}
+        {{ .Values.gitops.instance.namespace }}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "gitops.channel.namespace" -}}
+  {{- if .Values.gitops -}}
+    {{- if .Values.gitops.channel -}}
+      {{- if .Values.gitops.channel.namespace -}}
+        {{ .Values.gitops.channel.namespace }}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "gitops.channel.name" -}}
+  {{- if .Values.gitops -}}
+    {{- if .Values.gitops.channel -}}
+      {{- if .Values.gitops.channel.name -}}
+        {{ .Values.gitops.channel.name }}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
