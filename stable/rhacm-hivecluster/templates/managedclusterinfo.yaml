@@ -1,0 +1,7 @@
+apiVersion: internal.open-cluster-management.io/v1beta1
+kind: ManagedClusterInfo
+metadata:
+  name: '{{ include "cluster.name" . }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "130"
+  namespace: '{{ include "cluster.name" . }}'
