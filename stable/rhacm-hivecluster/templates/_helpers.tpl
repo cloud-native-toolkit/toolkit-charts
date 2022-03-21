@@ -171,7 +171,7 @@ data:
 - secretKey: osServicePrincipal
   remoteRef:
     key: 595f66cd-047c-dbdf-9467-948d74346e1a
-refreshInterval: 1m
+refreshInterval: 24h
 secretStoreRef:
   name: cluster
   kind: ClusterSecretStore
