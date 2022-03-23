@@ -2493,6 +2493,17 @@ entries:
   odf-operator:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2022-03-23T05:01:44.482872433Z"
+    description: A Helm chart for deploying infrastrucure reference architecture to
+      OpenShift 4.x clusters
+    digest: 1408028bbb86a62b3c1187356333380c6cc66115e6c64706396c98bf33bd207e
+    name: odf-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/odf-operator-0.1.2/odf-operator-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2022-02-01T23:23:34.646641396Z"
     description: A Helm chart for deploying infrastrucure reference architecture to
       OpenShift 4.x clusters
