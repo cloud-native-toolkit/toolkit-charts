@@ -5,7 +5,7 @@
 job:
   repository: ibmgaragecloud/ibmcloud-dev
   tag: 1.2.2
-  autoApproveCsr: false
+  autoApproveCsr: true
 
 serviceAccount:
   name: job-sign-cert
