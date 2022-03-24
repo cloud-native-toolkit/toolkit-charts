@@ -3,6 +3,8 @@ kind: Job
 metadata:
   name: {{ include "service-signed-cert.name" . }}
   namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
   labels:
 {{ include "service-signed-cert.labels" . | nindent 4 }}
 spec:

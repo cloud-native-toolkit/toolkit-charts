@@ -3,6 +3,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ .Values.serviceAccount.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
   labels:
 {{ include "service-signed-cert.labels" . | nindent 4 }}
 rules:
@@ -14,6 +16,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ .Values.serviceAccount.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
   labels:
 {{ include "service-signed-cert.labels" . | nindent 4 }}
 subjects:
@@ -30,6 +34,8 @@ kind: Role
 metadata:
   name: {{ .Values.serviceAccount.name }}-secret
   namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
   labels:
 {{ include "service-signed-cert.labels" . | nindent 4 }}
 rules:
@@ -42,6 +48,8 @@ kind: RoleBinding
 metadata:
   name: {{ .Values.serviceAccount.name }}-secret
   namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
   labels:
 {{ include "service-signed-cert.labels" . | nindent 4 }}
 subjects:
