@@ -23,7 +23,6 @@ spec:
     sshPrivateKeySecretRef:
       name: {{ include "cluster.name" . }}-ssh-private-key
     imageSetRef:
-      #quay.io/openshift-release-dev/ocp-release:4.9.23-x86_64
       name: {{ include "imageset.name" . }} 
   pullSecretRef:
     name: {{ include "cluster.name" . }}-pull-secret

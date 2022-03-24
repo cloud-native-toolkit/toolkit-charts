@@ -2,12 +2,16 @@
   {{- if eq .Values.cloud.provider "Azure" -}}
     {{- include "cluster.installconfig.controlPlane.platform.azure" . -}}
   {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cluster.installconfig.controlPlane.platform.aws" . -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "cluster.installconfig.controlPlane.platform.azure" -}}
 azure:
   osDisk:
     diskSizeGB: {{ include "cloud.master.diskSizeGB" . }}
+    diskType:  {{ include "cloud.master.diskType" . }}
   type:  {{ include "cloud.master.vmsize" . }}
   zones:
   - "1"
@@ -15,9 +19,21 @@ azure:
   - "3"
 {{- end -}}
 
+{{- define "cluster.installconfig.controlPlane.platform.aws" -}}
+aws:
+  rootVolume:
+    iops: {{ include "cloud.master.diskIOPS" . | default "4000" }}
+    size: {{ include "cloud.master.diskSizeGB" . | default "100" }}
+    type: {{ include "cloud.master.diskType" . | default "io1" }}
+  type: {{ include "cloud.master.vmsize" . }}
+{{- end -}}
+
 {{- define "cluster.installconfig.compute.platform" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
     {{- include "cluster.installconfig.compute.platform.azure" . -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cluster.installconfig.compute.platform.aws" . -}}
   {{- end -}}
 {{- end -}}
 
@@ -25,16 +41,29 @@ azure:
 azure:
   osDisk:
     diskSizeGB: {{ include "cloud.worker.diskSizeGB" . }}
-  type:  {{ include "cloud.worker.vmsize" . }}
+    diskType: {{ include "cloud.worker.diskType" . }}
+  type: {{ include "cloud.worker.vmsize" . }}
   zones:
   - "1"
   - "2"
   - "3"
 {{- end -}}
 
+{{- define "cluster.installconfig.compute.platform.aws" -}}
+aws:
+  rootVolume:
+    iops: {{ include "cloud.worker.diskIOPS" . }}
+    size: {{ include "cloud.worker.diskSizeGB" . }}
+    type: {{ include "cloud.worker.diskType" . }}
+  type: {{ include "cloud.worker.vmsize" . }}
+{{- end -}}
+
 {{- define "cluster.installconfig.platform" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
     {{- include "cluster.installconfig.platform.azure" . -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cluster.installconfig.platform.aws" . -}}
   {{- end -}}
 {{- end -}}
 
@@ -61,6 +90,14 @@ azure:
   {{- end -}}
 {{- end -}}
 
+{{- define "cluster.installconfig.platform.aws" -}}
+aws:
+  region: {{ include "cloud.region" . }}
+  {{- if .Values.cloud.subnets }}
+  subnets:
+{{ toYaml .Values.cloud.subnets | indent 4}}
+  {{- end -}}
+{{- end -}}
 
 {{- define "cluster.installconfig" -}}
 apiVersion: v1
@@ -78,7 +115,7 @@ compute:
   name: worker
   replicas: 3
   platform:
-    {{- include "cluster.installconfig.compute.platform" . | nindent 4}}
+    {{- include "cluster.installconfig.compute.platform" . | nindent 4 }}
 networking:
   networkType: {{ include "cluster.networking.networkType" . | default "OpenShiftSDN" }}
   clusterNetwork:
@@ -92,5 +129,5 @@ platform:
   {{- include "cluster.installconfig.platform" . | nindent 2}}
 pullSecret: "" # skip, hive will inject based on it's secrets
 sshKey: |-
-    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJlPS4hSmr8DKh3L9YVOusuA3w8aqQc+33Z15ylXpEg30K6xkBZ40zTtAGACsBvsGAWuVuCeOEtnfU9d9MCTYU0FgnT9u+5hUrcAxBhEjFpDmhaexqHFWrYalFFgvIdTttFBLYIIb2nHQ9t7YdlmQIJuSRTCANs4lMmqyrCHCgcO+GXmubvg2lFfDKZjMyY7hn+FCeWKyBPxmL7AbyAp0Q9asL8zJhSVpKtjWQS5tOeV0RrwgrKb72qfLcq6yJB+d2ihmTvnLzikFeBQpwTXSktj/2J2vudT82Eey4u9QPAr6v24drdG+viM2KGpRRQefvmGASkH0vcaMnfhrhpnwf ncolon@ncm-mbpr.local
+  {{ include "cluster.sshkey" . }}
 {{- end -}}

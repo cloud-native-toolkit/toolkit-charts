@@ -14,6 +14,15 @@
   {{ .Values.cloud.provider }}
 {{- end -}}
 
+{{- define "metadata.labels.cloud" -}}
+  {{- if eq .Values.cloud.provider "Azure" -}}
+    {{ .Values.cloud.provider }}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    Amazon
+  {{- end -}}
+{{- end -}}
+
 {{- define "cluster.basedomain" -}}
   {{ .Values.cluster.baseDomain }}
 {{- end -}}
@@ -25,6 +34,9 @@
 {{- define "clusterdeployment.platform" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
     {{- include "clusterdeployment.platform.azure" . -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "clusterdeployment.platform.aws" . -}}
   {{- end -}}
 {{- end -}}
 
@@ -38,6 +50,15 @@ platform:
     cloudName: AzurePublicCloud
 {{- end -}}
 
+{{- define "clusterdeployment.platform.aws" -}}
+platform:
+  aws:
+    credentialsSecretRef:
+      name: {{ include "cluster.name" . }}-aws-creds
+    region: {{ include "cloud.region" . }}
+{{- end -}}
+
+
 {{- define "cloud.azure.baseDomainResourceGroupName" -}}
   {{- if .Values.cloud.azure.baseDomainResourceGroupName -}}
     {{- .Values.cloud.azure.baseDomainResourceGroupName -}}
@@ -50,15 +71,18 @@ platform:
 
 {{- define "cloud.worker.diskSizeGB" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
-    {{- include "cloud.azure.worker.diskSizeGB" . | default "1024" -}}
+    {{- include "cloud.worker.diskSizeGB.value" . | default "1024" -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.worker.diskSizeGB.value" . | default "100" -}}
   {{- end -}}
 {{- end -}}
 
-{{- define "cloud.azure.worker.diskSizeGB" -}}
-  {{- if .Values.cloud.azure -}}
-    {{- if .Values.cloud.azure.worker -}}
-      {{- if .Values.cloud.azure.worker.diskSizeGB -}}
-        {{- .Values.cloud.azure.worker.diskSizeGB -}}
+{{- define "cloud.worker.diskSizeGB.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.worker -}}
+      {{- if .Values.cloud.worker.diskSizeGB -}}
+        {{- .Values.cloud.worker.diskSizeGB -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -66,15 +90,88 @@ platform:
 
 {{- define "cloud.worker.vmsize" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
-    {{- include "cloud.azure.worker.vmsize" . | default "Standard_D2s_v3" -}}
+    {{- include "cloud.worker.vmsize.value" . | default "Standard_D4s_v3" -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.worker.vmsize.value" . | default "m5.xlarge" -}}
   {{- end -}}
 {{- end -}}
 
-{{- define "cloud.azure.worker.vmsize" -}}
-  {{- if .Values.cloud.azure -}}
-    {{- if .Values.cloud.azure.worker -}}
-      {{- if .Values.cloud.azure.worker.vmSize -}}
-        {{- .Values.cloud.azure.worker.vmSize -}}
+{{- define "cloud.worker.vmsize.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.worker -}}
+      {{- if .Values.cloud.worker.vmSize -}}
+        {{- .Values.cloud.worker.vmSize -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.worker.diskType" -}}
+  {{- if eq .Values.cloud.provider "Azure" -}}
+    {{- include "cloud.worker.diskType.value" . | default "Premium_LRS" -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.worker.diskType.value" . | default "io1" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.worker.diskType.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.worker -}}
+      {{- if .Values.cloud.worker.diskType -}}
+        {{- .Values.cloud.worker.diskType -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.worker.diskIOPS" -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.worker.diskType.value" . | default "2000" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.worker.diskIOPS.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.worker -}}
+      {{- if .Values.cloud.worker.diskIOPS -}}
+        {{- .Values.cloud.worker.diskIOPS -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.master.diskIOPS" -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.master.diskIOPS.value" . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.master.diskIOPS.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.master -}}
+      {{- if .Values.cloud.master.diskIOPS -}}
+        {{- .Values.cloud.master.diskIOPS -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.master.diskType" -}}
+  {{- if eq .Values.cloud.provider "Azure" -}}
+    {{- include "cloud.master.diskType.value" . | default "Premium_LRS" -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.master.diskType.value" . | default "io1" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "cloud.master.diskType.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.master -}}
+      {{- if .Values.cloud.master.diskType -}}
+        {{- .Values.cloud.master.diskType -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -82,15 +179,18 @@ platform:
 
 {{- define "cloud.master.diskSizeGB" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
-    {{- include "cloud.azure.master.diskSizeGB" . | default "1024" -}}
+    {{- include "cloud.master.diskSizeGB.value" . | default "1024" -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.master.diskSizeGB.value" . | default "100" -}}
   {{- end -}}
 {{- end -}}
 
-{{- define "cloud.azure.master.diskSizeGB" -}}
-  {{- if .Values.cloud.azure -}}
-    {{- if .Values.cloud.azure.master -}}
-      {{- if .Values.cloud.azure.master.diskSizeGB -}}
-        {{- .Values.cloud.azure.master.diskSizeGB -}}
+{{- define "cloud.master.diskSizeGB.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.master -}}
+      {{- if .Values.cloud.master.diskSizeGB -}}
+        {{- .Values.cloud.master.diskSizeGB -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -98,15 +198,18 @@ platform:
 
 {{- define "cloud.master.vmsize" -}}
   {{- if eq .Values.cloud.provider "Azure" -}}
-    {{- include "cloud.azure.master.vmsize" . | default "Standard_D4s_v3" -}}
+    {{- include "cloud.master.vmsize.value" . | default "Standard_D4s_v3" -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cloud.master.vmsize.value" . | default "m5.xlarge" -}}
   {{- end -}}
 {{- end -}}
 
-{{- define "cloud.azure.master.vmsize" -}}
-  {{- if .Values.cloud.azure -}}
-    {{- if .Values.cloud.azure.master -}}
-      {{- if .Values.cloud.azure.master.vmSize -}}
-        {{- .Values.cloud.azure.master.vmSize -}}
+{{- define "cloud.master.vmsize.value" -}}
+  {{- if .Values.cloud -}}
+    {{- if .Values.cloud.master -}}
+      {{- if .Values.cloud.master.vmSize -}}
+        {{- .Values.cloud.master.vmSize -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -164,6 +267,9 @@ platform:
   {{- if eq .Values.cloud.provider "Azure" -}}
     {{- include "cluster.credentials.secret.azure" . -}}
   {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "cluster.credentials.secret.aws" . -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "cluster.credentials.secret.azure" -}}
@@ -183,6 +289,30 @@ target:
     data:
       osServicePrincipal.json: |-
         {{ "{{ .osServicePrincipal | toString }}" }}
+{{- end -}}
+
+{{- define "cluster.credentials.secret.aws" -}}
+data:
+  - secretKey: awsAccessKeyId
+    remoteRef:
+      key: 4d18cfd7-84ee-dbb5-7567-cfef62391453
+  - secretKey: awsSecretAccessKey
+    remoteRef:
+      key: 8a79517a-04f6-b772-cda6-bde1071d9005
+refreshInterval: 24h
+secretStoreRef:
+  name: cluster
+  kind: ClusterSecretStore
+target:
+  name: {{ include "cluster.name" . }}-aws-creds
+  creationPolicy: Owner
+  template:
+    type: Opaque
+    data:
+      aws_access_key_id: |- 
+        {{ "{{ .awsAccessKeyId | toString }}" }}
+      aws_secret_access_key: |- 
+        {{ "{{ .awsSecretAccessKey | toString }}" }}
 {{- end -}}
 
 {{- define "gitops.instance.namespace" -}}
@@ -212,5 +342,40 @@ target:
         {{ .Values.gitops.channel.name }}
       {{- end -}}
     {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "machinepool.platform" -}}
+  {{- if eq .Values.cloud.provider "Azure" -}}
+    {{- include "machinepool.platform.azure" . -}}
+  {{- end -}}
+  {{- if eq .Values.cloud.provider "AWS" -}}
+    {{- include "machinepool.platform.aws" . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "machinepool.platform.azure" -}}
+azure:
+  osDisk:
+    diskSizeGB: {{ include "cloud.worker.diskSizeGB" . }}
+  type: {{ include "cloud.worker.vmsize" . }}
+  zones:
+    - "1"
+    - "2"
+    - "3"
+{{- end -}}
+
+{{- define "machinepool.platform.aws" -}}
+aws:
+  rootVolume:
+    iops: {{ include "cloud.worker.diskIOPS" . | default "2000" }}
+    size: {{ include "cloud.worker.diskSizeGB" . }}
+    type: {{ include "cloud.worker.diskType" . | default "io1" }}
+  type: {{ include "cloud.worker.vmsize" . }}
+{{- end -}}
+
+{{- define "cluster.sshkey" -}}
+  {{- if .Values.cluster.publicsshkey -}}
+    {{- .Values.cluster.publicsshkey -}}
   {{- end -}}
 {{- end -}}
