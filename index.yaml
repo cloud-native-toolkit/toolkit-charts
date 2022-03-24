@@ -1205,6 +1205,16 @@ entries:
   hivecluster:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-03-24T01:40:03.748259919Z"
+    description: A Helm chart for deploying OpenShift clusters via Hive/RHACM
+    digest: 98a0cbea08510bad8c67027c8fcfa958bd16dae6897626ada9cc62a4568ecfff
+    name: hivecluster
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/hivecluster-0.3.0/hivecluster-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-03-22T16:53:33.6140363Z"
     description: A Helm chart for deploying OpenShift clusters via Hive/RHACM
     digest: 9e39c5be0829daf1ffcf5292333263662efff1618be9f41d9edf5e94b79ed124
