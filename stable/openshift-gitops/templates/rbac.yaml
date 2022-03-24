@@ -28,7 +28,7 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: {{ printf "systen:serviceaccounts:%s" $releaseNamespace | quote }}
+  name: {{ printf "system:serviceaccounts:%s" $releaseNamespace | quote }}
 - kind: ServiceAccount
   name: job-{{ include "operator.name" . }}
   namespace: {{ include "operator.operator-namespace" . }}
