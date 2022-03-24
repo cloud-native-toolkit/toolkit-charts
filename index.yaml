@@ -3123,6 +3123,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/service-mesh-operator-0.1.0.tgz
     version: 0.1.0
+  service-signed-cert:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-03-24T03:25:55.574853434Z"
+    description: A Helm chart for Kubernetes
+    digest: a7b29c8468ae3690fb20e796d7eb5b10e11d56654b6f9d09dbea06a08ee25593
+    name: service-signed-cert
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/service-signed-cert-0.1.0/service-signed-cert-0.1.0.tgz
+    version: 0.1.0
   setup-job:
   - apiVersion: v2
     appVersion: 0.1.0
