@@ -11,12 +11,5 @@ spec:
     name: "{{ include "cluster.name" . }}"
   name: worker
   platform:
-    azure:
-      osDisk:
-        diskSizeGB: {{ include "cloud.worker.diskSizeGB" . }}
-      type: {{ include "cloud.worker.vmsize" . }}
-      zones:
-        - "1"
-        - "2"
-        - "3"
+    {{- include "machinepool.platform" . | nindent 4}}
   replicas: 3

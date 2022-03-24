@@ -23,7 +23,7 @@ kind: Subscription
 metadata:
   annotations:
     apps.open-cluster-management.io/git-branch: master
-    apps.open-cluster-management.io/git-path: 0-bootstrap/others/3-multi-cluster/{{ include "cluster.name" . }}/bootstrap.yaml
+    apps.open-cluster-management.io/git-path: 0-bootstrap/others/3-multi-cluster/targetclusters/{{ include "cluster.name" . }}/bootstrap.yaml
     apps.open-cluster-management.io/reconcile-option: merge
     argocd.argoproj.io/sync-wave: "130"
     helm.sh/hook-weight: "130"

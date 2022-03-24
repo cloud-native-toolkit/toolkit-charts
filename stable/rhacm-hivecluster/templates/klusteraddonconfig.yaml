@@ -1,17 +1,17 @@
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
-  name: {{ include "cluster.name" . }}
-  namespace: {{ include "cluster.namespace" . }}
+  name: '{{ include "cluster.name" . }}'
+  namespace: '{{ include "cluster.namespace" . }}'
   annotations:
     argocd.argoproj.io/sync-wave: "120"
     helm.sh/hook-weight: "120"
 spec:
-  clusterName: {{ include "cluster.name" . }}
-  clusterNamespace: {{ include "cluster.namespace" . }}
+  clusterName: '{{ include "cluster.name" . }}'
+  clusterNamespace: '{{ include "cluster.namespace" . }}'
   clusterLabels:
-    cloud: {{ include "cloud.provider" . }}
-    vendor: {{ include "cluster.vendor" . }}
+    cloud: '{{ include "metadata.labels.cloud" . }}'
+    vendor: '{{ include "cluster.vendor" . }}'
   applicationManager:
     proxyPolicy: OCPGlobalProxy
     enabled: true
@@ -27,4 +27,3 @@ spec:
   iamPolicyController:
     proxyPolicy: OCPGlobalProxy
     enabled: true
-
