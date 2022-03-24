@@ -1,0 +1,86 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "service-signed-cert.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "service-signed-cert.labels" . | nindent 4 }}
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ required "The service account name is required" .Values.serviceAccount.name }}
+      volumes:
+        - name: cert-dir
+          emptyDir: {}
+        - name: scripts
+          configMap:
+            name: {{ include "service-signed-cert.name" . }}
+            defaultMode: 0777
+      initContainers:
+        - name: create-csr
+          image: {{ printf "%s:%s" .Values.job.repository .Values.job.tag }}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: SERVICE
+              value: {{ .Values.serviceName }}
+            - name: CERT_DIR
+              value: /opt/certs
+          command: ["/opt/bin/create-csr.sh"]
+          volumeMounts:
+            - mountPath: /opt/certs
+              name: cert-dir
+            - mountPath: /opt/bin
+              name: scripts
+        {{- if .Values.job.autoApproveCsr }}
+        - name: approve-csr
+          image: {{ printf "%s:%s" .Values.job.repository .Values.job.tag }}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: SERVICE
+              value: {{ .Values.serviceName }}
+          command: ["/opt/bin/approve-csr.sh"]
+          volumeMounts:
+            - mountPath: /opt/bin
+              name: scripts
+        {{- end }}
+        - name: wait-for-csr
+          image: {{ printf "%s:%s" .Values.job.repository .Values.job.tag }}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: SERVICE
+              value: {{ .Values.serviceName }}
+          command: ["/opt/bin/wait-for-csr.sh"]
+          volumeMounts:
+            - mountPath: /opt/bin
+              name: scripts
+      containers:
+        - name: create-cert-secret
+          image: {{ printf "%s:%s" .Values.job.repository .Values.job.tag }}
+          command: ["/opt/bin/create-secret.sh"]
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: SERVICE
+              value: {{ .Values.serviceName }}
+            - name: SECRET_NAME
+              value: {{ required "The secretName is required" .Values.secretName }}
+            - name: CERT_DIR
+              value: /opt/certs
+          volumeMounts:
+            - mountPath: /opt/certs
+              name: cert-dir
+            - mountPath: /opt/bin
+              name: scripts
+      restartPolicy: Never
+  backoffLimit: 4
