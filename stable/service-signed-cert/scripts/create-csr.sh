@@ -35,10 +35,10 @@ keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 [alt_names]
-DNS.1 = ${SERVICE}
-DNS.2 = ${SERVICE}.${NAMESPACE}
-DNS.3 = ${SERVICE}.${NAMESPACE}.svc
-DNS.4 = ${SERVICE}.${NAMESPACE}.svc.cluster.local
+DNS.1 = ${SERVICE}.${NAMESPACE}.svc.cluster.local
+DNS.2 = ${SERVICE}
+DNS.3 = ${SERVICE}.${NAMESPACE}
+DNS.4 = ${SERVICE}.${NAMESPACE}.svc
 DNS.5 = *.${SERVICE}.${NAMESPACE}.svc.cluster.local
 EOF
 
