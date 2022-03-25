@@ -14,3 +14,4 @@ serviceAccount:
 
 serviceName: ""
 secretName: ""
+caConfigName: ""

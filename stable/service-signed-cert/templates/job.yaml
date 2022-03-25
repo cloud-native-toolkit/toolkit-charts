@@ -81,6 +81,10 @@ spec:
               value: {{ .Values.serviceName }}
             - name: SECRET_NAME
               value: {{ required "The secretName is required" .Values.secretName }}
+            {{- if .Values.caConfigName }}
+            - name: CA_CONFIG_MAP_NAME
+              value: {{ .Values.caConfigName }}
+            {{- end }}
             - name: CERT_DIR
               value: /opt/certs
           volumeMounts:
