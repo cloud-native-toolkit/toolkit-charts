@@ -45,5 +45,14 @@ oc create secret generic ${SECRET_NAME} \
   --from-file=key.pem="${CERT_DIR}"/server-key.pem \
   --from-file=cert.pem="${CERT_DIR}"/server-cert.pem \
   --dry-run=client \
-  -o yaml |
+  -o yaml | \
   oc -n ${NAMESPACE} apply -f -
+
+if [[ -n "${CA_CONFIG_MAP_NAME}" ]]; then
+  oc get cm -n "${NAMESPACE}" kube-root-ca.crt -o jsonpath='{ .data.ca\.crt }' | base64 -D > "${CERT_DIR}/ca.crt"
+  oc create configmap ${CA_CONFIG_MAP_NAME} \
+    --from-file=ca.crt="${CERT_DIR}/ca.crt" \
+    --dry-run=client \
+    -o yaml | \
+    oc -n "${NAMESPACE}" apply -f -
+fi

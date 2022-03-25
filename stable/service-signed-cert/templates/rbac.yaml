@@ -48,7 +48,7 @@ metadata:
 {{ include "service-signed-cert.labels" . | nindent 4 }}
 rules:
   - apiGroups: [""]
-    resources: ["secrets"]
+    resources: ["secrets","configmaps"]
     verbs: ["*"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
