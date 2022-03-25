@@ -10,9 +10,6 @@ metadata:
 {{ include "service-signed-cert.labels" . | nindent 4 }}
 spec:
   template:
-    metadata:
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       serviceAccountName: {{ required "The service account name is required" .Values.serviceAccount.name }}
       volumes:
