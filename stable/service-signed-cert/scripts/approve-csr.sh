@@ -19,9 +19,17 @@ fi
 
 # verify CSR has been created
 while true; do
-  if oc get csr ${csrName}; then
+  if oc get csr ${csrName} 1> /dev/null 2> /dev/null; then
+    echo "Found csr: ${csrName}"
     break
   fi
 done
 
-oc get csr ${csrName} -o json | jq -r 'select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
+CSR_NAME=$(oc get csr ${csrName} -o json | jq -r 'select(.status == {} ) | .metadata.name')
+
+echo "Unapproved csr: ${CSR_NAME}"
+
+if [[ -n "${CSR_NAME}" ]]; then
+  echo "Approving csr: ${CSR_NAME}"
+  kubectl certificate approve "${CSR_NAME}"
+fi
