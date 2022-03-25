@@ -1,0 +1,187 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "service-signed-cert.name" . }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+  labels:
+  {{ include "service-signed-cert.labels" . | nindent 4 }}
+data:
+  approve-csr.sh: |
+    #!/bin/bash
+
+    if [[ -z "${SERVICE}" ]] || [[ -z "${NAMESPACE}" ]]; then
+      echo "SERVICE and NAMESPACE are required environment variables" >&2
+      exit 1
+    fi
+
+    csrName=${SERVICE}.${NAMESPACE}
+
+    if ! command -v oc 1> /dev/null 2> /dev/null; then
+      echo "oc cli not found" >&2
+      exit 1
+    fi
+
+    if ! command -v jq 1> /dev/null 2> /dev/null; then
+      echo "jq cli not found" >&2
+      exit 1
+    fi
+
+    # verify CSR has been created
+    while true; do
+      if oc get csr ${csrName}; then
+        break
+      fi
+    done
+
+    oc get csr ${csrName} -o json | jq -r 'select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
+  create-csr.sh: |
+    #!/bin/bash
+
+    if [[ -z "${SERVICE}" ]] || [[ -z "${NAMESPACE}" ]]; then
+      echo "SERVICE and NAMESPACE are required environment variables" >&2
+      exit 1
+    fi
+
+    csrName=${SERVICE}.${NAMESPACE}
+
+    echo "creating certs in CERT_DIR ${CERT_DIR} "
+
+    if ! command -v openssl 1> /dev/null 2> /dev/null; then
+      echo "openssl cli not found" >&2
+      exit 1
+    fi
+
+    if ! command -v oc 1> /dev/null 2> /dev/null; then
+      echo "oc cli not found" >&2
+      exit 1
+    fi
+
+    if [[ -z "${CERT_DIR}" ]]; then
+      CERT_DIR=/tmp/cert
+      mkdir -p "${CERT_DIR}"
+    fi
+
+    cat <<EOF >> "${CERT_DIR}"/csr.conf
+    [req]
+    req_extensions = v3_req
+    distinguished_name = req_distinguished_name
+    [req_distinguished_name]
+    [ v3_req ]
+    basicConstraints = CA:FALSE
+    keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+    extendedKeyUsage = serverAuth
+    subjectAltName = @alt_names
+    [alt_names]
+    DNS.1 = ${SERVICE}
+    DNS.2 = ${SERVICE}.${NAMESPACE}
+    DNS.3 = ${SERVICE}.${NAMESPACE}.svc
+    DNS.4 = ${SERVICE}.${NAMESPACE}.svc.cluster.local
+    DNS.5 = *.${SERVICE}.${NAMESPACE}.svc.cluster.local
+    EOF
+
+    openssl genrsa -out "${CERT_DIR}"/server-key.pem 2048
+    openssl req -new -key "${CERT_DIR}"/server-key.pem -subj "/CN=${SERVICE}.${NAMESPACE}.svc" -out "${CERT_DIR}"/server.csr -config "${CERT_DIR}"/csr.conf
+
+    # clean-up any previously created CSR for our service. Ignore errors if not present.
+    echo "Deleting existing csr ${csrName}, if present"
+    oc delete csr ${csrName} 2>/dev/null || true
+
+    echo "Creating csr ${csrName} for cert "${CERT_DIR}"/server.csr"
+    cat <<EOF | oc create -f -
+    apiVersion: certificates.k8s.io/v1beta1
+    kind: CertificateSigningRequest
+    metadata:
+      name: ${csrName}
+    spec:
+      groups:
+        - system:authenticated
+      request: $(< "${CERT_DIR}"/server.csr base64 | tr -d '\n')
+      usages:
+        - digital signature
+        - key encipherment
+        - server auth
+    EOF
+
+    #echo "Verifying csr has been created"
+    #while true; do
+    #  if oc get csr ${csrName}; then
+    #    break
+    #  fi
+    #done
+  create-secret.sh: |
+    #!/bin/bash
+
+    if [[ -z "${SERVICE}" ]] || [[ -z "${NAMESPACE}" ]]; then
+      echo "SERVICE and NAMESPACE are required environment variables" >&2
+      exit 1
+    fi
+
+    if [[ -z "${SECRET_NAME}" ]]; then
+      SECRET_NAME="${SERVICE}"
+    fi
+
+    csrName=${SERVICE}.${NAMESPACE}
+
+    if ! command -v oc 1> /dev/null 2> /dev/null; then
+      echo "oc cli not found" >&2
+      exit 1
+    fi
+
+    if ! command -v openssl 1> /dev/null 2> /dev/null; then
+      echo "openssl cli not found" >&2
+      exit 1
+    fi
+
+    if [[ -z "${CERT_DIR}" ]]; then
+      CERT_DIR=/tmp/cert
+      mkdir -p "${CERT_DIR}"
+    fi
+
+    for _ in $(seq 10); do
+      serverCert=$(oc get csr ${csrName} -o jsonpath='{.status.certificate}')
+      if [[ -n "${serverCert}" ]]; then
+        break
+      fi
+      sleep 1
+    done
+
+    if [[ -z "${serverCert}" ]]; then
+      echo "ERROR: After approving csr ${csrName}, the signed certificate did not appear on the resource. Giving up after 10 attempts." >&2
+      exit 1
+    fi
+    echo "${serverCert}" | openssl base64 -d -A -out "${CERT_DIR}"/server-cert.pem
+
+    # create the secret with CA cert and server cert/key
+    oc create secret generic ${SECRET_NAME} \
+      --from-file=key.pem="${CERT_DIR}"/server-key.pem \
+      --from-file=cert.pem="${CERT_DIR}"/server-cert.pem \
+      --dry-run=client \
+      -o yaml |
+      oc -n ${NAMESPACE} apply -f -
+  wait-for-csr.sh: |
+    #!/bin/bash
+
+    if [[ -z "${SERVICE}" ]] || [[ -z "${NAMESPACE}" ]]; then
+      echo "SERVICE and NAMESPACE are required environment variables" >&2
+      exit 1
+    fi
+
+    csrName=${SERVICE}.${NAMESPACE}
+
+    if ! command -v oc 1> /dev/null 2> /dev/null; then
+      echo "oc cli not found" >&2
+      exit 1
+    fi
+
+    while true; do
+      echo "Getting certificate value from csr ${csrName}"
+      serverCert=$(oc get csr ${csrName} -o jsonpath='{.status.certificate}')
+      if [[ -n "${serverCert}" ]]; then
+          break
+      fi
+      sleep 30
+    done
+
+    echo "*** The certificate has been approved - ${csrName}"
