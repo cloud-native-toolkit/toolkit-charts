@@ -222,7 +222,7 @@ providerSpec:
       - {{ $.Values.infrastructureId }}-sg-cluster-wide
       - {{ $.Values.infrastructureId }}-sg-openshift-net
       subnet: {{ $.Values.infrastructureId }}-subnet-compute-{{ include "cloud.region" . }}-{{ .Zone }}
-    profile: bx2-16x64
+    profile: {{ include "machineset.defaultNodeSize" $params }}
     region: {{ include "cloud.region" . }}
     resourceGroup: {{ $.Values.infrastructureId }}
     userDataSecret:

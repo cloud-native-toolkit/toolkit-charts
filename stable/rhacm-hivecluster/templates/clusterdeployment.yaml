@@ -1,0 +1,28 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: {{ include "cluster.name" . }}
+  namespace: {{ include "cluster.namespace" . }}
+  labels:
+    cloud: {{ include "cloud.provider" . }}
+    region: {{ include "cloud.region" . }}
+    vendor: {{ include "cluster.vendor" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "120"
+    helm.sh/hook-weight: "120"
+spec:
+  baseDomain: {{ include "cluster.basedomain" . }}
+  clusterName: {{ include "cluster.name" . }}
+  controlPlaneConfig:
+    servingCertificates: {}
+  installAttemptsLimit: 1
+  {{- include "clusterdeployment.platform" . | nindent 2 }}
+  provisioning:
+    installConfigSecretRef:
+      name: {{ include "cluster.name" . }}-install-config
+    sshPrivateKeySecretRef:
+      name: {{ include "cluster.name" . }}-ssh-private-key
+    imageSetRef:
+      name: {{ include "imageset.name" . }} 
+  pullSecretRef:
+    name: {{ include "cluster.name" . }}-pull-secret

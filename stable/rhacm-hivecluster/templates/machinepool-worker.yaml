@@ -1,0 +1,15 @@
+apiVersion: hive.openshift.io/v1
+kind: MachinePool
+metadata:
+  name: {{ include "cluster.name" . }}-worker
+  namespace: {{ include "cluster.namespace" .}}
+  annotations:
+    argocd.argoproj.io/sync-wave: "120"
+    helm.sh/hook-weight: "120"
+spec:
+  clusterDeploymentRef:
+    name: "{{ include "cluster.name" . }}"
+  name: worker
+  platform:
+    {{- include "machinepool.platform" . | nindent 4}}
+  replicas: 3
