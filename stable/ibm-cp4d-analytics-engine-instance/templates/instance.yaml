@@ -1,0 +1,10 @@
+apiVersion: ae.cpd.ibm.com/v1
+kind: AnalyticsEngine
+metadata:
+  name: {{ .Values.metadata.name }}
+spec:
+  license:
+    accept: {{ .Values.spec.license.accept }}
+    license: {{ .Values.spec.license.license }}
+  version: {{ .Values.spec.version }}
+  storageClass: {{ .Values.spec.storageClass }}
