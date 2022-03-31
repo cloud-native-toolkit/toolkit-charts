@@ -1527,6 +1527,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4a-operator-0.1.0/ibm-cp4a-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-cp4d-analytics-engine-instance:
+  - apiVersion: v2
+    appVersion: 4.0.4
+    created: "2022-03-31T20:05:31.647265818Z"
+    description: A Helm chart for Kubernetes
+    digest: 23959909f5139553efecdd4fe0262d1e26ff2e55e9666b0a52436e9b16f787e7
+    name: ibm-cp4d-analytics-engine-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-analytics-engine-instance-0.1.0/ibm-cp4d-analytics-engine-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-cp4d-watson-knowledge-catalog-instance:
   - apiVersion: v2
     appVersion: 4.0.4
