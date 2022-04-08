@@ -1,11 +1,11 @@
-{{- if .Values.createInstance -}}
+{{- if eq .Release.Namespace "openshift-gitops" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-{{ include "operator.name" . }}
-  namespace: {{ include "operator.operator-namespace" . }}
+  name: config-{{ include "openshift-gitops-instance.name" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "operator.labels" . | nindent 4 }}
+    {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install
 data:
@@ -13,12 +13,12 @@ data:
     apiVersion: argoproj.io/v1alpha1
     kind: ArgoCD
     metadata:
-      name: {{ include "operator.argocd-name" . }}
+      name: {{ include "openshift-gitops-instance.argocd-name" . }}
     spec:
       dex:
-        openShiftOAuth: {{ .Values.instance.dex.openShiftOAuth }}
-        {{- if .Values.instance.dex.image }}
-        image: {{ .Values.instance.dex.image }}
+        openShiftOAuth: {{ .Values.openshiftgitops.argocd.spec.dex.openShiftOAuth }}
+        {{- if .Values.openshiftgitops.argocd.spec.dex.image }}
+        image: {{ .Values.openshiftgitops.argocd.spec.dex.image }}
         {{- end }}
       rbac:
         defaultPolicy: 'role:readonly'
@@ -30,19 +30,7 @@ data:
           enabled: true
   patch.yaml: |
     spec:
-      dex:
-        openShiftOAuth: {{ .Values.instance.dex.openShiftOAuth }}
-        {{- if .Values.instance.dex.image }}
-        image: {{ .Values.instance.dex.image }}
-        {{- end }}
-      rbac:
-        defaultPolicy: 'role:readonly'
-        policy: |
-          g, argocd-admins, role:admin
-        scopes: '[groups]'
-      server:
-        route:
-          enabled: true
+      {{- .Values.openshiftgitops.argocd.spec | toYaml | nindent 6 }}
   apply.sh: |
     NAMESPACE="$1"
     INSTANCE_NAME="$2"

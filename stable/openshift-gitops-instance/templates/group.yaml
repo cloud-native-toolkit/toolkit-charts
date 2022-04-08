@@ -3,5 +3,5 @@ kind: Group
 metadata:
   name: argocd-admins
   labels:
-    {{- include "operator.labels" . | nindent 4 }}
+    {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
 users: []

@@ -1,6 +1,8 @@
+{{- if ne .Release.Namespace "openshift-gitops" }}
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
   name: {{ .Values.openshiftgitops.argocd.name }}
 spec:
   {{- toYaml .Values.openshiftgitops.argocd.spec | nindent 2 }}
+{{- end }}

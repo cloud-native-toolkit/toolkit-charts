@@ -1,12 +1,12 @@
 {{- if .Values.controllerRbac -}}
-{{- $releaseNamespace := "openshift-gitops" -}}
+{{- $releaseNamespace := .Release.Namespace -}}
 {{- $name := printf "%s-argocd" $releaseNamespace }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ $name }}
   labels:
-    {{ include "operator.labels" . | nindent 4 }}
+    {{ include "openshift-gitops-instance.labels" . | nindent 4 }}
 rules:
 - apiGroups:
   - "*"
@@ -20,7 +20,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ $name }}
   labels:
-    {{ include "operator.labels" . | nindent 4 }}
+    {{ include "openshift-gitops-instance.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -30,7 +30,7 @@ subjects:
   kind: Group
   name: {{ printf "system:serviceaccounts:%s" $releaseNamespace | quote }}
 - kind: ServiceAccount
-  name: job-{{ include "operator.name" . }}
-  namespace: {{ include "operator.operator-namespace" . }}
+  name: job-{{ include "openshift-gitops-instance.name" . }}
+  namespace: {{ .Release.Namespace }}
 ---
 {{- end -}}
