@@ -1,35 +1,35 @@
-{{- if .Values.createInstance -}}
+{{- if eq .Release.Namespace "openshift-gitops" }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: {{ include "operator.operator-namespace" . }}
-  name: job-{{ include "operator.name" . }}
+  namespace: {{ .Release.Namespace }}
+  name: job-{{ include "openshift-gitops-instance.name" . }}
   labels:
-    {{- include "operator.labels" . | nindent 4 }}
+    {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: job-{{ include "operator.name" . }}
-  namespace: {{ include "operator.operator-namespace" . }}
+  name: job-{{ include "openshift-gitops-instance.name" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "operator.labels" . | nindent 4 }}
+    {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
-      name: job-{{ include "operator.name" . }}
+      name: job-{{ include "openshift-gitops-instance.name" . }}
       labels:
-        {{- include "operator.labels" . | nindent 8 }}
+        {{- include "openshift-gitops-instance.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: job-{{ include "operator.name" . }}
+      serviceAccountName: job-{{ include "openshift-gitops-instance.name" . }}
       restartPolicy: Never
       volumes:
         - name: config-yaml
           configMap:
-            name: config-{{ include "operator.name" . }}
+            name: config-{{ include "openshift-gitops-instance.name" . }}
       containers:
         - name: create-instance
           image: "quay.io/bitnami/kubectl:latest"
@@ -40,7 +40,7 @@ spec:
             - name: NAMESPACE
               value: openshift-gitops
             - name: INSTANCE_NAME
-              value: {{ include "operator.argocd-name" . }}
+              value: {{ include "openshift-gitops-instance.argocd-name" . }}
           command: ["/bin/sh", "-c"]
           args:
             - cp /tmp/config/apply.sh /tmp/apply.sh;

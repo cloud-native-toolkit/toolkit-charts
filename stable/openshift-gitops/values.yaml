@@ -15,12 +15,9 @@ operatorNamespace: ""
 
 createInstance: true
 
-instance:
-  dex:
-    openShiftOAuth: true
-    image: ""
-
 controllerRbac: true
+
+namespaceScoped: false
 
 subscription:
   source: redhat-operators
