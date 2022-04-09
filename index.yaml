@@ -2592,6 +2592,16 @@ entries:
   openshift-gitops:
   - apiVersion: v2
     appVersion: 0.4.0
+    created: "2022-04-09T04:02:16.172506751Z"
+    description: A Helm chart to install ArgoCD via the operator
+    digest: 1a1fd2033dbedb8ae36aaf6e2b703b3eaef441b0874e2f713d10e5c82f2168de
+    name: openshift-gitops
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openshift-gitops-0.9.0/openshift-gitops-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v2
+    appVersion: 0.4.0
     created: "2022-03-24T12:19:30.829300238Z"
     description: A Helm chart to install ArgoCD via the operator
     digest: 845e600233975adeb141e4eb0d91f3ae4037c22787d33e94c1034ea2c58653be
@@ -2661,6 +2671,16 @@ entries:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openshift-gitops-0.3.0/openshift-gitops-0.3.0.tgz
     version: 0.3.0
   openshift-gitops-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-04-09T04:02:16.380060631Z"
+    description: A Helm chart for Kubernetes
+    digest: ae3b24cd272e078c03f56f303f0b434e1b712d6609335c56328eccb87fd8788a
+    name: openshift-gitops-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openshift-gitops-instance-0.3.0/openshift-gitops-instance-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-03-04T20:22:31.912531713Z"
