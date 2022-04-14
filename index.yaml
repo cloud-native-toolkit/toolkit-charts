@@ -1666,6 +1666,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cpd-scheduling-operator-0.1.1/ibm-cpd-scheduling-operator-0.1.1.tgz
     version: 0.1.1
+  ibm-cpd-wos-instance:
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2022-04-14T21:39:09.278766035Z"
+    description: A Helm chart for Kubernetes
+    digest: 9766015d9ca2b15369206284f8512f9a2dd575679f9827f59b5bc62032fb18af
+    name: ibm-cpd-wos-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cpd-wos-instance-0.1.0/ibm-cpd-wos-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-datapower-operator:
   - apiVersion: v2
     appVersion: 1.16.0
