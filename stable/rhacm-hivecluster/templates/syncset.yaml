@@ -1,0 +1,20 @@
+{{- if (default .Values.cluster.installInstanaAgent false) }}
+apiVersion: hive.openshift.io/v1
+kind: SyncSet
+metadata:
+  name: syncset-{{ include "cluster.name" . }}-instana
+  namespace: '{{ include "cluster.namespace" . }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "130"
+    helm.sh/hook-weight: "130"
+spec:
+  clusterDeploymentRefs:
+    - name: '{{ include "cluster.name" . }}'
+  secretMappings:
+    - sourceRef:
+        name: externalsecret-apikey
+        namespace: '{{ include "cluster.name" . }}'
+      targetRef:
+        name: ibmcloud-credentials
+        namespace: kube-system
+{{- end -}}
