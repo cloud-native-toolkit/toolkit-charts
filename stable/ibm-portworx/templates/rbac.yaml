@@ -1,0 +1,71 @@
+{{- if .Values.rbac -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "ibm-portworx.fullname" . }}
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "nodes"
+    verbs:
+      - "list"
+      - "get"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "ibm-portworx.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+rules:
+  - apiGroups:
+      - "apps"
+    resources:
+      - "daemonsets"
+    verbs:
+      - "list"
+      - "get"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "ibm-portworx.fullname" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "ibm-portworx.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "ibm-portworx.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "ibm-portworx.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "ibm-portworx.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "ibm-portworx.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end -}}
