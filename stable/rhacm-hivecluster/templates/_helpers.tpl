@@ -277,7 +277,7 @@ data:
 - secretKey: osServicePrincipal
   remoteRef:
     key: 595f66cd-047c-dbdf-9467-948d74346e1a
-refreshInterval: 24h
+refreshInterval: 24h0m0s
 secretStoreRef:
   name: cluster
   kind: ClusterSecretStore
@@ -299,7 +299,7 @@ data:
   - secretKey: awsSecretAccessKey
     remoteRef:
       key: 8a79517a-04f6-b772-cda6-bde1071d9005
-refreshInterval: 24h
+refreshInterval: 24h0m0s
 secretStoreRef:
   name: cluster
   kind: ClusterSecretStore
