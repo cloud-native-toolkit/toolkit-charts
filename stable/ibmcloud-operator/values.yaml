@@ -15,17 +15,11 @@ clusterType: ""
 
 ocpCatalog:
   source: community-operators
-  channel: alpha
+  channel: stable
   name: ibmcloud-operator
 operatorHub:
   source: operatorhubio-catalog
-  channel: alpha
+  channel: stable
   name: ibmcloud-operator
 
-apiKey: ""
-resourceGroup: ""
-resourceGroupId: ""
-region: ""
-user: ""
-org: ""
-space: ""
+configNamespace: ""

@@ -1,14 +1,11 @@
+{{- if .Values.configNamespace }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-ibm-cloud-operator
-  namespace: default
+  name: ibmcloud-operator-config
+  namespace: {{ include "operator.operator-namespace" . }}
   labels:
-    {{- include "operator.labels" . | nindent 4 }}
+    {{ include "operator.labels" . }}
 data:
-  org: {{ .Values.org | quote }}
-  region: {{ .Values.region | quote }}
-  resourcegroup: {{ required "The resourceGroup must be provided" .Values.resourceGroup | quote }}
-  resourcegroupid: {{ .Values.resourceGroupId | quote }}
-  space: {{ .Values.space | quote }}
-  user: {{ .Values.user | quote }}
+  namespace: {{ .Values.configNamespace }}
+{{- end }}
