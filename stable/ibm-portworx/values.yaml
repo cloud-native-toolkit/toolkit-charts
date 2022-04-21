@@ -6,7 +6,7 @@ image:
   repository: quay.io/cloudnativetoolkit/cli-tools
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v1.2.0-v1.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -24,10 +24,11 @@ serviceAccount:
 rbac: true
 
 apikey: ""
-apikeySecretName: ibmcloud-credentials
 
 clusterConfigSecretName: ibmcloud-config
+
 resourceGroupId: ""
+region: ""
 
 plan: px-enterprise
 etcdSecretName: ""

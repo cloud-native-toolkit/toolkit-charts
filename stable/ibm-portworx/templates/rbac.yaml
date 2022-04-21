@@ -7,6 +7,7 @@ metadata:
   {{- include "ibm-portworx.labels" . | nindent 4 }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
 rules:
   - apiGroups:
       - ""
@@ -15,6 +16,18 @@ rules:
     verbs:
       - "list"
       - "get"
+  - apiGroups:
+      - ""
+    resources:
+      - "secrets"
+    verbs:
+      - "list"
+  - apiGroups:
+      - "rbac.authorization.k8s.io"
+    resources:
+      - "clusterrolebindings"
+    verbs:
+      - "*"
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -23,6 +36,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
   labels:
   {{- include "ibm-portworx.labels" . | nindent 4 }}
 rules:
@@ -33,6 +47,12 @@ rules:
     verbs:
       - "list"
       - "get"
+  - apiGroups:
+      - ""
+    resources:
+      - "secrets"
+    verbs:
+      - "*"
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -40,6 +60,7 @@ metadata:
   name: {{ include "ibm-portworx.fullname" . }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
   labels:
   {{- include "ibm-portworx.labels" . | nindent 4 }}
 roleRef:
@@ -58,6 +79,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
   labels:
   {{- include "ibm-portworx.labels" . | nindent 4 }}
 roleRef:

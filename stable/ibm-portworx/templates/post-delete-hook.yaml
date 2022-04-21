@@ -1,0 +1,128 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-delete" (include "ibm-portworx.fullname" .) }}
+  labels:
+    {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ printf "%s-delete" (include "ibm-portworx.fullname" .) }}
+            defaultMode: 0777
+      serviceAccountName: {{ printf "%s-delete" (include "ibm-portworx.serviceAccountName" .) }}
+      containers:
+        - name: wipe-portworx
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Release.Revision }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: SERVICE_NAME
+              value: {{ include "ibm-portworx.service-name" . }}
+          command:
+            - /scripts/wipe_portworx.sh
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ printf "%s-delete" (include "ibm-portworx.serviceAccountName" .) }}
+  labels:
+    {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ printf "%s-delete" (include "ibm-portworx.fullname" .) }}
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "secrets"
+      - "configmaps"
+      - "serviceaccounts"
+      - "services"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "batch"
+    resources:
+      - "jobs"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "apps"
+    resources:
+      - "daemonsets"
+      - "deployments"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "apiextensions.k8s.io"
+    resources:
+      - "customresourcedefinitions"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "storage.k8s.io"
+    resources:
+      - "storageclasses"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "rbac.authorization.k8s.io"
+    resources:
+      - "clusterrolebindings"
+      - "clusterroles"
+    verbs:
+      - "*"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ printf "%s-delete" (include "ibm-portworx.fullname" .) }}
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ printf "%s-delete" (include "ibm-portworx.fullname" .) }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ printf "%s-delete" (include "ibm-portworx.serviceAccountName" .) }}
+    namespace: {{ .Release.Namespace }}
+---

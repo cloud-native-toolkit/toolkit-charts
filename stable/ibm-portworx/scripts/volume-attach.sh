@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
-NODE_NAME="$1"
-RESOURCE_GROUP_ID="$2"
+SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
 
-if [[ -z "${NODE_NAME}" ]] || [[ -z "${RESOURCE_GROUP_ID}" ]]; then
-  echo "usage: attach-volume.sh NODE_NAME RESOURCE_GROUP_ID" >&2
+RESOURCE_GROUP_ID="$1"
+REGION="$2"
+WORKER_ID="$3"
+CLUSTER_ID="$4"
+
+if [[ -z "${RESOURCE_GROUP_ID}" ]] || [[ -z "${REGION}" ]] ||  [[ -z "${WORKER_ID}" ]] || [[ -z "${CLUSTER_ID}" ]]; then
+  echo "usage: volume-attach.sh RESOURCE_GROUP_ID REGION WORKER_ID CLUSTER_ID" >&2
   exit 1
 fi
 
@@ -28,22 +32,13 @@ if ! command -v kubectl 1> /dev/null 2> /dev/null; then
   exit 1
 fi
 
-REGION=$(kubectl get node "${NODE_NAME}" -o json | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/region"]')
-WORKER_ID=$(kubectl get node "${NODE_NAME}" -o json | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/worker-id"]')
-PROVIDER_ID=$(kubectl get node "${NODE_NAME}" -o json | jq -r '.spec.providerID')
-CLUSTER_ID=$(echo "${PROVIDER_ID}" | sed -E 's~ibm://.*/([^/]+)/.+~\1~g')
+source "${SCRIPT_DIR}/support-functions.sh"
 
 NAME="pwx-${WORKER_ID}"
 
-export TOKEN=$(curl -s -X POST "https://iam.cloud.ibm.com/identity/token" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${IBMCLOUD_API_KEY}" | jq -r '.access_token')
+get_token "${IBMCLOUD_API_KEY}"
 
-API_VERSION="2021-04-06"
-
-VOLUME_ID=$(curl -X GET "https://${REGION}.iaas.cloud.ibm.com/v1/volumes?version=${API_VERSION}&generation=2" \
-  -H "Authorization: ${TOKEN}" | \
-  jq -r --arg NAME "${NAME}" '.volumes[] | select(.name == $NAME) | .id // empty')
+get_volume_id "${REGION}" "${NAME}"
 
 # Before creating, check to see if attachment for volume is already present
 if ! RESPONSE=$(curl -s -X GET \

@@ -11,8 +11,17 @@ oc create configmap tmp \
   --from-file="${SCRIPT_DIR}/volume-attach.sh" \
   --from-file="${SCRIPT_DIR}/volume-attachment-destroy.sh" \
   --from-file="${SCRIPT_DIR}/volume-manage.sh" \
-  --from-file="${SCRIPT_DIR}/wipe_portworx.sh" \
   --from-file="${SCRIPT_DIR}/write-config-secret.sh" \
+  --from-file="${SCRIPT_DIR}/support-functions.sh" \
   --dry-run=client \
   -o yaml | \
 yq eval 'del(.apiVersion) | del(.kind) | del(.metadata)' - >> "${TEMPLATE_DIR}/configmap.yaml"
+
+
+cat "${SUPPORT_DIR}/configmap-delete.snippet.yaml" > "${TEMPLATE_DIR}/post-delete-hook-config.yaml"
+
+oc create configmap tmp \
+  --from-file="${SCRIPT_DIR}/wipe_portworx.sh" \
+  --dry-run=client \
+  -o yaml | \
+yq eval 'del(.apiVersion) | del(.kind) | del(.metadata)' - >> "${TEMPLATE_DIR}/post-delete-hook-config.yaml"

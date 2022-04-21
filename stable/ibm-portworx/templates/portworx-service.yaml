@@ -34,5 +34,5 @@ spec:
     - name: apikey
       valueFrom:
         secretKeyRef:
-          name: {{ .Values.apikeySecretName }}
-          key: apikey
+          name: {{ include "ibm-portworx.operator-secret" . }}
+          key: api-key

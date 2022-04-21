@@ -68,3 +68,15 @@ Create the name of the service account to use
 {{- "internal" }}
 {{- end }}
 {{- end }}
+
+{{- define "ibm-portworx.operator-secret" }}
+{{- "ibmcloud-operator-secret" }}
+{{- end }}
+
+{{- define "ibm-portworx.operator-config" }}
+{{- "ibmcloud-operator-defaults" }}
+{{- end }}
+
+{{- define "ibm-portworx.service-name" }}
+{{- "portworx" }}
+{{- end }}

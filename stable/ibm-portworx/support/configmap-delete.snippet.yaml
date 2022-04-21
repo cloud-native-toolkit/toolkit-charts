@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-delete" (include "ibm-portworx.fullname" .) }}
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+labels:
+    {{- include "ibm-portworx.labels" . | nindent 4 }}

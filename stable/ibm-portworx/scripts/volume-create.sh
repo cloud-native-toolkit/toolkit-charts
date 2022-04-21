@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
+
 NODE_NAME="$1"
 RESOURCE_GROUP_ID="$2"
 
@@ -14,24 +16,30 @@ if [[ -z "${IBMCLOUD_API_KEY}" ]]; then
 fi
 
 if ! command -v curl 1> /dev/null 2> /dev/null; then
-  echo "curl command not found" > &2
+  echo "curl command not found" >&2
   exit 1
 fi
 
 if ! command -v jq 1> /dev/null 2> /dev/null; then
-  echo "jq command not found" > &2
+  echo "jq command not found" >&2
   exit 1
 fi
 
 if ! command -v kubectl 1> /dev/null 2> /dev/null; then
-  echo "kubectl command not found" > &2
+  echo "kubectl command not found" >&2
   exit 1
 fi
 
+source "${SCRIPT_DIR}/support-functions.sh"
+
 ## Lookup zone and resource group from the cluster
-REGION=$(kubectl get node "${NODE_NAME}" -o json | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/region"]')
-ZONE=$(kubectl get node "${NODE_NAME}" -o json | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/zone"]')
-WORKER_ID=$(kubectl get node "${NODE_NAME}" -o json | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/worker-id"]')
+NODE_JSON=$(kubectl get node "${NODE_NAME}" -o json)
+
+REGION=$(echo "${NODE_JSON}" | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/region"]')
+ZONE=$(echo "${NODE_JSON}" | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/zone"]')
+WORKER_ID=$(echo "${NODE_JSON}" | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/worker-id"]')
+
+echo "Node values: region=${REGION}, zone=${ZONE}, workerId=${WORKER_ID}"
 
 NAME="pwx-${WORKER_ID}"
 
@@ -55,8 +63,8 @@ jq -n \
   --arg NAME "${NAME}" \
   --arg ZONE "${ZONE}" \
   --arg RESOURCE_GROUP_ID "${RESOURCE_GROUP_ID}" \
-  --arg IOPS "${IOPS}" \
-  --arg CAPACITY "${CAPACITY}" \
+  --argjson IOPS "${IOPS}" \
+  --argjson CAPACITY "${CAPACITY}" \
   --arg PROFILE "${PROFILE}" \
   '{"name": $NAME, "iops": $IOPS, "capacity": $CAPACITY, "zone": {"name": $ZONE}, "profile": {"name": $PROFILE}, "resource_group": {"id": $RESOURCE_GROUP_ID}}' > /tmp/volume-request.json
 
@@ -67,24 +75,26 @@ if [[ -n "${ENCRYPTION_KEY}" ]]; then
     rm /tmp/volume-request.json.bak
 fi
 
-VPC_API_ENDPOINT="https://${REGION}.iaas.cloud.ibm.com"
-API_VERSION="2021-04-06"
+echo "Getting auth token"
 
-export TOKEN=$(curl -s -X POST "https://iam.cloud.ibm.com/identity/token" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${IBMCLOUD_API_KEY}" | jq -r '.access_token')
+get_token "${IBMCLOUD_API_KEY}" || exit 1
 
+echo "Looking up exiting volume: ${NAME}"
 
 ## Check if volume already exists
-VOLUME_ID=$(curl -X GET "${VPC_API_ENDPOINT}/v1/volumes?version=${API_VERSION}&generation=2" \
-  -H "Authorization: $TOKEN" | \
-  jq -r --arg NAME "${NAME}" '.volumes[] | select(.name == $NAME) | .id // empty')
+get_volume_id "${REGION}" "${NAME}"
 
-if [[ -n "${VOLUME_ID}" ]]; then
-  echo "Volume already exists: ${NAME}"
-  exit 0
+if [[ -z "${VOLUME_ID}" ]]; then
+  echo "Volume not found: ${NAME}"
+
+  echo "Creating volume: "
+  jq '.' /tmp/volume-request.json
+
+  create_volume "${REGION}" $(jq -c '.' /tmp/volume-request.json)
+else
+  echo "Existing volume found: ${NAME}"
 fi
 
-curl -X POST "${VPC_API_ENDPOINT}/v1/volumes?version=${API_VERSION}&generation=2" \
-  -H "Authorization: $TOKEN" \
-  -d @/tmp/volume-request.json
+echo "Waiting for volume"
+
+wait_for_volume "${REGION}" "${VOLUME_ID}"

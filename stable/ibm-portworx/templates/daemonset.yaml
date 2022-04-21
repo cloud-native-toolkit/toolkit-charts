@@ -6,6 +6,7 @@ metadata:
     {{- include "ibm-portworx.labels" . | nindent 4 }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
 spec:
   selector:
     matchLabels:
@@ -15,6 +16,8 @@ spec:
       labels:
         {{- include "ibm-portworx.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "ibm-portworx.serviceAccountName" . }}
+      terminationGracePeriodSeconds: 60
       volumes:
         - name: scripts
           configMap:
@@ -32,7 +35,12 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: RESOURCE_GROUP_ID
-              value: {{ .Values.resourceGroupId }}
+              value: {{ required "resourceGroupId value is required!" .Values.resourceGroupId }}
+            - name: IBMCLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ibm-portworx.operator-secret" . }}
+                  key: api-key
           command:
             - /bin/sh
           args:
@@ -41,8 +49,20 @@ spec:
       containers:
         - name: volume-attach
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Release.Revision }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: RESOURCE_GROUP_ID
+              value: {{ required "resourceGroupId value is required!" .Values.resourceGroupId }}
+            - name: IBMCLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ibm-portworx.operator-secret" . }}
+                  key: api-key
           command:
-            - /bin/sh
-          args:
-            - -c
-            - /scripts/volume-manage.sh $NODE_NAME $RESOURCE_GROUP_ID
+            - /scripts/volume-manage.sh

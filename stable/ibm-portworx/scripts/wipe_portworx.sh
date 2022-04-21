@@ -1,53 +1,92 @@
 #!/bin/bash
 
-
 # Docs for cleaning up Portworx installation at: https://cloud.ibm.com/docs/containers?topic=containers-portworx#portworx_cleanup
 # Additional utilities for cleaning up Portworx installation available at https://github.com/IBM/ibmcloud-storage-utilities/blob/master/px-utils/px_cleanup/px-wipe.sh
 
-echo "Wiping Portworx from cluster: $CLUSTER"
+if [[ -z "${NAMESPACE}" ]] || [[ -z "${SERVICE_NAME}" ]]; then
+  echo "NAMESPACE and SERVICE_NAME must be provided as environment variables" >&2
+  exit 1
+fi
 
-PATH=$BIN_DIR:$PATH
+if ! command -v jq 1> /dev/null 2> /dev/null; then
+  echo "jq cli not found" >&2
+  exit 1
+fi
 
-curl  -fSsL https://raw.githubusercontent.com/IBM/ibmcloud-storage-utilities/master/px-utils/px_cleanup/px-wipe.sh | bash -s -- --talismanimage icr.io/ext/portworx/talisman --talismantag 1.1.0 --wiperimage icr.io/ext/portworx/px-node-wiper --wipertag 2.5.0 --force
+if ! command -v helm 1> /dev/null 2> /dev/null; then
+  echo "helm cli not found" >&2
+  exit 1
+fi
 
-echo "removing the portworx helm from the cluster"
-_rc=0
-helm_release=$(helm ls -a --output json | jq -r '.[]|select(.name=="portworx") | .name')
-if [ -z "$helm_release" ];
-then
+if ! command -v kubectl 1> /dev/null 2> /dev/null; then
+  echo "kubectl cli not found" >&2
+  exit 1
+fi
+
+if ! command -v oc 1> /dev/null 2> /dev/null; then
+  echo "oc cli not found" >&2
+  exit 1
+fi
+
+if oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" 1> /dev/null 2> /dev/null; then
+  SERVICE_STATE=$(oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" -o json | jq '.status.state // empty')
+
+  echo "Current state of ${SERVICE_NAME}: ${SERVICE_STATE}"
+  if [[ "${SERVICE_STATE}" == "Online" ]] || [[ "${SERVICE_STATE}" == "in progress" ]] || [[ "${SERVICE_STATE}" == "provisioning" ]]; then
+    echo "The ${SERVICE_NAME} IBM Cloud service instance exists. This is a PostSync create event."
+    exit 0
+  fi
+fi
+
+echo "Wiping Portworx from cluster"
+
+curl -fSsL https://raw.githubusercontent.com/IBM/ibmcloud-storage-utilities/master/px-utils/px_cleanup/px-wipe.sh | bash -s -- --talismanimage icr.io/ext/portworx/talisman --talismantag 1.1.0 --wiperimage icr.io/ext/portworx/px-node-wiper --wipertag 2.5.0 --force
+
+echo "Removing the portworx helm deployment from the cluster"
+
+helm_releases=$(helm ls -A --output json)
+
+helm_release=$(echo "${helm_releases}" | jq -r '.[] | select(.name=="portworx") | .name // empty')
+helm_namespace=$(echo "${helm_releases}" | jq -r '.[] | select(.name=="portworx") | .namespace // empty')
+
+if [[ -z "${helm_release}" ]]; then
   echo "Unable to find helm release for portworx.  Ensure your helm client is at version 3 and has access to the cluster.";
 else
-  helm uninstall portworx || _rc=$?
-  if [ $_rc -ne 0 ]; then
+  if ! helm uninstall "${helm_release}" -n "${helm_namespace}"; then
     echo "error removing the helm release"
     #exit 1;
   fi
 fi
 
 echo "removing all portworx storage classes"
-kubectl get sc -A | grep portworx | awk '{ print $1 }' > sc.tmp
-while read in; do
+kubectl get sc -A | grep portworx | awk '{ print $1 }' | while read in; do
   kubectl delete sc "$in"
-done < sc.tmp
-rm -rf sc.tmp
+done
 
 echo "removing portworx artifacts"
 kubectl delete serviceaccount -n kube-system portworx-hook --ignore-not-found=true
-kubectl delete clusterrole -n kube-system portworx-hook --ignore-not-found=true
-kubectl delete clusterrolebinding -n kube-system portworx-hook --ignore-not-found=true
+kubectl delete clusterrole portworx-hook --ignore-not-found=true
+kubectl delete clusterrolebinding portworx-hook --ignore-not-found=true
 
-kubectl delete Service portworx-service -n kube-system --ignore-not-found=true
-kubectl delete Service portworx-api -n kube-system --ignore-not-found=true
+kubectl delete service portworx-service -n kube-system --ignore-not-found=true
+kubectl delete service portworx-api -n kube-system --ignore-not-found=true
 
 kubectl delete serviceaccount -n kube-system portworx-hook --ignore-not-found=true 
-kubectl delete clusterrole portworx-hook -n kube-system --ignore-not-found=true
-kubectl delete clusterrolebinding portworx-hook -n kube-system --ignore-not-found=true
+kubectl delete clusterrole portworx-hook --ignore-not-found=true
+kubectl delete clusterrolebinding portworx-hook --ignore-not-found=true
 
 kubectl delete job -n kube-system talisman --ignore-not-found=true
 kubectl delete serviceaccount -n kube-system talisman-account --ignore-not-found=true 
 kubectl delete clusterrolebinding talisman-role-binding --ignore-not-found=true 
 kubectl delete crd volumeplacementstrategies.portworx.io --ignore-not-found=true
 kubectl delete configmap -n kube-system portworx-pvc-controller --ignore-not-found=true
+
+kubectl delete daemonset -n kube-system portworx --ignore-not-found=true
+kubectl delete daemonset -n kube-system portworx-api --ignore-not-found=true
+kubectl delete deployment -n kube-system portworx-pvc-controller --ignore-not-found=true
+
+kubectl delete job -n kube-system px-hook-etcd-preinstall --ignore-not-found=true
+kubectl delete job -n kube-system px-hook-predelete-nodelabel --ignore-not-found=true
 
 kubectl delete secret -n default sh.helm.release.v1.portworx.v1 --ignore-not-found=true
 

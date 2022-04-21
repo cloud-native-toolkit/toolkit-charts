@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ibm-portworx.operator-config" . }}
+  labels:
+    {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
+data:
+  region: {{ required "region value is required!" .Values.region }}
+  resourcegroupid: {{ required "resourceGroupId value is required!" .Values.resourceGroupId }}

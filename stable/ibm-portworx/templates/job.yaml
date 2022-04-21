@@ -1,14 +1,16 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "ibm-portworx.fullname" . }}
+  name: {{ printf "%s-job" (include "ibm-portworx.fullname" .) }}
   labels:
     {{- include "ibm-portworx.labels" . | nindent 4}}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
 spec:
   template:
     spec:
+      restartPolicy: OnFailure
       volumes:
         - name: scripts
           configMap:
