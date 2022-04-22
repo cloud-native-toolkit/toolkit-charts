@@ -8,5 +8,5 @@ metadata:
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
-labels:
+  labels:
     {{- include "ibm-portworx.labels" . | nindent 4 }}
