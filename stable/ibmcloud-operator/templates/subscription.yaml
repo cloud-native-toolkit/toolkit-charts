@@ -14,3 +14,11 @@ spec:
   name: {{ include "operator.catalog-name" . }}
   source: {{ include "operator.source" . }}
   sourceNamespace: {{ include "operator.olm-namespace" . }}
+  config:
+    resources:
+      limits:
+        cpu: 400m
+        memory: 700Mi
+      requests:
+        cpu: 400m
+        memory: 40Mi
