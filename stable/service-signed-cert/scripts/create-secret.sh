@@ -44,6 +44,8 @@ echo "${serverCert}" | openssl base64 -d -A -out "${CERT_DIR}"/server-cert.pem
 oc create secret generic ${SECRET_NAME} \
   --from-file=key.pem="${CERT_DIR}"/server-key.pem \
   --from-file=cert.pem="${CERT_DIR}"/server-cert.pem \
+  --from-file=tls.key="${CERT_DIR}"/server-key.pem \
+  --from-file=tls.crt="${CERT_DIR}"/server-cert.pem \
   --dry-run=client \
   -o yaml | \
   oc -n ${NAMESPACE} apply -f -
