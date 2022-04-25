@@ -33,10 +33,11 @@ sleep 30
 
 if oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" 1> /dev/null 2> /dev/null; then
   echo "IBM Cloud Portworx service found: ${NAMESPACE}/${SERVICE_NAME}"
+  oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" -o yaml
   SERVICE_STATE=$(oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" -o json | jq '.status.state // empty')
 
   echo "Current state of ${NAMESPACE}/${SERVICE_NAME}: ${SERVICE_STATE}"
-  if [[ "${SERVICE_STATE}" =~ [Oo]nline ]] || [[ "${SERVICE_STATE}" == "in progress" ]] || [[ "${SERVICE_STATE}" == "provisioning" ]]; then
+  if [[ -z "${SERVICE_STATE}" ]] || [[ "${SERVICE_STATE}" =~ [Oo]nline ]] || [[ "${SERVICE_STATE}" == "in progress" ]] || [[ "${SERVICE_STATE}" == "provisioning" ]]; then
     echo "The ${NAMESPACE}/${SERVICE_NAME} IBM Cloud service instance exists. This is a PostSync create event."
     exit 0
   fi
