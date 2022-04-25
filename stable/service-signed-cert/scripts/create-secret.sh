@@ -40,13 +40,15 @@ if [[ -z "${serverCert}" ]]; then
 fi
 echo "${serverCert}" | openssl base64 -d -A -out "${CERT_DIR}"/server-cert.pem
 
-ls
+ls "${CERT_DIR}"
 
 openssl x509 -outform der -in "${CERT_DIR}"/server-cert.pem -out "${CERT_DIR}"/server-cert.crt
-ls
+
+ls "${CERT_DIR}"
 openssl x509 -outform der -in "${CERT_DIR}"/server-key.pem -out "${CERT_DIR}"/server-key.crt
 
-ls
+ls "${CERT_DIR}"
+
 # create the secret with CA cert and server cert/key
 oc create secret generic ${SECRET_NAME} \
   --from-file=key.pem="${CERT_DIR}"/server-key.pem \
