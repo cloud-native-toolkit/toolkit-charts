@@ -1,7 +1,7 @@
 apiVersion: ibmcloud.ibm.com/v1
 kind: Service
 metadata:
-  name: portworx
+  name: {{ include "ibm-portworx.service-name" . }}
   labels:
     {{- include "ibm-portworx.labels" . | nindent 4 }}
 spec:

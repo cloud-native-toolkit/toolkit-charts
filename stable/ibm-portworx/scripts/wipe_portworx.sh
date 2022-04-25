@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Docs for cleaning up Portworx installation at: https://cloud.ibm.com/docs/containers?topic=containers-portworx#portworx_cleanup
 # Additional utilities for cleaning up Portworx installation available at https://github.com/IBM/ibmcloud-storage-utilities/blob/master/px-utils/px_cleanup/px-wipe.sh
@@ -28,14 +28,21 @@ if ! command -v oc 1> /dev/null 2> /dev/null; then
   exit 1
 fi
 
+echo "Sleeping for 30 seconds to let things settle"
+sleep 30
+
 if oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" 1> /dev/null 2> /dev/null; then
+  echo "IBM Cloud Portworx service found: ${NAMESPACE}/${SERVICE_NAME}"
   SERVICE_STATE=$(oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" -o json | jq '.status.state // empty')
 
-  echo "Current state of ${SERVICE_NAME}: ${SERVICE_STATE}"
-  if [[ "${SERVICE_STATE}" == "Online" ]] || [[ "${SERVICE_STATE}" == "in progress" ]] || [[ "${SERVICE_STATE}" == "provisioning" ]]; then
-    echo "The ${SERVICE_NAME} IBM Cloud service instance exists. This is a PostSync create event."
+  echo "Current state of ${NAMESPACE}/${SERVICE_NAME}: ${SERVICE_STATE}"
+  if [[ "${SERVICE_STATE}" =~ [Oo]nline ]] || [[ "${SERVICE_STATE}" == "in progress" ]] || [[ "${SERVICE_STATE}" == "provisioning" ]]; then
+    echo "The ${NAMESPACE}/${SERVICE_NAME} IBM Cloud service instance exists. This is a PostSync create event."
     exit 0
   fi
+else
+  echo "IBM Cloud Portworx service not found: ${NAMESPACE}/${SERVICE_NAME}. Cleaning up..."
+  oc get services.ibmcloud -n "${NAMESPACE}"
 fi
 
 echo "Wiping Portworx from cluster"
