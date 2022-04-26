@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "operator.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": pre-install
     argocd.argoproj.io/sync-wave: "-5"
 spec:
   channel: {{ include "operator.channel" . }}
