@@ -2134,6 +2134,16 @@ entries:
   ibmcloud-operator:
   - apiVersion: v2
     appVersion: 0.1.11
+    created: "2022-04-26T03:46:52.844881529Z"
+    description: A Helm chart for Kubernetes
+    digest: b5d5dd76219e3b15a0843c57e26308efcfb9a51bb06c77a9f59163ec5a0364c3
+    name: ibmcloud-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibmcloud-operator-0.2.2/ibmcloud-operator-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 0.1.11
     created: "2022-04-25T19:48:14.420517658Z"
     description: A Helm chart for Kubernetes
     digest: e823a7d7abe139b63d59bd9aea00d37839d9e8bc2f4bf1f82953f44c272fed44
