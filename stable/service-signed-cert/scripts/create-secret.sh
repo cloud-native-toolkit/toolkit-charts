@@ -40,15 +40,13 @@ if [[ -z "${serverCert}" ]]; then
 fi
 echo "${serverCert}" | openssl base64 -d -A -out "${CERT_DIR}"/server-cert.pem
 
-openssl x509 -req -in "${CERT_DIR}"/server.csr -signkey "${CERT_DIR}"/server-key.pem -out "${CERT_DIR}"/server.crt
-
 
 # create the secret with CA cert and server cert/key
 oc create secret generic ${SECRET_NAME} \
   --from-file=key.pem="${CERT_DIR}"/server-key.pem \
   --from-file=cert.pem="${CERT_DIR}"/server-cert.pem \
   --from-file=tls.key="${CERT_DIR}"/server-key.pem \
-  --from-file=tls.crt="${CERT_DIR}"/server.crt \
+  --from-file=tls.crt="${CERT_DIR}"/server-cert.pem \
   --dry-run=client \
   -o yaml | \
   oc -n ${NAMESPACE} apply -f -
