@@ -32,7 +32,7 @@ spec:
             name: config-{{ include "openshift-gitops-instance.name" . }}
       containers:
         - name: create-instance
-          image: "quay.io/bitnami/kubectl:latest"
+          image: "docker.io/bitnami/kubectl:latest"
           volumeMounts:
             - mountPath: /tmp/config
               name: config-yaml
