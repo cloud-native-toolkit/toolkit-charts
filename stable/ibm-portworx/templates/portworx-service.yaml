@@ -4,6 +4,9 @@ metadata:
   name: {{ include "ibm-portworx.service-name" . }}
   labels:
     {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    helm.sh/hook-weight: "-1"
 spec:
   plan: {{ .Values.plan }}
   serviceClass: portworx
