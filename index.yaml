@@ -672,6 +672,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/baas-supplemental-0.1.0/baas-supplemental-0.1.0.tgz
     version: 0.1.0
+  cloud-portworx:
+  - apiVersion: v2
+    appVersion: 2.8.1.5
+    created: "2022-04-27T04:02:13.473097597Z"
+    description: A Helm chart to install Portworx in a cloud environment (AWS or Azure)
+    digest: a65b606ad8b284efe9c75d7643db92a757d1966b7ad7e072d97b28182498c2fe
+    name: cloud-portworx
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/cloud-portworx-0.1.0/cloud-portworx-0.1.0.tgz
+    version: 0.1.0
   cloud-setup:
   - apiVersion: v2
     appVersion: 1.16.0
