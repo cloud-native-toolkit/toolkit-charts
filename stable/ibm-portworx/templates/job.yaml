@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ printf "%s-job" (include "ibm-portworx.fullname" .) }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
   labels:
     {{- include "ibm-portworx.labels" . | nindent 4}}
   annotations:

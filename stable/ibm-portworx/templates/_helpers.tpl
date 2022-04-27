@@ -78,5 +78,13 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "ibm-portworx.service-name" }}
-{{- "portworx" }}
+{{- include "ibm-portworx.fullname" . }}
+{{- end }}
+
+{{- define "ibm-portworx.namespace" }}
+{{- if eq .Release.Namespace "kube-system" }}
+{{- .Release.Namespace }}
+{{- else }}
+{{- required "The chart must be installed kube-system namespace" "" }}
+{{- end }}
 {{- end }}

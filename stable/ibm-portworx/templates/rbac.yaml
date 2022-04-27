@@ -3,6 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ include "ibm-portworx.fullname" . }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
   labels:
   {{- include "ibm-portworx.labels" . | nindent 4 }}
   annotations:
@@ -33,7 +34,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "ibm-portworx.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
     helm.sh/hook-weight: "-5"
@@ -58,7 +59,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ include "ibm-portworx.fullname" . }}
-  annotations:
+  namespace: {{ include "ibm-portworx.namespace" . }}
+ annotations:
     argocd.argoproj.io/sync-wave: "-5"
     helm.sh/hook-weight: "-5"
   labels:
@@ -70,13 +72,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "ibm-portworx.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ include "ibm-portworx.namespace" . }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ include "ibm-portworx.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
     helm.sh/hook-weight: "-5"
@@ -89,5 +91,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "ibm-portworx.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ include "ibm-portworx.namespace" . }}
 {{- end -}}

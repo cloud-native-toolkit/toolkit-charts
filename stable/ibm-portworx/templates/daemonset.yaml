@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ include "ibm-portworx.name" . }}
+  name: {{ include "ibm-portworx.fullname" . }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
   labels:
     {{- include "ibm-portworx.labels" . | nindent 4 }}
   annotations:
