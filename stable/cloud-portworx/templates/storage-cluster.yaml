@@ -1,0 +1,43 @@
+# SOURCE: https://install.portworx.com/?operator=true&mc=false&kbver=&oem=esse&user=feec5406-26f8-49c6-b723-db56061ed010&b=true&kd=type%3Dgp2%2Csize%3D150&s=%22type%3Dgp2%2Csize%3D150%22&c=px-cluster-1bebc608-7ba7-4e03-be1e-ca3b3bc12dd0&osft=true&stork=true&csi=true&mon=true&tel=false&st=k8s&promop=true
+{{- $storageType := required "storage.type variable is required ('gp2' for AWS or 'Premium_LRS' for Azure)" .Values.storage.type }}
+{{- $storageSize := required "storage.size variable is required" .Values.storage.size }}
+{{- $deviceSpec := include "cloud-portworx.deviceSpec" .Values.storage }}
+kind: StorageCluster
+apiVersion: core.libopenstorage.org/v1
+metadata:
+  name: px-cluster
+  namespace: {{ include "cloud-portworx.namespace" . }}
+  annotations:
+    portworx.io/is-openshift: "true"
+    {{- if include "cloud-portworx.essentials" . }}
+    portworx.io/misc-args: "--oem esse"
+    {{- end }}
+spec:
+  image: {{ .Values.image.repo }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+  imagePullPolicy: {{ .Values.image.pullPolicy }}
+  kvdb:
+    {{- if .Values.etcd.endpoint }}
+    endpoints:
+      - {{ .Values.etcd.endpoint }}
+    {{- else }}
+    internal: true
+    {{- end }}
+  cloudStorage:
+    deviceSpecs:
+    - {{ $deviceSpec }}
+    {{- if not .Values.etcd.endpoint }}
+    kvdbDeviceSpec: {{ (include "cloud-portworx.deviceSpec" .Values.kvdbStorage) | default $deviceSpec }}
+    {{- end }}
+  secretsProvider: k8s
+  stork:
+    enabled: true
+    args:
+      webhook-controller: "false"
+  autopilot:
+    enabled: true
+  monitoring:
+    prometheus:
+      enabled: true
+      exportMetrics: true
+  featureGates:
+    CSI: "true"

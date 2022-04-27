@@ -1,0 +1,33 @@
+# Default values for aws-portworx.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+class: "essentials"
+
+essentials:
+  userId: ""
+
+enterprise:
+  encryption: false
+
+osb:
+  endpoint: https://pxessentials.portworx.com/osb/billing/v1/register
+
+image:
+  repo: portworx/oci-monitor
+  tag: ""
+  pullPolicy: Always
+
+etcd:
+  endpoint: ""
+
+storage:
+  type: ""
+  size: "200"
+
+kvdbStorage:
+  type: ""
+  size: ""
+
+operatorGroup:
+  enabled: true

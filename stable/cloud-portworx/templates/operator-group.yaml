@@ -1,0 +1,10 @@
+{{- if .Values.operatorGroup.enabled }}
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: kube-system-operatorgroup
+  namespace: {{ include "cloud-portworx.namespace" . }}
+spec:
+  targetNamespaces:
+    - kube-system
+{{- end }}
