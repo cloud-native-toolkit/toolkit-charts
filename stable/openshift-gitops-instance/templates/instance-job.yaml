@@ -30,11 +30,12 @@ spec:
         - name: config-yaml
           configMap:
             name: config-{{ include "openshift-gitops-instance.name" . }}
+            defaultMode: 0777
       containers:
         - name: create-instance
           image: "docker.io/bitnami/kubectl:latest"
           volumeMounts:
-            - mountPath: /tmp/config
+            - mountPath: /config
               name: config-yaml
           env:
             - name: NAMESPACE
@@ -43,7 +44,5 @@ spec:
               value: {{ include "openshift-gitops-instance.argocd-name" . }}
           command: ["/bin/sh", "-c"]
           args:
-            - cp /tmp/config/apply.sh /tmp/apply.sh;
-              chmod +x /tmp/apply.sh;
-              /tmp/apply.sh $NAMESPACE $INSTANCE_NAME /tmp/config/instance.yaml /tmp/config/patch.yaml
+            - /config/apply.sh $NAMESPACE $INSTANCE_NAME /config/instance.yaml /config/patch.yaml
 {{- end -}}

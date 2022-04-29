@@ -25,6 +25,8 @@ openshiftgitops:
             memory: 128Mi
         route:
           enabled: true
+          tls:
+            termination: reencrypt
         service:
           type: ''
       grafana:

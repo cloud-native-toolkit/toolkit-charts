@@ -15,19 +15,7 @@ data:
     metadata:
       name: {{ include "openshift-gitops-instance.argocd-name" . }}
     spec:
-      dex:
-        openShiftOAuth: {{ .Values.openshiftgitops.argocd.spec.dex.openShiftOAuth }}
-        {{- if .Values.openshiftgitops.argocd.spec.dex.image }}
-        image: {{ .Values.openshiftgitops.argocd.spec.dex.image }}
-        {{- end }}
-      rbac:
-        defaultPolicy: 'role:readonly'
-        policy: |
-          g, argocd-admins, role:admin
-        scopes: '[groups]'
-      server:
-        route:
-          enabled: true
+      {{- .Values.openshiftgitops.argocd.spec | toYaml | nindent 6 }}
   patch.yaml: |
     spec:
       {{- .Values.openshiftgitops.argocd.spec | toYaml | nindent 6 }}
