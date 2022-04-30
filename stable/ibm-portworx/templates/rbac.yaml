@@ -5,7 +5,7 @@ metadata:
   name: {{ include "ibm-portworx.fullname" . }}
   namespace: {{ include "ibm-portworx.namespace" . }}
   labels:
-  {{- include "ibm-portworx.labels" . | nindent 4 }}
+    {{- include "ibm-portworx.labels" . | nindent 4 }}
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
     helm.sh/hook-weight: "-5"
@@ -60,7 +60,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ include "ibm-portworx.fullname" . }}
   namespace: {{ include "ibm-portworx.namespace" . }}
- annotations:
+  annotations:
     argocd.argoproj.io/sync-wave: "-5"
     helm.sh/hook-weight: "-5"
   labels:
