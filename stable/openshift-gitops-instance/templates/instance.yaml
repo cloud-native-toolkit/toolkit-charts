@@ -4,6 +4,8 @@ kind: ArgoCD
 metadata:
   name: {{ .Values.openshiftgitops.argocd.name }}
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
 spec:
   {{- toYaml .Values.openshiftgitops.argocd.spec | nindent 2 }}
 {{- end }}

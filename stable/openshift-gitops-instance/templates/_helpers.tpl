@@ -40,6 +40,9 @@ helm.sh/chart: {{ include "openshift-gitops-instance.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+{{- if .Values.createdBy }}
+created-by: {{ .Values.createdBy | quote }}
+{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 

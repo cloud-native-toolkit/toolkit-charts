@@ -14,6 +14,8 @@ data:
     kind: ArgoCD
     metadata:
       name: {{ include "openshift-gitops-instance.argocd-name" . }}
+      labels:
+        {{- include "openshift-gitops-instance.labels" . | nindent 8 }}
     spec:
       {{- .Values.openshiftgitops.argocd.spec | toYaml | nindent 6 }}
   patch.yaml: |
