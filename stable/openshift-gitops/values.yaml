@@ -23,3 +23,5 @@ subscription:
   source: redhat-operators
   channel: stable
   name: openshift-gitops-operator
+
+createdBy: ""
