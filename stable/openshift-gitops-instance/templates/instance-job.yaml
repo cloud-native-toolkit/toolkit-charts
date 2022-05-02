@@ -18,6 +18,7 @@ metadata:
     "helm.sh/hook": post-install
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
+  ttlSecondsAfterFinished: 300
   template:
     metadata:
       name: job-{{ include "openshift-gitops-instance.name" . }}
@@ -33,7 +34,7 @@ spec:
             defaultMode: 0777
       containers:
         - name: create-instance
-          image: "docker.io/bitnami/kubectl:latest"
+          image: {{ printf "docker.io/bitnami/kubectl:%s" .Chart.AppVersion }}
           volumeMounts:
             - mountPath: /config
               name: config-yaml
@@ -42,7 +43,10 @@ spec:
               value: openshift-gitops
             - name: INSTANCE_NAME
               value: {{ include "openshift-gitops-instance.argocd-name" . }}
-          command: ["/bin/sh", "-c"]
-          args:
-            - /config/apply.sh $NAMESPACE $INSTANCE_NAME /config/instance.yaml /config/patch.yaml
+            - name: CONFIG_FILE
+              value: /config/instance.yaml
+            - name: PATCH_FILE
+              value: /config/patch.yaml
+          command:
+            - /config/apply.sh
 {{- end -}}

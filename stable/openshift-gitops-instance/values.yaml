@@ -6,7 +6,6 @@ controllerRbac: true
 
 openshiftgitops:
   argocd:
-    name: openshift-gitops-cntk
     spec:
       server:
         autoscale:

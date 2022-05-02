@@ -20,10 +20,7 @@ data:
     spec:
       {{- .Values.openshiftgitops.argocd.spec | toYaml | nindent 6 }}
   apply.sh: |
-    NAMESPACE="$1"
-    INSTANCE_NAME="$2"
-    CONFIG_FILE="$3"
-    PATCH_FILE="$4"
+    #!/bin/bash
 
     if oc get argocd $INSTANCE_NAME -n $NAMESPACE 1> /dev/null 2> /dev/null; then
       kubectl patch argocd $INSTANCE_NAME -n $NAMESPACE --type merge -p "$(cat $PATCH_FILE)"

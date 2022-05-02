@@ -63,5 +63,9 @@ Create the name of the service account to use
 {{- end -}}
 
 {{- define "openshift-gitops-instance.argocd-name" -}}
-{{ "argocd-cluster" }}
+{{- if eq .Release.Namespace "openshift-gitops" }}
+{{- .Release.Namespace }}
+{{- else }}
+{{- printf "%s-gitops" .Release.Namespace }}
+{{- end }}
 {{- end -}}
