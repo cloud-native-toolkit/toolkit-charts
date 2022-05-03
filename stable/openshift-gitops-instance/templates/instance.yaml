@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
-  name: {{ .Values.openshiftgitops.argocd.name }}
+  name: {{ include "openshift-gitops-instance.argocd-name" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
