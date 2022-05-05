@@ -4004,6 +4004,16 @@ entries:
   tekton-operator:
   - apiVersion: v2
     appVersion: 1.18.0
+    created: "2022-05-05T21:02:19.894698644Z"
+    description: A Helm chart to install the Tekton operator
+    digest: ebb49c23cede9d5038c78132ac9cd7771d571095ba8fba487b323dc88ed22c3c
+    name: tekton-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/tekton-operator-0.2.1/tekton-operator-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 1.18.0
     created: "2020-10-28T17:25:17.908261834Z"
     description: A Helm chart to install the Tekton operator
     digest: 4599844726b09dde4fd8f05e0c378e2c258283c2a6b2f7b1e61431e06d5da627
