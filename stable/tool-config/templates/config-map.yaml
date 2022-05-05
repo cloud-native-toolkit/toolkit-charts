@@ -3,13 +3,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "tool-config.config-name" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     console-link.cloud-native-toolkit.dev/enabled: {{ include "tool-config.consoleLinkEnabled" . | quote }}
-    {{ include "tool-config.labels" . | nindent 4 }}
+    {{- include "tool-config.labels" . | nindent 4 }}
   annotations:
     description: {{ printf "Config map to hold the url for %s in the environment so that other components can access it" (include "tool-config.name" .) }}
     console-link.cloud-native-toolkit.dev/section: {{ .Values.section | quote }}
-    console-link.cloud-native-toolkit.dev/location: ApplicationMenu
+    console-link.cloud-native-toolkit.dev/location: {{ include "tool-config.location" . }}
     console-link.cloud-native-toolkit.dev/displayName: {{ include "tool-config.display-name" . }}
     {{- if include "tool-config.imageUrl" . }}
     console-link.cloud-native-toolkit.dev/imageUrl: {{ include "tool-config.imageUrl" . | quote }}

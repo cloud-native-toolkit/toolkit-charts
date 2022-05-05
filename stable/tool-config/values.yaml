@@ -29,6 +29,8 @@ enableConsoleLink: true
 section: "Cloud-Native Toolkit"
 imageUrl: ""
 category: ""
+# One of ApplicationMenu, HelpMenu, UserMenu, NamespaceDashboard
+location: ""
 
 otherConfig: {}
 otherSecrets: {}

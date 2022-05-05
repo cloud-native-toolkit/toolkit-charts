@@ -10,6 +10,6 @@ spec:
     imageURL: {{ include "tool-config.imageUrl" . | quote }}
     section: {{ .Values.section | quote }}
   href: {{ include "tool-config.url" . | quote }}
-  location: ApplicationMenu
+  location: {{ include "tool-config.location" . }}
   text: {{ include "tool-config.display-name" . }}
 {{- end }}

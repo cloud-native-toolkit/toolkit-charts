@@ -10,6 +10,18 @@ Expand the name of the chart.
 {{- (default (include "tool-config.name" .) .Values.type) | nospace | lower -}}
 {{- end -}}
 
+{{- define "tool-config.location" -}}
+{{- if .Values.location }}
+{{- if (and (and (and (ne .Values.location "ApplicationMenu") (ne .Values.location "HelpMenu")) (ne .Values.location "UserMenu")) (ne .Values.location "NamespaceDashboard")) }}
+{{- required "location must be one of ApplicationMenu, HelpMenu, UserMenu, NamespaceDashboard" "" }}
+{{- else }}
+{{- .Values.location }}
+{{- end }}
+{{- else }}
+{{- "ApplicationMenu" }}
+{{- end }}
+{{- end -}}
+
 {{- define "tool-config.display-name" -}}
 {{- default .Release.Name (default .Values.name .Values.displayName) -}}
 {{- end -}}
