@@ -4,6 +4,8 @@ kind: OperatorGroup
 metadata:
   name: {{ printf "%s-operatorgroup" (include "operator.operator-namespace" .) }}
   namespace: {{ include "operator.operator-namespace" . }}
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
 spec:
   targetNamespaces:
     - {{ include "operator.operator-namespace" . }}

@@ -21,3 +21,5 @@ operatorHub:
   source: ""
   channel: ""
   name: ""
+
+createdBy: ""
