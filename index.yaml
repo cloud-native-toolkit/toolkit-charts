@@ -4033,6 +4033,17 @@ entries:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/tekton-operator-0.1.0.tgz
     version: 0.1.0
   tool-config:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2022-05-05T18:31:29.376090185Z"
+    description: A Helm chart to create a ConfigMap and Secret containing the configuration
+      information for a deployed tool
+    digest: ed1fcb8ded274e953dd88b87bd7e27a826db0ad90d4bcab9c6887247d57e235d
+    name: tool-config
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/tool-config-0.13.0/tool-config-0.13.0.tgz
+    version: 0.13.0
   - apiVersion: v1
     appVersion: "1.0"
     created: "2021-11-12T19:57:45.570182584Z"
