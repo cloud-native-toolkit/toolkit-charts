@@ -23,3 +23,5 @@ operatorHub:
   name: ""
 
 createdBy: ""
+
+tektonNamespace: "openshift-pipelines"

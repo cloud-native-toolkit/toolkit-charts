@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tekton-webhook-test
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tekton-webhook-test
+  labels:
+    {{- include "operator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      serviceAccountName: tekton-webhook-test
+      initContainers:
+        - name: wait-for-tekton-webhook
+          image: quay.io/ibmgaragecloud/alpine-curl
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: URL
+              value: {{ printf "http://tekton-pipelines-webhook.%s.svc:8080" .Values.tektonNamespace }}
+          command: ["sh"]
+          args:
+            - "-c"
+            - "count=0; until curl -Iskf ${URL} || [[ $count -eq 20 ]]; do echo \">>> waiting for ${URL}\"; sleep 90; count=$((count + 1)); done; if [[ $count -eq 20 ]]; then echo \"Timeout\"; exit 1; else echo \">>> Started\"; fi"
+      containers:
+        - name: tekton-webhook-started
+          image: quay.io/ibmgaragecloud/alpine-curl
+          imagePullPolicy: Always
+          env:
+            - name: URL
+              value: {{ printf "http://tekton-pipelines-webhook.%s.svc:8080" .Values.tektonNamespace }}
+          command: ["sh"]
+          args:
+            - "-c"
+            - "curl -Iskf ${URL}"
+      restartPolicy: Never
+  backoffLimit: 1
