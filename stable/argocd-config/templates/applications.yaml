@@ -7,6 +7,7 @@
 {{- $prefix := include "argocd.prefix" . -}}
 {{- $project := default "default" (include "argocd.project" .) -}}
 {{- $labels := include "argocd.labels" . -}}
+{{- $cascadingDelete := .Values.cascadingDelete -}}
 {{- range .Values.applicationTargets }}
 {{- $targetNamespace := default $globalNamespace .targetNamespace -}}
 {{- $targetRevision := default $globalRevision .targetRevision -}}
@@ -41,6 +42,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: {{ .syncWave | quote }}
 {{- end }}
+  {{- if $cascadingDelete }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  {{- end }}
 spec:
   destination:
     namespace: {{ $targetNamespace }}

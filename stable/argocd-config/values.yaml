@@ -24,6 +24,9 @@ global:
   ## Label applied to all the application resources
   groupLabel: ""
 
+## Flag indicating that the applications should be configured to perform a cascading delete (i.e. configured with finalizer)
+cascadingDelete: true
+
 ## The url of the gitops repo that contains the applications
 repoUrl: ""
 
