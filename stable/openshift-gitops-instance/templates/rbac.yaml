@@ -7,6 +7,9 @@ metadata:
   name: {{ $name }}
   labels:
     {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": before-hook-creation
 rules:
 - apiGroups:
   - "*"
@@ -21,6 +24,9 @@ metadata:
   name: {{ $name }}
   labels:
     {{- include "openshift-gitops-instance.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": before-hook-creation
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
