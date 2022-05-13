@@ -1667,6 +1667,16 @@ entries:
   ibm-cp4sthreatmanagements-instance:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-05-13T13:26:06.778002937Z"
+    description: A Helm chart for Kubernetes
+    digest: 9a2c4f65750106f3701b524947ccaad1bc38e500d4ec445e461e70d0b9cef3d2
+    name: ibm-cp4sthreatmanagements-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4sthreatmanagements-instance-0.1.1/ibm-cp4sthreatmanagements-instance-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2021-11-10T12:34:41.198143227Z"
     description: A Helm chart for Kubernetes
     digest: 8edeabe98e4ba2fd213324f920e4e9713050fe3688ab68826646e5a151f52a74
