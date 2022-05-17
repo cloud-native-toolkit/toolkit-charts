@@ -19,7 +19,11 @@ get_volume_id() {
   local REGION="$1"
   local NAME="$2"
 
-  VOLUME_ID=$(curl -s -X GET "https://${REGION}.iaas.cloud.ibm.com/v1/volumes?version=${API_VERSION}&generation=2&name=${NAME}" \
+  local URL="https://${REGION}.iaas.cloud.ibm.com/v1/volumes?version=${API_VERSION}&generation=2&name=${NAME}"
+
+  echo "Getting volume id: ${URL}"
+
+  VOLUME_ID=$(curl -s -X GET "${URL}" \
     -H "Authorization: Bearer ${TOKEN}" | \
     jq -r --arg NAME "${NAME}" '.volumes[] | select(.name == $NAME) | .id // empty')
 }
@@ -29,7 +33,12 @@ create_volume() {
   local NAME="$2"
   local DATA="$3"
 
-  curl -s -X POST "https://${REGION}.iaas.cloud.ibm.com/v1/volumes?version=${API_VERSION}&generation=2" \
+  local URL="https://${REGION}.iaas.cloud.ibm.com/v1/volumes?version=${API_VERSION}&generation=2"
+
+  echo "Creating volume using url: ${URL}"
+  echo "  Data: ${DATA}"
+
+  curl -s -X POST "${URL}" \
     -H "Authorization: Bearer $TOKEN" \
     -d "${DATA}"
 

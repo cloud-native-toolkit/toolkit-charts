@@ -79,7 +79,7 @@ echo "Getting auth token"
 
 get_token "${IBMCLOUD_API_KEY}" || exit 1
 
-echo "Looking up exiting volume: ${NAME}"
+echo "Looking up existing volume: ${NAME}"
 
 ## Check if volume already exists
 get_volume_id "${REGION}" "${NAME}"
@@ -90,7 +90,7 @@ if [[ -z "${VOLUME_ID}" ]]; then
   echo "Creating volume: "
   jq '.' /tmp/volume-request.json
 
-  create_volume "${REGION}" $(jq -c '.' /tmp/volume-request.json)
+  create_volume "${REGION}" "${NAME}" "$(jq -c '.' /tmp/volume-request.json)"
 else
   echo "Existing volume found: ${NAME}"
 fi
