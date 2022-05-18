@@ -39,6 +39,10 @@ REGION=$(echo "${NODE_JSON}" | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/
 ZONE=$(echo "${NODE_JSON}" | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/zone"]')
 WORKER_ID=$(echo "${NODE_JSON}" | jq -r '.metadata.labels["ibm-cloud.kubernetes.io/worker-id"]')
 
+CLUSTER_ID=$(echo "${NODE_JSON}" | jq -r '.spec.providerID' | sed -E 's~.*/([^/]+)/[^/]+~\1~g')
+
+CLUSTER_ID
+
 echo "Node values: region=${REGION}, zone=${ZONE}, workerId=${WORKER_ID}"
 
 NAME="pwx-${WORKER_ID}"
@@ -59,6 +63,11 @@ if [[ -z "${ENCRYPTION_KEY}" ]]; then
   echo "ENCRYPTION_KEY environment variable not provided. The volume won't be encrypted with KMS."
 fi
 
+TAGS=$(jq -n \
+  --arg CLUSTER_ID "${CLUSTER_ID}" \
+  --arg WORKER_ID "${WORKER_ID}" \
+  '["clusterid:$CLUSTER_ID", "workerid:$WORKER_ID", "source:portworx"]')
+
 jq -n \
   --arg NAME "${NAME}" \
   --arg ZONE "${ZONE}" \
@@ -66,7 +75,9 @@ jq -n \
   --argjson IOPS "${IOPS}" \
   --argjson CAPACITY "${CAPACITY}" \
   --arg PROFILE "${PROFILE}" \
-  '{"name": $NAME, "iops": $IOPS, "capacity": $CAPACITY, "zone": {"name": $ZONE}, "profile": {"name": $PROFILE}, "resource_group": {"id": $RESOURCE_GROUP_ID}}' > /tmp/volume-request.json
+  --argjson TAGS "${TAGS}" \
+  '{"name": $NAME, "iops": $IOPS, "capacity": $CAPACITY, "zone": {"name": $ZONE}, "profile": {"name": $PROFILE}, "resource_group": {"id": $RESOURCE_GROUP_ID}, "user_tags": $TAGS}' \
+  > /tmp/volume-request.json
 
 if [[ -n "${ENCRYPTION_KEY}" ]]; then
   cat /tmp/volume-request.json | jq --arg ENCRYPTION_KEY "${ENCRYPTION_KEY}" \
