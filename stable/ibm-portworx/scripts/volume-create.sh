@@ -47,17 +47,17 @@ echo "Node values: region=${REGION}, zone=${ZONE}, workerId=${WORKER_ID}"
 
 NAME="pwx-${WORKER_ID}"
 
-if [[ -z "${IOPS}" ]]; then
+if [[ -z "${PROFILE}" ]]; then
+  PROFILE="custom"
+  echo "PROFILE environment variable not provided. Defaulting to '${PROFILE}'"
+fi
+if [[ -z "${IOPS}" ]] && [[ "${PROFILE}" == "custom" ]]; then
   IOPS="100"
   echo "IOPS environment variable not provided. Defaulting to '${IOPS}'"
 fi
 if [[ -z "${CAPACITY}" ]]; then
   CAPACITY="50"
   echo "CAPACITY environment variable not provided. Defaulting to '${CAPACITY}'"
-fi
-if [[ -z "${PROFILE}" ]]; then
-  PROFILE="custom"
-  echo "PROFILE environment variable not provided. Defaulting to '${PROFILE}'"
 fi
 if [[ -z "${ENCRYPTION_KEY}" ]]; then
   echo "ENCRYPTION_KEY environment variable not provided. The volume won't be encrypted with KMS."
@@ -72,12 +72,18 @@ jq -n \
   --arg NAME "${NAME}" \
   --arg ZONE "${ZONE}" \
   --arg RESOURCE_GROUP_ID "${RESOURCE_GROUP_ID}" \
-  --argjson IOPS "${IOPS}" \
   --argjson CAPACITY "${CAPACITY}" \
   --arg PROFILE "${PROFILE}" \
   --argjson TAGS "${TAGS}" \
-  '{"name": $NAME, "iops": $IOPS, "capacity": $CAPACITY, "zone": {"name": $ZONE}, "profile": {"name": $PROFILE}, "resource_group": {"id": $RESOURCE_GROUP_ID}, "user_tags": $TAGS}' \
+  '{"name": $NAME, "capacity": $CAPACITY, "zone": {"name": $ZONE}, "profile": {"name": $PROFILE}, "resource_group": {"id": $RESOURCE_GROUP_ID}, "user_tags": $TAGS}' \
   > /tmp/volume-request.json
+
+if [[ -n "${IOPS}" ]]; then
+  cat /tmp/volume-request.json | jq --argjson IOPS "${IOPS}" \
+    '. += {"iops": $IOPS}' > /tmp/volume-request.json.bak && \
+    cp /tmp/volume-request.json.bak /tmp/volume-request.json && \
+    rm /tmp/volume-request.json.bak
+fi
 
 if [[ -n "${ENCRYPTION_KEY}" ]]; then
   cat /tmp/volume-request.json | jq --arg ENCRYPTION_KEY "${ENCRYPTION_KEY}" \
