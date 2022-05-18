@@ -305,9 +305,9 @@ data:
     fi
 
     TAGS=$(jq -n \
-      --arg CLUSTER_ID "${CLUSTER_ID}" \
-      --arg WORKER_ID "${WORKER_ID}" \
-      '["clusterid:$CLUSTER_ID", "workerid:$WORKER_ID", "source:portworx"]')
+      --arg CLUSTER_TAG "clusterid:${CLUSTER_ID}" \
+      --arg WORKER_TAG "workerid:${WORKER_ID}" \
+      '[$CLUSTER_TAG, $WORKER_TAG, "source:portworx"]')
 
     jq -n \
       --arg NAME "${NAME}" \
