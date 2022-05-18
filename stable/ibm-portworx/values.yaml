@@ -34,7 +34,7 @@ plan: px-enterprise
 etcdSecretName: ""
 
 volume:
-  iops: 100
-  capacity: 50
-  profile: custom
+  iops: 3000
+  capacity: 200
+  profile: 10iops-tier
   encryption_key: ""
