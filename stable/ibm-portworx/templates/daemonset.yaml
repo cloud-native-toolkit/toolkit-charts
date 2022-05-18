@@ -42,6 +42,14 @@ spec:
                 secretKeyRef:
                   name: {{ include "ibm-portworx.operator-secret" . }}
                   key: api-key
+            - name: IOPS
+              value: {{ .Values.volume.iops | quote }}
+            - name: CAPACITY
+              value: {{ .Values.volume.capacity | quote }}
+            - name: PROFILE
+              value: {{ .Values.volume.profile | quote }}
+            - name: ENCRYPTION_KEY
+              value: {{ .Values.volume.encryption_key | quote }}
           command:
             - /bin/sh
           args:

@@ -32,3 +32,9 @@ region: ""
 
 plan: px-enterprise
 etcdSecretName: ""
+
+volume:
+  iops: 100
+  capacity: 50
+  profile: custom
+  encryption_key: ""
