@@ -55,6 +55,9 @@ if [[ -z "${IOPS}" ]] && [[ "${PROFILE}" == "custom" ]]; then
   IOPS="100"
   echo "IOPS environment variable not provided. Defaulting to '${IOPS}'"
 fi
+if [[ -n "${IOPS}" ]] && [[ "${PROFILE}" != "custom" ]]; then
+  IOPS=""
+fi
 if [[ -z "${CAPACITY}" ]]; then
   CAPACITY="50"
   echo "CAPACITY environment variable not provided. Defaulting to '${CAPACITY}'"
