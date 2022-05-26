@@ -447,6 +447,7 @@ reclaimPolicy: Retain
 volumeBindingMode: Immediate
 ---
 # WKC DB2 Metastore - SC portworx-db2-sc for upgrade purposes
+{{- if .Values.createDB2SC }}
 allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -466,6 +467,7 @@ provisioner: kubernetes.io/portworx-volume
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 ---
+{{- end }}
 # Watson Assistant - This was previously named portworx-assistant
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
