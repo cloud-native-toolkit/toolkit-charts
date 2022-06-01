@@ -13,6 +13,7 @@ oc create configmap tmp \
   --from-file="${SCRIPT_DIR}/volume-manage.sh" \
   --from-file="${SCRIPT_DIR}/write-config-secret.sh" \
   --from-file="${SCRIPT_DIR}/support-functions.sh" \
+  --from-file="${SCRIPT_DIR}/update-resource-owner.sh" \
   --dry-run=client \
   -o yaml | \
 yq eval 'del(.apiVersion) | del(.kind) | del(.metadata)' - >> "${TEMPLATE_DIR}/configmap.yaml"

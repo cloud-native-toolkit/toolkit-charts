@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-ownerjob" (include "ibm-portworx.fullname" .) }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
+  labels:
+    {{- include "ibm-portworx.labels" . | nindent 4}}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    helm.sh/hook-weight: "5"
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "ibm-portworx.fullname" . }}
+            defaultMode: 0777
+      serviceAccountName: {{ include "ibm-portworx.serviceAccountName" . }}
+      containers:
+        - name: config
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Release.Revision }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: SERVICE_NAME
+              value: {{ include "ibm-portworx.service-name" . }}
+          command:
+            - /scripts/update-resource-owner.sh

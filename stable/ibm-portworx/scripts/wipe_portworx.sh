@@ -66,35 +66,17 @@ else
   fi
 fi
 
+
 echo "removing all portworx storage classes"
-kubectl get sc -A | grep portworx | awk '{ print $1 }' | while read in; do
+kubectl get sc | grep portworx | awk '{ print $1 }' | while read in; do
   kubectl delete sc "$in"
 done
 
 echo "removing portworx artifacts"
-kubectl delete serviceaccount -n kube-system portworx-hook --ignore-not-found=true
-kubectl delete clusterrole portworx-hook --ignore-not-found=true
-kubectl delete clusterrolebinding portworx-hook --ignore-not-found=true
-
-kubectl delete service portworx-service -n kube-system --ignore-not-found=true
-kubectl delete service portworx-api -n kube-system --ignore-not-found=true
-
-kubectl delete serviceaccount -n kube-system portworx-hook --ignore-not-found=true 
-kubectl delete clusterrole portworx-hook --ignore-not-found=true
-kubectl delete clusterrolebinding portworx-hook --ignore-not-found=true
-
-kubectl delete job -n kube-system talisman --ignore-not-found=true
-kubectl delete serviceaccount -n kube-system talisman-account --ignore-not-found=true 
-kubectl delete clusterrolebinding talisman-role-binding --ignore-not-found=true 
-kubectl delete crd volumeplacementstrategies.portworx.io --ignore-not-found=true
-kubectl delete configmap -n kube-system portworx-pvc-controller --ignore-not-found=true
-
-kubectl delete daemonset -n kube-system portworx --ignore-not-found=true
-kubectl delete daemonset -n kube-system portworx-api --ignore-not-found=true
-kubectl delete deployment -n kube-system portworx-pvc-controller --ignore-not-found=true
-
-kubectl delete job -n kube-system px-hook-etcd-preinstall --ignore-not-found=true
-kubectl delete job -n kube-system px-hook-predelete-nodelabel --ignore-not-found=true
+kubectl delete clusterrole,clusterrolebinding -l app.kubernetes.io/instance=portworx
+kubectl delete serviceaccount,service,job,configmap,deployment,daemonset,statefulset -n kube-system -l app.kubernetes.io/instance=portworx
+kubectl delete deployment portworx-pvc-controller -n kube-system --ignore-not-found=true
+kubectl delete sa portworx-pvc-controller-account -n kube-system --ignore-not-found=true
 
 kubectl delete secret -n default sh.helm.release.v1.portworx.v1 --ignore-not-found=true
 

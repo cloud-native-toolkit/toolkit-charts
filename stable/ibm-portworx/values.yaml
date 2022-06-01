@@ -38,3 +38,5 @@ volume:
   capacity: 200
   profile: 10iops-tier
   encryption_key: ""
+
+serviceSuffix: ""

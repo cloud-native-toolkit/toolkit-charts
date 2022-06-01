@@ -78,7 +78,11 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "ibm-portworx.service-name" }}
+{{- if .Values.serviceSuffix }}
+{{- printf "%s-%s" (include "ibm-portworx.fullname" .) .Values.serviceSuffix }}
+{{- else }}
 {{- include "ibm-portworx.fullname" . }}
+{{- end }}
 {{- end }}
 
 {{- define "ibm-portworx.namespace" }}

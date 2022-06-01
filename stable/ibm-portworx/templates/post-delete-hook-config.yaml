@@ -10,4 +10,88 @@ metadata:
   labels:
     {{- include "ibm-portworx.labels" . | nindent 4 }}
 data:
-  wipe_portworx.sh: "#!/usr/bin/env bash\n\n# Docs for cleaning up Portworx installation at: https://cloud.ibm.com/docs/containers?topic=containers-portworx#portworx_cleanup\n# Additional utilities for cleaning up Portworx installation available at https://github.com/IBM/ibmcloud-storage-utilities/blob/master/px-utils/px_cleanup/px-wipe.sh\n\nif [[ -z \"${NAMESPACE}\" ]] || [[ -z \"${SERVICE_NAME}\" ]]; then\n  echo \"NAMESPACE and SERVICE_NAME must be provided as environment variables\" >&2\n  exit 1\nfi\n\nif ! command -v jq 1> /dev/null 2> /dev/null; then\n  echo \"jq cli not found\" >&2\n  exit 1\nfi\n\nif ! command -v helm 1> /dev/null 2> /dev/null; then\n  echo \"helm cli not found\" >&2\n  exit 1\nfi\n\nif ! command -v kubectl 1> /dev/null 2> /dev/null; then\n  echo \"kubectl cli not found\" >&2\n  exit 1\nfi\n\nif ! command -v oc 1> /dev/null 2> /dev/null; then\n  echo \"oc cli not found\" >&2\n  exit 1\nfi\n\necho \"Sleeping for 30 seconds to let things settle\"\nsleep 30\n\nif oc get services.ibmcloud \"${SERVICE_NAME}\" -n \"${NAMESPACE}\" 1> /dev/null 2> /dev/null; then\n  echo \"IBM Cloud Portworx service found: ${NAMESPACE}/${SERVICE_NAME}\"\n  oc get services.ibmcloud \"${SERVICE_NAME}\" -n \"${NAMESPACE}\" -o yaml\n  SERVICE_STATE=$(oc get services.ibmcloud \"${SERVICE_NAME}\" -n \"${NAMESPACE}\" -o json | jq '.status.state // empty')\n\n  echo \"Current state of ${NAMESPACE}/${SERVICE_NAME}: ${SERVICE_STATE}\"\n  if [[ -z \"${SERVICE_STATE}\" ]] || [[ \"${SERVICE_STATE}\" =~ [Oo]nline ]] || [[ \"${SERVICE_STATE}\" == \"in progress\" ]] || [[ \"${SERVICE_STATE}\" == \"provisioning\" ]]; then\n    echo \"The ${NAMESPACE}/${SERVICE_NAME} IBM Cloud service instance exists. This is a PostSync create event.\"\n    exit 0\n  fi\nelse\n  echo \"IBM Cloud Portworx service not found: ${NAMESPACE}/${SERVICE_NAME}. Cleaning up...\"\n  oc get services.ibmcloud -n \"${NAMESPACE}\"\nfi\n\necho \"Wiping Portworx from cluster\"\n\ncurl -fSsL https://raw.githubusercontent.com/IBM/ibmcloud-storage-utilities/master/px-utils/px_cleanup/px-wipe.sh | bash -s -- --talismanimage icr.io/ext/portworx/talisman --talismantag 1.1.0 --wiperimage icr.io/ext/portworx/px-node-wiper --wipertag 2.5.0 --force\n\necho \"Removing the portworx helm deployment from the cluster\"\n\nhelm_releases=$(helm ls -A --output json)\n\nhelm_release=$(echo \"${helm_releases}\" | jq -r '.[] | select(.name==\"portworx\") | .name // empty')\nhelm_namespace=$(echo \"${helm_releases}\" | jq -r '.[] | select(.name==\"portworx\") | .namespace // empty')\n\nif [[ -z \"${helm_release}\" ]]; then\n  echo \"Unable to find helm release for portworx.  Ensure your helm client is at version 3 and has access to the cluster.\";\nelse\n  if ! helm uninstall \"${helm_release}\" -n \"${helm_namespace}\"; then\n    echo \"error removing the helm release\"\n    #exit 1;\n  fi\nfi\n\necho \"removing all portworx storage classes\"\nkubectl get sc -A | grep portworx | awk '{ print $1 }' | while read in; do\n  kubectl delete sc \"$in\"\ndone\n\necho \"removing portworx artifacts\"\nkubectl delete serviceaccount -n kube-system portworx-hook --ignore-not-found=true\nkubectl delete clusterrole portworx-hook --ignore-not-found=true\nkubectl delete clusterrolebinding portworx-hook --ignore-not-found=true\n\nkubectl delete service portworx-service -n kube-system --ignore-not-found=true\nkubectl delete service portworx-api -n kube-system --ignore-not-found=true\n\nkubectl delete serviceaccount -n kube-system portworx-hook --ignore-not-found=true \nkubectl delete clusterrole portworx-hook --ignore-not-found=true\nkubectl delete clusterrolebinding portworx-hook --ignore-not-found=true\n\nkubectl delete job -n kube-system talisman --ignore-not-found=true\nkubectl delete serviceaccount -n kube-system talisman-account --ignore-not-found=true \nkubectl delete clusterrolebinding talisman-role-binding --ignore-not-found=true \nkubectl delete crd volumeplacementstrategies.portworx.io --ignore-not-found=true\nkubectl delete configmap -n kube-system portworx-pvc-controller --ignore-not-found=true\n\nkubectl delete daemonset -n kube-system portworx --ignore-not-found=true\nkubectl delete daemonset -n kube-system portworx-api --ignore-not-found=true\nkubectl delete deployment -n kube-system portworx-pvc-controller --ignore-not-found=true\n\nkubectl delete job -n kube-system px-hook-etcd-preinstall --ignore-not-found=true\nkubectl delete job -n kube-system px-hook-predelete-nodelabel --ignore-not-found=true\n\nkubectl delete secret -n default sh.helm.release.v1.portworx.v1 --ignore-not-found=true\n\n# use the following command to verify all portworks resources are gone.  If you see a result here, it didn't work\n# kubectl get all -A | grep portworx\n"
+  wipe_portworx.sh: |
+    #!/usr/bin/env bash
+
+    # Docs for cleaning up Portworx installation at: https://cloud.ibm.com/docs/containers?topic=containers-portworx#portworx_cleanup
+    # Additional utilities for cleaning up Portworx installation available at https://github.com/IBM/ibmcloud-storage-utilities/blob/master/px-utils/px_cleanup/px-wipe.sh
+
+    if [[ -z "${NAMESPACE}" ]] || [[ -z "${SERVICE_NAME}" ]]; then
+      echo "NAMESPACE and SERVICE_NAME must be provided as environment variables" >&2
+      exit 1
+    fi
+
+    if ! command -v jq 1> /dev/null 2> /dev/null; then
+      echo "jq cli not found" >&2
+      exit 1
+    fi
+
+    if ! command -v helm 1> /dev/null 2> /dev/null; then
+      echo "helm cli not found" >&2
+      exit 1
+    fi
+
+    if ! command -v kubectl 1> /dev/null 2> /dev/null; then
+      echo "kubectl cli not found" >&2
+      exit 1
+    fi
+
+    if ! command -v oc 1> /dev/null 2> /dev/null; then
+      echo "oc cli not found" >&2
+      exit 1
+    fi
+
+    echo "Sleeping for 30 seconds to let things settle"
+    sleep 30
+
+    if oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" 1> /dev/null 2> /dev/null; then
+      echo "IBM Cloud Portworx service found: ${NAMESPACE}/${SERVICE_NAME}"
+      oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" -o yaml
+      SERVICE_STATE=$(oc get services.ibmcloud "${SERVICE_NAME}" -n "${NAMESPACE}" -o json | jq '.status.state // empty')
+
+      echo "Current state of ${NAMESPACE}/${SERVICE_NAME}: ${SERVICE_STATE}"
+      if [[ -z "${SERVICE_STATE}" ]] || [[ "${SERVICE_STATE}" =~ [Oo]nline ]] || [[ "${SERVICE_STATE}" == "in progress" ]] || [[ "${SERVICE_STATE}" == "provisioning" ]]; then
+        echo "The ${NAMESPACE}/${SERVICE_NAME} IBM Cloud service instance exists. This is a PostSync create event."
+        exit 0
+      fi
+    else
+      echo "IBM Cloud Portworx service not found: ${NAMESPACE}/${SERVICE_NAME}. Cleaning up..."
+      oc get services.ibmcloud -n "${NAMESPACE}"
+    fi
+
+    echo "Wiping Portworx from cluster"
+
+    curl -fSsL https://raw.githubusercontent.com/IBM/ibmcloud-storage-utilities/master/px-utils/px_cleanup/px-wipe.sh | bash -s -- --talismanimage icr.io/ext/portworx/talisman --talismantag 1.1.0 --wiperimage icr.io/ext/portworx/px-node-wiper --wipertag 2.5.0 --force
+
+    echo "Removing the portworx helm deployment from the cluster"
+
+    helm_releases=$(helm ls -A --output json)
+
+    helm_release=$(echo "${helm_releases}" | jq -r '.[] | select(.name=="portworx") | .name // empty')
+    helm_namespace=$(echo "${helm_releases}" | jq -r '.[] | select(.name=="portworx") | .namespace // empty')
+
+    if [[ -z "${helm_release}" ]]; then
+      echo "Unable to find helm release for portworx.  Ensure your helm client is at version 3 and has access to the cluster.";
+    else
+      if ! helm uninstall "${helm_release}" -n "${helm_namespace}"; then
+        echo "error removing the helm release"
+        #exit 1;
+      fi
+    fi
+
+
+    echo "removing all portworx storage classes"
+    kubectl get sc | grep portworx | awk '{ print $1 }' | while read in; do
+      kubectl delete sc "$in"
+    done
+
+    echo "removing portworx artifacts"
+    kubectl delete clusterrole,clusterrolebinding -l app.kubernetes.io/instance=portworx
+    kubectl delete serviceaccount,service,job,configmap,deployment,daemonset,statefulset -n kube-system -l app.kubernetes.io/instance=portworx
+    kubectl delete deployment portworx-pvc-controller -n kube-system --ignore-not-found=true
+    kubectl delete sa portworx-pvc-controller-account -n kube-system --ignore-not-found=true
+
+    kubectl delete secret -n default sh.helm.release.v1.portworx.v1 --ignore-not-found=true
+
+    # use the following command to verify all portworks resources are gone.  If you see a result here, it didn't work
+    # kubectl get all -A | grep portworx
