@@ -1,3 +1,4 @@
+{{- $serviceAccount := printf "%s-owner" (include "ibm-portworx.serviceAccountName" .) }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -18,7 +19,7 @@ spec:
           configMap:
             name: {{ include "ibm-portworx.fullname" . }}
             defaultMode: 0777
-      serviceAccountName: {{ include "ibm-portworx.serviceAccountName" . }}
+      serviceAccountName: {{ $serviceAccount }}
       containers:
         - name: config
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Release.Revision }}
@@ -34,3 +35,74 @@ spec:
               value: {{ include "ibm-portworx.service-name" . }}
           command:
             - /scripts/update-resource-owner.sh
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $serviceAccount }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
+  labels:
+    {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    helm.sh/hook-weight: "5"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $serviceAccount }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    helm.sh/hook-weight: "5"
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "serviceaccounts"
+      - "services"
+      - "configmaps"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "batch"
+    resources:
+      - "jobs"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "apps"
+    resources:
+      - "daemonsets"
+      - "deployments"
+      - "statefulsets"
+    verbs:
+      - "*"
+  - apiGroups:
+      - "ibmcloud.ibm.com"
+    resources:
+      - "services"
+    verbs:
+      - list
+      - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $serviceAccount }}
+  namespace: {{ include "ibm-portworx.namespace" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    helm.sh/hook-weight: "5"
+  labels:
+  {{- include "ibm-portworx.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $serviceAccount }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ $serviceAccount }}
+    namespace: {{ .Release.Namespace }}

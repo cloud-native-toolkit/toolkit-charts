@@ -112,16 +112,16 @@ data:
     SERVICE_API_VERSION=$(echo "${SERVICE_JSON}" | jq -r '.apiVersion')
     SERVICE_KIND=$(echo "${SERVICE_JSON}" | jq -r '.kind')
 
-    oc get serviceaccount,service,job,configmap,deployment,daemonset,statefulset -n "${NAMESPACE}" -l app.kubernetes.io/instance=portworx -o json | \
+    PATCH=$(jq -n -c --arg UID "${SERVICE_UID}" --arg API_VERSION "${SERVICE_API_VERSION}" --arg KIND "${SERVICE_KIND}" \
+      '{"metadata": {"ownerReferences": [{"apiVersion": $API_VERSION, "kind": $KIND, "uid": $UID}]}}')
+
+    oc get serviceaccount,service,configmap,job,deployment,daemonset,statefulset -n "${NAMESPACE}" -l app.kubernetes.io/instance=portworx -o json | \
     jq -c '.items[] | {"name": .metadata.name, "kind": .kind}' | \
     while read resource; do
       kind=$(echo "${resource}" | jq -r '.kind')
       name=$(echo "${resource}" | jq -r '.name')
 
-      patch=$(jq -n --arg UID "${SERVICE_UID}" --arg API_VERSION "${SERVICE_API_VERSION}" --arg KIND "${SERVICE_KIND}" \
-        '{"metadata": {"ownerReferences": [{"apiVersion": $API_VERSION, "kind": $KIND, "uid": $UID}]}}')
-
-      oc patch -n "${NAMESPACE}" "${kind}" "${name}" -p "${patch}"
+      oc patch -n "${NAMESPACE}" "${kind}" "${name}" -p "${PATCH}"
     done
 
     if oc get deployment -n "${NAMESPACE}" portworx-pvc-controller 1> /dev/null 2> /dev/null; then
@@ -131,10 +131,7 @@ data:
         kind=$(echo "${resource}" | jq -r '.kind')
         name=$(echo "${resource}" | jq -r '.name')
 
-        patch=$(jq -n --arg UID "${SERVICE_UID}" --arg API_VERSION "${SERVICE_API_VERSION}" --arg KIND "${SERVICE_KIND}" \
-          '{"metadata": {"ownerReferences": [{"apiVersion": $API_VERSION, "kind": $KIND, "uid": $UID}]}}')
-
-        oc patch -n "${NAMESPACE}" "${kind}" "${name}" -p "${patch}"
+        oc patch -n "${NAMESPACE}" "${kind}" "${name}" -p "${PATCH}"
       done
     fi
 
@@ -145,10 +142,7 @@ data:
         kind=$(echo "${resource}" | jq -r '.kind')
         name=$(echo "${resource}" | jq -r '.name')
 
-        patch=$(jq -n --arg UID "${SERVICE_UID}" --arg API_VERSION "${SERVICE_API_VERSION}" --arg KIND "${SERVICE_KIND}" \
-          '{"metadata": {"ownerReferences": [{"apiVersion": $API_VERSION, "kind": $KIND, "uid": $UID}]}}')
-
-        oc patch -n "${NAMESPACE}" "${kind}" "${name}" -p "${patch}"
+        oc patch -n "${NAMESPACE}" "${kind}" "${name}" -p "${PATCH}"
       done
     fi
   volume-attach.sh: |+
