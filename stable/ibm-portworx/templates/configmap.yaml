@@ -18,12 +18,12 @@ data:
       local worker_id="$1"
       local volume_suffix="$2"
 
-      local worker_name=$(echo "${worker_id}" | sed -s "s/kube-//g")
+      local worker_name=$(echo "${worker_id}" | sed "s/kube-//g")
 
       if [[ -n "${volume_suffix}" ]]; then
-        echo "pwx-${worker_name}-${volume_suffix}"
+        echo "pwx-${worker_name}-${volume_suffix}" | sed 's/\(.\{63\}\).*/\1/'
       else
-        echo "pwx-${worker_name}"
+        echo "pwx-${worker_name}" | sed 's/\(.\{63\}\).*/\1/'
       fi
     }
 
