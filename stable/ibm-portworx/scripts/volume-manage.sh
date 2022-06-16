@@ -19,12 +19,12 @@ echo "Node values: region=${REGION}, workerId=${WORKER_ID}, clusterId=${CLUSTER_
 exit_script() {
     echo "SIGTERM received!"
     echo "Cleaning up volume attachment"
-    "${SCRIPT_DIR}/volume-attachment-destroy.sh" "${RESOURCE_GROUP_ID}" "${REGION}" "${WORKER_ID}" "${CLUSTER_ID}"
+    "${SCRIPT_DIR}/volume-attachment-destroy.sh" "${RESOURCE_GROUP_ID}" "${REGION}" "${WORKER_ID}" "${CLUSTER_ID}" "${VOLUME_SUFFIX}"
     EXIT="true"
 }
 
 trap exit_script SIGINT SIGTERM
 
-"${SCRIPT_DIR}/volume-attach.sh" "${RESOURCE_GROUP_ID}" "${REGION}" "${WORKER_ID}" "${CLUSTER_ID}"
+"${SCRIPT_DIR}/volume-attach.sh" "${RESOURCE_GROUP_ID}" "${REGION}" "${WORKER_ID}" "${CLUSTER_ID}" "${VOLUME_SUFFIX}"
 
 while [[ "${EXIT}" != "true" ]]; do sleep 10; done

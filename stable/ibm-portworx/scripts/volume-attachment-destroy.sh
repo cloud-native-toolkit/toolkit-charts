@@ -6,6 +6,7 @@ RESOURCE_GROUP_ID="$1"
 REGION="$2"
 WORKER_ID="$3"
 CLUSTER_ID="$4"
+VOLUME_SUFFIX="$5"
 
 if [[ -z "${RESOURCE_GROUP_ID}" ]] || [[ -z "${REGION}" ]] ||  [[ -z "${WORKER_ID}" ]] || [[ -z "${CLUSTER_ID}" ]]; then
   echo "usage: volume-attachment-destroy.sh RESOURCE_GROUP_ID REGION WORKER_ID CLUSTER_ID" >&2
@@ -34,7 +35,11 @@ fi
 
 source "${SCRIPT_DIR}/support-functions.sh"
 
-NAME="pwx-${WORKER_ID}"
+if [[ -n "${VOLUME_SUFFIX}" ]]; then
+  NAME="pwx-${WORKER_ID}-${VOLUME_SUFFIX}"
+else
+  NAME="pwx-${WORKER_ID}"
+fi
 
 get_token "${IBMCLOUD_API_KEY}"
 

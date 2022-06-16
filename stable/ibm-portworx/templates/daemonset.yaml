@@ -50,6 +50,8 @@ spec:
               value: {{ .Values.volume.profile | quote }}
             - name: ENCRYPTION_KEY
               value: {{ .Values.volume.encryption_key | quote }}
+            - name: VOLUME_SUFFIX
+              value: {{ .Values.volumeSuffix | quote }}
           command:
             - /bin/sh
           args:
@@ -73,5 +75,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "ibm-portworx.operator-secret" . }}
                   key: api-key
+            - name: VOLUME_SUFFIX
+              value: {{ .Values.volumeSuffix | quote }}
           command:
             - /scripts/volume-manage.sh

@@ -40,3 +40,4 @@ volume:
   encryption_key: ""
 
 serviceSuffix: ""
+volumeSuffix: ""
