@@ -24,8 +24,12 @@ SERVICE_UID=$(echo "${SERVICE_JSON}" | jq -r '.metadata.uid')
 SERVICE_API_VERSION=$(echo "${SERVICE_JSON}" | jq -r '.apiVersion')
 SERVICE_KIND=$(echo "${SERVICE_JSON}" | jq -r '.kind')
 
-PATCH=$(jq -n -c --arg UID "${SERVICE_UID}" --arg API_VERSION "${SERVICE_API_VERSION}" --arg KIND "${SERVICE_KIND}" \
-  '{"metadata": {"ownerReferences": [{"apiVersion": $API_VERSION, "kind": $KIND, "uid": $UID}]}}')
+PATCH=$(jq -n -c \
+  --arg UID "${SERVICE_UID}" \
+  --arg API_VERSION "${SERVICE_API_VERSION}" \
+  --arg KIND "${SERVICE_KIND}" \
+  --arg NAME "${SERVICE_NAME}" \
+  '{"metadata": {"ownerReferences": [{"apiVersion": $API_VERSION, "kind": $KIND, "uid": $UID, "name": $NAME}]}}')
 
 oc get serviceaccount,service,configmap,job,deployment,daemonset,statefulset -n "${NAMESPACE}" -l app.kubernetes.io/instance=portworx -o json | \
 jq -c '.items[] | {"name": .metadata.name, "kind": .kind}' | \
