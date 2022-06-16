@@ -1892,6 +1892,16 @@ entries:
   ibm-portworx:
   - apiVersion: v2
     appVersion: v1.1
+    created: "2022-06-16T19:17:46.939167592Z"
+    description: Chart to provision Portworx on an IBM cluster
+    digest: 85953f9959b8b4fe6a7cc1c2ceed60cc4743f2dd07618f32358d5558f4c77ce1
+    name: ibm-portworx
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-portworx-0.8.4/ibm-portworx-0.8.4.tgz
+    version: 0.8.4
+  - apiVersion: v2
+    appVersion: v1.1
     created: "2022-06-16T18:53:32.983400879Z"
     description: Chart to provision Portworx on an IBM cluster
     digest: 0f8fd9bf66657e324a94dddb98f8a2e33df11a4ca471fa83e34b4fc9731c1c33
