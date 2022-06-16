@@ -35,11 +35,7 @@ fi
 
 source "${SCRIPT_DIR}/support-functions.sh"
 
-if [[ -n "${VOLUME_SUFFIX}" ]]; then
-  NAME="pwx-${WORKER_ID}-${VOLUME_SUFFIX}"
-else
-  NAME="pwx-${WORKER_ID}"
-fi
+NAME=$(volume_name "${WORKER_ID}" "${VOLUME_SUFFIX}")
 
 get_token "${IBMCLOUD_API_KEY}"
 

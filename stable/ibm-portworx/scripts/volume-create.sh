@@ -45,11 +45,7 @@ CLUSTER_ID
 
 echo "Node values: region=${REGION}, zone=${ZONE}, workerId=${WORKER_ID}"
 
-if [[ -n "${VOLUME_SUFFIX}" ]]; then
-  NAME="pwx-${WORKER_ID}-${VOLUME_SUFFIX}"
-else
-  NAME="pwx-${WORKER_ID}"
-fi
+NAME=$(volume_name "${WORKER_ID}" "${VOLUME_SUFFIX}")
 
 if [[ -z "${PROFILE}" ]]; then
   PROFILE="custom"

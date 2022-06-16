@@ -2,6 +2,19 @@
 
 API_VERSION="2021-04-06"
 
+volume_name() {
+  local worker_id="$1"
+  local volume_suffix="$2"
+
+  local worker_name=$(echo "${worker_id}" | sed "s/kube-//g")
+
+  if [[ -n "${volume_suffix}" ]]; then
+    echo "pwx-${worker_name}-${volume_suffix}" | sed 's/\(.\{63\}\).*/\1/'
+  else
+    echo "pwx-${worker_name}" | sed 's/\(.\{63\}\).*/\1/'
+  fi
+}
+
 get_token() {
   local API_KEY="$1"
 
@@ -25,7 +38,7 @@ get_volume_id() {
 
   VOLUME_ID=$(curl -s -X GET "${URL}" \
     -H "Authorization: Bearer ${TOKEN}" | \
-    jq -r --arg NAME "${NAME}" '.volumes[] | select(.name == $NAME) | .id // empty')
+    jq -r --arg NAME "${NAME}" '.volumes?[] | select(.name == $NAME) | .id // empty')
 }
 
 create_volume() {

@@ -14,6 +14,19 @@ data:
 
     API_VERSION="2021-04-06"
 
+    volume_name() {
+      local worker_id="$1"
+      local volume_suffix="$2"
+
+      local worker_name=$(echo "${worker_id}" | sed -s "s/kube-//g")
+
+      if [[ -n "${volume_suffix}" ]]; then
+        echo "pwx-${worker_name}-${volume_suffix}"
+      else
+        echo "pwx-${worker_name}"
+      fi
+    }
+
     get_token() {
       local API_KEY="$1"
 
@@ -37,7 +50,7 @@ data:
 
       VOLUME_ID=$(curl -s -X GET "${URL}" \
         -H "Authorization: Bearer ${TOKEN}" | \
-        jq -r --arg NAME "${NAME}" '.volumes[] | select(.name == $NAME) | .id // empty')
+        jq -r --arg NAME "${NAME}" '.volumes?[] | select(.name == $NAME) | .id // empty')
     }
 
     create_volume() {
@@ -183,11 +196,7 @@ data:
 
     source "${SCRIPT_DIR}/support-functions.sh"
 
-    if [[ -n "${VOLUME_SUFFIX}" ]]; then
-      NAME="pwx-${WORKER_ID}-${VOLUME_SUFFIX}"
-    else
-      NAME="pwx-${WORKER_ID}"
-    fi
+    NAME=$(volume_name "${WORKER_ID}" "${VOLUME_SUFFIX}")
 
     get_token "${IBMCLOUD_API_KEY}"
 
@@ -271,11 +280,7 @@ data:
 
     source "${SCRIPT_DIR}/support-functions.sh"
 
-    if [[ -n "${VOLUME_SUFFIX}" ]]; then
-      NAME="pwx-${WORKER_ID}-${VOLUME_SUFFIX}"
-    else
-      NAME="pwx-${WORKER_ID}"
-    fi
+    NAME=$(volume_name "${WORKER_ID}" "${VOLUME_SUFFIX}")
 
     get_token "${IBMCLOUD_API_KEY}"
 
@@ -356,11 +361,7 @@ data:
 
     echo "Node values: region=${REGION}, zone=${ZONE}, workerId=${WORKER_ID}"
 
-    if [[ -n "${VOLUME_SUFFIX}" ]]; then
-      NAME="pwx-${WORKER_ID}-${VOLUME_SUFFIX}"
-    else
-      NAME="pwx-${WORKER_ID}"
-    fi
+    NAME=$(volume_name "${WORKER_ID}" "${VOLUME_SUFFIX}")
 
     if [[ -z "${PROFILE}" ]]; then
       PROFILE="custom"
