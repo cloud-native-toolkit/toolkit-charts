@@ -1,0 +1,10 @@
+apiVersion: db2u.databases.ibm.com/v1
+kind: DvService
+metadata:
+  name: {{ .Values.metadata.name }}
+spec:
+  license:
+    accept: {{ .Values.spec.license.accept }}
+    license: {{ .Values.spec.license.license }}
+  size: {{ .Values.spec.size }}
+  version: {{ .Values.spec.version }}
