@@ -1,0 +1,13 @@
+# Default values for ibm-cp4d-data-virtualization-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+metadata:
+  name: dv-service
+
+spec:
+  license:
+    accept: "true"
+    license: Enterprise
+  size: small
+  version: 1.7.8
