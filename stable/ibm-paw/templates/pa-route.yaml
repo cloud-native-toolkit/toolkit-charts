@@ -1,0 +1,23 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    haproxy.router.openshift.io/timeout: "{{ .Values.common.proxyTimeoutSeconds }}s"
+    argocd.argoproj.io/sync-wave: “300"
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+  name: pa-route{{ .Values.instanceIdWithinNamespace }}
+  namespace:  {{ .Release.Namespace }}
+spec:
+  host: {{ .Values.ingress.host }}
+  port:
+    targetPort:  8000
+  to:
+    kind: Service
+    name: gateway{{ .Values.instanceIdWithinNamespace }}
+

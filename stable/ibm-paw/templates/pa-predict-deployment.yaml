@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    name: pa-predict{{ .Values.instanceIdWithinNamespace }}
+    release: {{ .Release.Name }}
+  name: pa-predict{{ .Values.instanceIdWithinNamespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: “300"
+spec:
+  replicas: {{ .Values.paPredict.replicas }}
+  selector:
+    matchLabels:
+      name: pa-predict{{ .Values.instanceIdWithinNamespace }}
+  template:
+    metadata:
+      annotations:
+        hook.activate.cpd.ibm.com/command: '[]'
+        hook.deactivate.cpd.ibm.com/command: '[]'          
+        productName: IBM Planning Analytics Workspace
+        productID: com.ibm.ba.paw.{{ .Release.Name }}
+        productVersion: {{ .Release.Name }}
+      labels:
+        app: {{ .Values.common.appName }}
+        app.kubernetes.io/name: {{ .Values.common.appName }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        name: pa-predict{{ .Values.instanceIdWithinNamespace }}
+        release: {{ .Release.Name }}
+        version: "1.0.781-ubi8"
+        pa-cacerts-version: {{ .Values.secrets.cacertVersion }}
+        pa-java-truststore-version: {{ .Values.secrets.javaTruststoreVersion }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                - {{ .Values.arch }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm: 
+              labelSelector:
+                matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                  - pa-predict{{ .Values.instanceIdWithinNamespace }}
+              topologyKey: kubernetes.io/paw
+      volumes:
+        - name: pa-cacerts
+          emptyDir:
+            medium: {{ .Values.secrets.tlsEmptyDirMedium }}
+            sizeLimit: {{ .Values.secrets.tlsEmptyDirSizeLimit }}
+        - name: pa-java-truststore-credential
+          secret:
+            secretName: pa-java-truststore-credential{{ .Values.instanceIdWithinNamespace }}
+        - name: pa-tls-cacerts
+          secret:
+            secretName: pa-tls-cacerts{{ .Values.instanceIdWithinNamespace }}
+      initContainers:
+        - name: prepare-cacerts
+          image: {{ .Values.docker_registry_prefix }}/k8s-config:1.0.103-ubi8
+          command: ["/bin/bash"]
+          args: ["-c", "/opt/harmony/start.sh cajks"]
+          env:
+           - name: PA_KUBE_TM1_CA_CERTS
+             value: /run/secrets/paw/tls-cacerts/cacerts.pem
+           - name: TRUST_STORE_PASSWORD
+             value: "/run/secrets/paw/java-truststore-credential/credential"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - name: pa-cacerts
+            mountPath: /run/config
+          - name: pa-java-truststore-credential
+            mountPath: /run/secrets/paw/java-truststore-credential
+          - name: pa-tls-cacerts
+            mountPath: /run/secrets/paw/tls-cacerts
+      containers:
+        - name: pa-predict
+          image: {{ .Values.docker_registry_prefix }}/pa-predict-svc:1.0.781-ubi8
+          ports:
+            - containerPort: 9610
+              protocol: TCP
+          env:
+            - name: ProxyTimeoutSeconds
+              value: "{{ .Values.common.proxyTimeoutSeconds }}"
+            - name: TRUST_STORE_FILE
+              value: "/run/config/cacerts"
+            - name: TRUST_STORE_PASSWORD
+              value: "/run/secrets/paw/java-truststore-credential/credential"
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: pa-cacerts
+              mountPath: /run/config
+            - name: pa-java-truststore-credential
+              mountPath: /run/secrets/paw/java-truststore-credential
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      hostNetwork: false
+      hostIPC: false
+      hostPID: false
+      restartPolicy: Always
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    name: share-proxy{{ .Values.instanceIdWithinNamespace }}
+    release: {{ .Release.Name }}
+  name: share-proxy{{ .Values.instanceIdWithinNamespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: “300"
+spec:
+  ports:
+    - name: share-proxy{{ .Values.instanceIdWithinNamespace }}
+      protocol: TCP
+      port: 9070
+      targetPort: 9070
+  selector:
+    name: share-proxy{{ .Values.instanceIdWithinNamespace }}
+  type: ClusterIP
+  sessionAffinity: None
+
