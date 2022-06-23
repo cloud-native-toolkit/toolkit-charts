@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    name: sentinel-data3{{ .Values.instanceIdWithinNamespace }}
+    release: {{ .Release.Name }}
+  name: sentinel3{{ .Values.instanceIdWithinNamespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: “300"
+spec:
+  ports:
+    - name: sentinel3{{ .Values.instanceIdWithinNamespace }}
+      protocol: TCP
+      port: 26379
+      targetPort: 26379
+  selector:
+    name: sentinel-data3{{ .Values.instanceIdWithinNamespace }}
+  type: ClusterIP
+  sessionAffinity: None
+

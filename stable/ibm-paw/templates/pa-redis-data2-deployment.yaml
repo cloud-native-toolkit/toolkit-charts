@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    name: redis-data2{{ .Values.instanceIdWithinNamespace }}
+    release: {{ .Release.Name }}
+  name: redis-data2{{ .Values.instanceIdWithinNamespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: “300"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis-data2{{ .Values.instanceIdWithinNamespace }}
+  template:
+    metadata:
+      annotations:
+        hook.activate.cpd.ibm.com/command: '[]'
+        hook.deactivate.cpd.ibm.com/command: '[]'       
+        productName: IBM Planning Analytics Workspace
+        productID: com.ibm.ba.paw.{{ .Release.Name }}
+        productVersion: {{ .Release.Name }}
+      labels:
+        app: {{ .Values.common.appName }}
+        app.kubernetes.io/name: {{ .Values.common.appName }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        name: redis-data2{{ .Values.instanceIdWithinNamespace }}
+        release: {{ .Release.Name }}
+        version: "1.0.176-ubi8"
+        pa-cacerts-version: {{ .Values.secrets.cacertVersion }}
+        pa-tls-version: {{ .Values.secrets.tlsCertVersion }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                - {{ .Values.arch }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                  - redis-data1
+                  - redis-data3
+              topologyKey: kubernetes.io/hostname
+      volumes:
+        - name: redis-data2-storage
+          persistentVolumeClaim:
+            claimName: redis-data2{{ .Values.instanceIdWithinNamespace }}
+        - name: pa-cacerts
+          emptyDir:
+            medium: {{ .Values.secrets.tlsEmptyDirMedium }}
+            sizeLimit: {{ .Values.secrets.tlsEmptyDirSizeLimit }}
+        - name: pa-tls-cacerts
+          secret:
+            secretName: pa-tls-cacerts{{ .Values.instanceIdWithinNamespace }}
+        - name: pa-tls-cert
+          secret:
+            secretName: {{ .Values.secrets.tlsCertSecretName }}{{ .Values.instanceIdWithinNamespace }}
+      initContainers:
+        - name: prepare-cacerts
+          image: {{ .Values.docker_registry_prefix }}/k8s-config:1.0.103-ubi8
+          command: ["/bin/bash"]
+          args: ["-c", "/opt/harmony/start.sh capem"]
+          env:
+           - name: PA_KUBE_TM1_CA_CERTS
+             value: /run/secrets/paw/tls-cacerts/cacerts.pem
+           - name: PA_KUBE_TLS_CA_CERT
+             value: /run/secrets/paw/tls-cert/{{ .Values.secrets.tlsCaCertName }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - name: pa-cacerts
+            mountPath: /run/config
+          - name: pa-tls-cacerts
+            mountPath: /run/secrets/paw/tls-cacerts
+          - name: pa-tls-cert
+            mountPath: /run/secrets/paw/tls-cert
+        - name: redis-data2-reset
+          image: {{ .Values.docker_registry_prefix }}/k8s-config:1.0.103-ubi8
+          command: ["/bin/bash"]
+          args: ["-c", "/opt/harmony/start.sh redis"]
+          env:
+            - name: SERVICE
+              value: "redis2{{ .Values.instanceIdWithinNamespace }}"
+            - name: ENABLE_SSL
+              value: "true"
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: redis-data2-storage
+              mountPath: /data
+              subPath: redis-data2.1
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      containers:
+        - name: redis-data2
+          image: {{ .Values.docker_registry_prefix }}/redis:1.0.176-ubi8
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+          env:
+            - name: REDIS_TYPE
+              value: "slave"
+            - name: REDIS_1
+              value: "redis1{{ .Values.instanceIdWithinNamespace }}"
+            - name: REDIS_CLUSTER
+              value: "redis-cluster{{ .Values.instanceIdWithinNamespace }}"
+            - name: ANNOUNCE_IP
+              value: "redis2{{ .Values.instanceIdWithinNamespace }}"
+            - name: ENABLE_SSL
+              value: "true"
+            - name: SSL_CA_BUNDLE_FILE
+              value: "/run/config/cacerts.pem"
+            - name: SSL_CERTIFICATE_KEY_FILE
+              value: "/run/secrets/paw/tls-cert/tls.key"
+            - name: SSL_CERTIFICATE_CHAIN_FILE
+              value: "/run/secrets/paw/tls-cert/tls.crt"
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: redis-data2-storage
+              mountPath: /data
+              subPath: redis-data2.1
+            - name: pa-cacerts
+              mountPath: /run/config              
+            - name: pa-tls-cert
+              mountPath: /run/secrets/paw/tls-cert
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      hostNetwork: false
+      hostIPC: false
+      hostPID: false
+      restartPolicy: Always
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      schedulerName: {{ .Values.persistence.podScheduler }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
