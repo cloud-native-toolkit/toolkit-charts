@@ -192,20 +192,20 @@ redis:
   memoryLimit: 100M
   memoryRequestLimit: 50M
 secrets:
-  cacertVersion: MjAyMl8wNV8xN18xNF8yN181MgoZ
+  cacertVersion:
   cpuLimit: 1000m
   cpuRequestLimit: 250m
   ingressCertExternal: false
   ingressCertSecretName: pa-ingress-cert
   ingressCertVersion: 
-  javaTruststoreVersion: MjAyMl8wNV8xN18xNF8yN181MwoZ
+  javaTruststoreVersion:
   memoryLimit: 500M
   memoryRequestLimit: 250M
   pawSecretVersion:
   tlsCaCertName: ca.crt
   tlsCertExternal: false
   tlsCertSecretName: pa-tls-cert
-  tlsCertVersion: MjAyMl8wNV8xN18xNF8yN181MAoZ
+  tlsCertVersion:
   tlsEmptyDirMedium: Memory
   tlsEmptyDirSizeLimit: 131072
 sentinel:
