@@ -201,7 +201,7 @@ secrets:
   javaTruststoreVersion: MjAyMl8wNV8xN18xNF8yN181MwoZ
   memoryLimit: 500M
   memoryRequestLimit: 250M
-  pawSecretVersion: MjAyMl8wNV8xN18xNF8yN181NAoZ
+  pawSecretVersion:
   tlsCaCertName: ca.crt
   tlsCertExternal: false
   tlsCertSecretName: pa-tls-cert
