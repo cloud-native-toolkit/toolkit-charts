@@ -1601,6 +1601,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-analytics-engine-instance-0.1.0/ibm-cp4d-analytics-engine-instance-0.1.0.tgz
     version: 0.1.0
+  ibm-cp4d-data-virtualization-instance:
+  - apiVersion: v2
+    appVersion: 1.7.8
+    created: "2022-06-23T05:10:59.896353548Z"
+    description: A Helm chart for Kubernetes
+    digest: 1f321179d0b6c529e727199f82b1d2876eb62401fb293711a2c09ce43af0ddaa
+    name: ibm-cp4d-data-virtualization-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-data-virtualization-instance-0.1.0/ibm-cp4d-data-virtualization-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-cp4d-watson-knowledge-catalog-instance:
   - apiVersion: v2
     appVersion: 4.0.4
