@@ -2488,6 +2488,17 @@ entries:
     version: 0.1.2
   iteration-zero:
   - apiVersion: v2
+    appVersion: v1.1-v1.8.2
+    created: "2022-06-29T15:27:53.032622813Z"
+    description: Helm chart to install the cli-tools image into a cluster so that
+      the iteration-zero scripts can be run
+    digest: 70f848496e2972420466c936aa5d6e1984635a36f5f56b64963cdf68a542440d
+    name: iteration-zero
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/iteration-zero-0.2.0/iteration-zero-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 0.7.0-lite
     created: "2020-10-28T17:25:17.875577581Z"
     description: Helm chart to install the cli-tools image into a cluster so that
