@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: docker.io/ibmgaragecloud/cli-tools
+  repository: quay.io/cloudnativetoolkit/cli-tools
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
