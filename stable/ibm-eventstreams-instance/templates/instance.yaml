@@ -1,4 +1,4 @@
-apiVersion: eventstreams.ibm.com/v1beta1
+apiVersion: eventstreams.ibm.com/v1beta2
 kind: EventStreams
 metadata:
   name: {{ .Values.ibmeventstreamsinstance.name }}
