@@ -18,7 +18,7 @@ spec:
           name: {{ .Values.clusterConfigSecretName }}
           key: clusterId
     - name: portworx-version
-      value: "Portworx: 2.6.2.1 , Stork: 2.6.0"
+      value: "Portworx: 2.10.2, Stork: 2.9.0"
     - name: secret_type
       value: k8s
     - name: internal_kvdb
