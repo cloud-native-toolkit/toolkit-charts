@@ -1,0 +1,6 @@
+apiVersion: eventstreams.ibm.com/v1beta2
+kind: EventStreams
+metadata:
+  name: {{ .Values.ibmcp4ioperationsdashboard.name }}
+spec:
+  {{- toYaml .Values.ibmcp4ioperationsdashboard.spec | nindent 2 }}
