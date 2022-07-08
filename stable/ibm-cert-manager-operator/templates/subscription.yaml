@@ -1,7 +1,0 @@
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
-metadata:
-  name: {{ .Values.subscriptions.ibmapic.name }}
-  annotations:
-spec:
-  {{- toYaml .Values.subscriptions.ibmapic.subscription | nindent 2 }}
