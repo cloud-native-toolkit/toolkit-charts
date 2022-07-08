@@ -1,6 +1,6 @@
 apiVersion: eventstreams.ibm.com/v1beta2
 kind: EventStreams
 metadata:
-  name: {{ .Values.ibmeventstreamsinstance.name }}
+  name: {{ .Values.ibmeventendpointinstance.name }}
 spec:
-  {{- toYaml .Values.ibmeventstreamsinstance.spec | nindent 2 }}
+  {{- toYaml .Values.ibmeventendpointinstance.spec | nindent 2 }}
