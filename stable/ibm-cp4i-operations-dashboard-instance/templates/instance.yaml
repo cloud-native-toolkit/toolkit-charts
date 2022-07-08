@@ -1,5 +1,5 @@
-apiVersion: eventstreams.ibm.com/v1beta2
-kind: EventStreams
+kind: OperationsDashboard
+apiVersion: integration.ibm.com/v1beta2
 metadata:
   name: {{ .Values.ibmcp4ioperationsdashboard.name }}
 spec:
