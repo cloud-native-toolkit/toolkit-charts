@@ -103,6 +103,7 @@ data:
     metadata:
       name: ${csrName}
     spec:
+      signerName: self-signed
       groups:
         - system:authenticated
       request: $(< "${CERT_DIR}"/server.csr base64 | tr -d '\n')
