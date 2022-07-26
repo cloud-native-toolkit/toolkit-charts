@@ -51,7 +51,7 @@ oc delete csr ${csrName} 2>/dev/null || true
 
 echo "Creating csr ${csrName} for cert "${CERT_DIR}"/server.csr"
 cat <<EOF | oc create -f -
-apiVersion: certificates.k8s.io/v1beta1
+apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 metadata:
   name: ${csrName}

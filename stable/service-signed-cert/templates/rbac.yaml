@@ -17,7 +17,6 @@ rules:
       - signers
     resourceNames:
       - "kubernetes.io/legacy-unknown"
-      - "{{ .Values.serviceName }}.{{ .Release.Namespace }}.svc.cluster.local/self-signed"
     verbs:
       - "*"
 ---
