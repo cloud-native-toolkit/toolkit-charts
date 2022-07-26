@@ -3715,6 +3715,16 @@ entries:
   service-signed-cert:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-07-26T14:57:49.828509825Z"
+    description: A Helm chart for Kubernetes
+    digest: b1825ec64ef2cde09febf60f383b12e081497ed0e3f4ca78d6a0cbc826cc51a6
+    name: service-signed-cert
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/service-signed-cert-0.3.16/service-signed-cert-0.3.16.tgz
+    version: 0.3.16
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-06-07T20:52:44.137989Z"
     description: A Helm chart for Kubernetes
     digest: d3c72ba42849045094d24159ea68df6efed9785e328a2d7a77defbbb95cbd52d
