@@ -103,7 +103,7 @@ data:
     metadata:
       name: ${csrName}
     spec:
-      signerName: self-signed
+      signerName: ${SERVICE}.${NAMESPACE}.svc.cluster.local/self-signed
       groups:
         - system:authenticated
       request: $(< "${CERT_DIR}"/server.csr base64 | tr -d '\n')
