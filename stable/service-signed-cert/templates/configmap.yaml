@@ -90,7 +90,7 @@ data:
     EOF
 
     openssl genrsa -out "${CERT_DIR}"/server-key.pem 2048
-    openssl req -new -key "${CERT_DIR}"/server-key.pem -subj "/CN=${SERVICE}.${NAMESPACE}.svc.cluster.local" -out "${CERT_DIR}"/server.csr -config "${CERT_DIR}"/csr.conf
+    openssl req -new -key "${CERT_DIR}"/server-key.pem -subj "/CN=*.${SERVICE}.${NAMESPACE}.svc.cluster.local" -out "${CERT_DIR}"/server.csr -config "${CERT_DIR}"/csr.conf
 
     # clean-up any previously created CSR for our service. Ignore errors if not present.
     echo "Deleting existing csr ${csrName}, if present"
