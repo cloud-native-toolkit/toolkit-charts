@@ -103,7 +103,8 @@ data:
     metadata:
       name: ${csrName}
     spec:
-      signerName: ${SERVICE}.${NAMESPACE}.svc.cluster.local/self-signed
+      #signerName: ${SERVICE}.${NAMESPACE}.svc.cluster.local/self-signed
+      signerName: kubernetes.io/legacy-unknown
       groups:
         - system:authenticated
       request: $(< "${CERT_DIR}"/server.csr base64 | tr -d '\n')
