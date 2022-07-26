@@ -198,7 +198,7 @@ data:
 
     while true; do
       echo "Getting certificate value from csr ${csrName}"
-      serverCert=$(oc get csr ${csrName} -o jsonpath='{.status.certificate}')
+      serverCert=$(oc get certificatesigningrequest.certificates.k8s.io ${csrName} -o jsonpath='{.status.certificate}')
       if [[ -n "${serverCert}" ]]; then
           break
       fi
