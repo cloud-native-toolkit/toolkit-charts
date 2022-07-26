@@ -98,7 +98,7 @@ data:
 
     echo "Creating csr ${csrName} for cert "${CERT_DIR}"/server.csr"
     cat <<EOF | oc create -f -
-    apiVersion: certificates.k8s.io/v1
+    apiVersion: certificates.k8s.io/v1beta1
     kind: CertificateSigningRequest
     metadata:
       name: ${csrName}
@@ -199,7 +199,7 @@ data:
 
     while true; do
       echo "Getting certificate value from csr ${csrName}"
-      serverCert=$(oc get certificatesigningrequest.certificates.k8s.io ${csrName} -o jsonpath='{.status.certificate}')
+      serverCert=$(oc get csr ${csrName} -o jsonpath='{.status.certificate}')
       if [[ -n "${serverCert}" ]]; then
           break
       fi
