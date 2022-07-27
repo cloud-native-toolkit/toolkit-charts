@@ -1,6 +1,8 @@
 # Default values for ocp-service-tls.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+global:
+  syncWave: "-3"
 
 job:
   repository: ibmgaragecloud/ibmcloud-dev
@@ -16,4 +18,4 @@ serviceName: ""
 secretName: ""
 caConfigName: ""
 
-syncWave: "-3"
+syncWave: ""

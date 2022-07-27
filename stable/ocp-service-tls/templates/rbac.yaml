@@ -5,9 +5,9 @@ metadata:
   name: {{ .Values.serviceAccount.name }}-rbac
   namespace: {{ .Release.Namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: {{ .Values.syncWave | quote }}
+    argocd.argoproj.io/sync-wave: {{ include "ocp-service-tls.syncWave" . }}
   labels:
-{{ include "ocp-service-tls.labels" . | nindent 4 }}
+    {{ include "ocp-service-tls.labels" . | nindent 4 }}
 rules:
   - apiGroups: [""]
     resources: ["services", "configmaps"]
@@ -19,9 +19,9 @@ metadata:
   name: {{ .Values.serviceAccount.name }}-rbac
   namespace: {{ .Release.Namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: {{ .Values.syncWave | quote }}
+    argocd.argoproj.io/sync-wave: {{ include "ocp-service-tls.syncWave" . }}
   labels:
-{{ include "ocp-service-tls.labels" . | nindent 4 }}
+    {{ include "ocp-service-tls.labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.serviceAccount.name }}

@@ -4,7 +4,7 @@ metadata:
   name: {{ include "ocp-service-tls.name" . }}
   namespace: {{ .Release.Namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: {{ .Values.syncWave | quote }}
+    argocd.argoproj.io/sync-wave: {{ include "ocp-service-tls.syncWave" . }}
   labels:
   {{ include "ocp-service-tls.labels" . | nindent 4 }}
 data:

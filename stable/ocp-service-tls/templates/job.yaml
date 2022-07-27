@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-    argocd.argoproj.io/sync-wave: {{ .Values.syncWave | quote }}
+    argocd.argoproj.io/sync-wave: {{ include "ocp-service-tls.syncWave" . }}
   labels:
 {{ include "ocp-service-tls.labels" . | nindent 4 }}
 spec:
