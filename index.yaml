@@ -2863,6 +2863,16 @@ entries:
   ocp-service-tls:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-07-27T22:03:26.735933463Z"
+    description: A Helm chart for Kubernetes
+    digest: f91cedf0d054d6a919dc096c7fa5cc0816d8cba56c518f49ed0bdd79d36958d5
+    name: ocp-service-tls
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-service-tls-0.2.2/ocp-service-tls-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-07-27T20:50:48.03204149Z"
     description: A Helm chart for Kubernetes
     digest: 4845d89ed0fe31f66ffdc261cb8e46e9a16e1e4ab2ad5d06cf7fb440a486a8db
