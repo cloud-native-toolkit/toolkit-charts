@@ -34,7 +34,7 @@ spec:
       containers:
         - name: annotate-service
           image: {{ printf "%s:%s" .Values.job.repository .Values.job.tag }}
-          command: ["/opt/bin/create-secret.sh"]
+          command: ["/opt/bin/annotate-service.sh"]
           env:
             - name: NAMESPACE
               valueFrom:
