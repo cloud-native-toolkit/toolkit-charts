@@ -41,12 +41,14 @@ Expand the name of the chart.
 {{- define "tool-config.url" -}}
 {{- if .Values.url -}}
 {{ .Values.url }}
-{{- else -}}
+{{- else if (include "tool-config.ingressSubdomain" .) -}}
 {{- if .Values.includeNamespace -}}
 {{ printf "https://%s-%s.%s" .Values.host .Release.Namespace (include "tool-config.ingressSubdomain" .)}}
 {{- else -}}
 {{ printf "https://%s.%s" .Values.host (include "tool-config.ingressSubdomain" .) }}
 {{- end -}}
+{{- else -}}
+{{ "" }}
 {{- end -}}
 {{- end -}}
 
