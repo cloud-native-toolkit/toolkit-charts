@@ -1,0 +1,15 @@
+# Default values for ibm-cpd-wos-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+#
+metadata:
+  name: wml-cr
+spec:
+  ignoreForMaintenance: "true"
+  license:
+    accept: "true"
+    license: Enterprise
+  scaleConfig: small
+  type: service
+  version: "4.0.9"
+  storageClass: "managed-nfs-storage"
