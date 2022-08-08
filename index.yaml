@@ -1623,6 +1623,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-watson-knowledge-catalog-instance-0.1.0/ibm-cp4d-watson-knowledge-catalog-instance-0.1.0.tgz
     version: 0.1.0
+  ibm-cp4d-watson-machine-learning-instance:
+  - apiVersion: v2
+    appVersion: 4.0.9
+    created: "2022-08-08T21:39:05.55691932Z"
+    description: A Helm chart for Kubernetes
+    digest: 3f65272aeed9681fa8a979a5d4cd3a81757814ecc4e3b73202001be4583ab7e3
+    name: ibm-cp4d-watson-machine-learning-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4d-watson-machine-learning-instance-0.1.0/ibm-cp4d-watson-machine-learning-instance-0.1.0.tgz
+    version: 0.1.0
   ibm-cp4d-watson-studio-instance:
   - apiVersion: v2
     appVersion: 4.0.4
