@@ -3330,6 +3330,23 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/pact-broker-0.1.0/pact-broker-0.1.0.tgz
     version: 0.1.0
+  paw:
+  - apiVersion: v1
+    appVersion: 2.0.76
+    created: "2022-08-08T21:37:58.600146869Z"
+    description: PA Workspace Local
+    digest: efeb666142b49e8c39a833a753bab62c4ba8b6413f729fc297e4cdc3864a8abb
+    keywords:
+    - Commercial
+    - Limited
+    - amd64
+    - ICP
+    - Analytics
+    kubeVersion: '>=1.11.0'
+    name: paw
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/paw-1.0.0/paw-1.0.0.tgz
+    version: 1.0.0
   refarch-infraconfig:
   - apiVersion: v2
     appVersion: 0.1.0
