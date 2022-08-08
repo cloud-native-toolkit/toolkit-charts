@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+  name: pa-registry-secret{{ .Values.instanceIdWithinNamespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: “200"
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkZWZhdWx0LXJvdXRlLW9wZW5zaGlmdC1pbWFnZS1yZWdpc3RyeS5hcHBzLnBhd2Fyby5lYXN0dXMuYXJvYXBwLmlvIjp7InVzZXJuYW1lIjoia3ViZWFkbWluIiwicGFzc3dvcmQiOiJzaGEyNTZ+czhJSUphV2JxYzIxN0x6UjVXbjA3aWRDdzZ3UDJtRk5Hb1Y4cnVMZ1lWNCIsImVtYWlsIjoiIiwiYXV0aCI6ImEzVmlaV0ZrYldsdU9uTm9ZVEkxTm41ek9FbEpTbUZYWW5Gak1qRTNUSHBTTlZkdU1EZHBaRU4zTm5kUU1tMUdUa2R2VmpoeWRVeG5XVlkwQ2c9PSJ9fX0K
+

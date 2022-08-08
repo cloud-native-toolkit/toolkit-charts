@@ -1,0 +1,156 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    name: prism-platform{{ .Values.instanceIdWithinNamespace }}
+    release: {{ .Release.Name }}
+  name: prism-platform{{ .Values.instanceIdWithinNamespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: “300"
+spec:
+  replicas: {{ .Values.prismPlatform.replicas }}
+  selector:
+    matchLabels:
+      name: prism-platform{{ .Values.instanceIdWithinNamespace }}
+  template:
+    metadata:
+      annotations:
+        hook.activate.cpd.ibm.com/command: '[]'
+        hook.deactivate.cpd.ibm.com/command: '[]'         
+        productName: IBM Planning Analytics Workspace
+        productID: com.ibm.ba.paw.{{ .Release.Name }}
+        productVersion: {{ .Release.Name }}   
+      labels:
+        app: {{ .Values.common.appName }}
+        app.kubernetes.io/name: {{ .Values.common.appName }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        name: prism-platform{{ .Values.instanceIdWithinNamespace }}
+        release: {{ .Release.Name }}
+        version: "3.0.2080.2-ubi8"
+        pa-cacerts-version: {{ .Values.secrets.cacertVersion }}
+        pa-java-truststore-version: {{ .Values.secrets.javaTruststoreVersion }}
+        pa-paw-secret-version: {{ .Values.secrets.pawSecretVersion }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                - {{ .Values.arch }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm: 
+              labelSelector:
+                matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                  - prism-platform{{ .Values.instanceIdWithinNamespace }}
+              topologyKey: kubernetes.io/paw
+      volumes:
+        - name: pa-credential-store-key
+          secret:
+            secretName: pa-credential-store-key{{ .Values.instanceIdWithinNamespace }}
+        - name: pa-cacerts
+          emptyDir:
+            medium: {{ .Values.secrets.tlsEmptyDirMedium }}
+            sizeLimit: {{ .Values.secrets.tlsEmptyDirSizeLimit }}
+        - name: pa-java-truststore-credential
+          secret:
+            secretName: pa-java-truststore-credential{{ .Values.instanceIdWithinNamespace }}
+        - name: pa-tls-cacerts
+          secret:
+            secretName: pa-tls-cacerts{{ .Values.instanceIdWithinNamespace }}
+      initContainers:
+        - name: prepare-cacerts
+          image: {{ .Values.docker_registry_prefix }}/k8s-config:1.0.103-ubi8
+          command: ["/bin/bash"]
+          args: ["-c", "/opt/harmony/start.sh cajks"]
+          env:
+           - name: PA_KUBE_TM1_CA_CERTS
+             value: /run/secrets/paw/tls-cacerts/cacerts.pem
+           - name: TRUST_STORE_PASSWORD
+             value: "/run/secrets/paw/java-truststore-credential/credential"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - name: pa-cacerts
+            mountPath: /run/config
+          - name: pa-java-truststore-credential
+            mountPath: /run/secrets/paw/java-truststore-credential
+          - name: pa-tls-cacerts
+            mountPath: /run/secrets/paw/tls-cacerts
+      containers:
+        - name: prism-platform
+          image: {{ .Values.docker_registry_prefix }}/prism-platform:3.0.2080.2-ubi8
+          ports:
+            - containerPort: 9080
+              protocol: TCP
+          env:
+            - name: CREDENTIAL_STORE_KEY_FILE
+              value: "/run/secrets/paw/tls.key"
+            - name: SecureSessionCookie
+              value: "{{ .Values.common.secureSessionCookie }}"
+            - name: ProxyTimeoutSeconds
+              value: "{{ .Values.common.proxyTimeoutSeconds }}"
+            - name: JVM_ARGS
+              value: "{{ .Values.prismPlatform.jvmArgs }}"
+            - name: CDN_URL
+              value: "/prism/3.0.10437-ubi8"
+            - name: MDV_URL
+              value: "/prism/mdv/3.0.1568"
+            - name: AGENT_API_KEY
+              value: "{{ .Values.monitor.adminAgentAPIKey }}"            
+            - name: TRUST_STORE_PASSWORD
+              value: "/run/secrets/paw/java-truststore-credential/credential"
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: pa-cacerts
+              mountPath: /run/config
+            - name: pa-credential-store-key
+              mountPath: /run/secrets/paw
+            - name: pa-java-truststore-credential
+              mountPath: /run/secrets/paw/java-truststore-credential
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      hostNetwork: false
+      hostIPC: false
+      hostPID: false
+      restartPolicy: Always
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+

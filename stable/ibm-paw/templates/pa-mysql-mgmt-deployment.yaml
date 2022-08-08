@@ -1,0 +1,186 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.common.appName }}
+    app.kubernetes.io/name: {{ .Values.common.appName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    name: mysql-mgmt{{ .Values.instanceIdWithinNamespace }}
+    release: {{ .Release.Name }}
+  name: mysql-mgmt{{ .Values.instanceIdWithinNamespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: “300"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mysql-mgmt{{ .Values.instanceIdWithinNamespace }}
+  template:
+    metadata:
+      annotations:
+        hook.activate.cpd.ibm.com/command: '[]'
+        hook.deactivate.cpd.ibm.com/command: '[]'         
+        productName: IBM Planning Analytics Workspace
+        productID: com.ibm.ba.paw.{{ .Release.Name }}
+        productVersion: {{ .Release.Name }}
+      labels:
+        app: {{ .Values.common.appName }}
+        app.kubernetes.io/name: {{ .Values.common.appName }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        name: mysql-mgmt{{ .Values.instanceIdWithinNamespace }}
+        release: {{ .Release.Name }}
+        version: "2.0.167-ubi8"
+        pa-cacerts-version: {{ .Values.secrets.cacertVersion }}
+        pa-tls-version: {{ .Values.secrets.tlsCertVersion }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                - {{ .Values.arch }}
+      volumes:     
+        - name: mysql-mgmt
+          emptyDir:
+            medium: "{{ .Values.mysqlMgmt.emptyDirMedium }}"
+            sizeLimit: "{{ .Values.mysqlMgmt.emptyDirSizeLimit }}"  
+        - name: pa-cacerts
+          emptyDir:
+            medium: {{ .Values.secrets.tlsEmptyDirMedium }}
+            sizeLimit: {{ .Values.secrets.tlsEmptyDirSizeLimit }}
+        - name: pa-tls-cacerts
+          secret:
+            secretName: pa-tls-cacerts{{ .Values.instanceIdWithinNamespace }}
+        - name: pa-tls-cert
+          secret:
+            secretName: {{ .Values.secrets.tlsCertSecretName }}{{ .Values.instanceIdWithinNamespace }}
+      initContainers:
+        - name: prepare-cacerts
+          image: {{ .Values.docker_registry_prefix }}/k8s-config:1.0.103-ubi8
+          command: ["/bin/bash"]
+          args: ["-c", "/opt/harmony/start.sh capem"]
+          env:
+           - name: PA_KUBE_TM1_CA_CERTS
+             value: /run/secrets/paw/tls-cacerts/cacerts.pem
+           - name: PA_KUBE_TLS_CA_CERT
+             value: /run/secrets/paw/tls-cert/{{ .Values.secrets.tlsCaCertName }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - name: pa-cacerts
+            mountPath: /run/config
+          - name: pa-tls-cacerts
+            mountPath: /run/secrets/paw/tls-cacerts
+          - name: pa-tls-cert
+            mountPath: /run/secrets/paw/tls-cert
+      containers:
+        - name: pingservice
+          image: {{ .Values.docker_registry_prefix }}/k8s-config:1.0.103-ubi8
+          command: ["/bin/bash"]
+          args: ["-c", "/opt/harmony/pingservice" ]
+          ports:
+            - containerPort: 31001
+              protocol: TCP
+          env:
+            - name: PINGSERVICE_PORT
+              value: "31001"
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+        - name: mysql-mgmt-stunnel
+          image: {{ .Values.docker_registry_prefix }}/mysql-cluster:2.0.167-ubi8
+          command: [ "/mysql-stunnel.sh", "mysql-mgmt" ]
+          ports:
+            - containerPort: 11186
+              protocol: TCP
+          env:
+            - name: MYSQL_INSTANCE
+              value: "{{ .Values.instanceIdWithinNamespace }}"
+            - name: MYSQL_DOMAIN
+              value: "{{ .Release.Namespace }}.{{ .Values.common.internalDomainName }}"
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: pa-cacerts
+              mountPath: /run/config              
+            - name: pa-tls-cert
+              mountPath: /run/secrets/paw/internal-tls-cert
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+        - name: mysql-mgmt
+          image: {{ .Values.docker_registry_prefix }}/mysql-cluster:2.0.167-ubi8
+          args: ["ndb_mgmd", "--config-cache=FALSE"]                    
+          ports:
+            - containerPort: 1186
+              protocol: TCP
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          env:
+            - name: ENABLE_SSL
+              value: "true"
+            - name: SIDECAR_NAME
+              value: "mysql-mgmt-stunnel"
+            - name: SIDECAR_PORTS
+              value: "1186,2201,2202"
+            - name: SIDECAR_EXTRA_WAIT
+              value: "5"
+            - name: HOSTNAMES
+              value: "mysql-data1{{ .Values.instanceIdWithinNamespace }}.{{ .Release.Namespace }}.{{ .Values.common.internalDomainName }} mysql-data2{{ .Values.instanceIdWithinNamespace }}.{{ .Release.Namespace }}.{{ .Values.common.internalDomainName }} mysql-mgmt{{ .Values.instanceIdWithinNamespace }}.{{ .Release.Namespace }}.{{ .Values.common.internalDomainName }}"
+            - name: READINESS_PORT
+              value: "31001"
+          volumeMounts:
+            - name: mysql-mgmt
+              mountPath: /var/lib/mysql
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      hostNetwork: false
+      hostIPC: false
+      hostPID: false
+      restartPolicy: Always
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
