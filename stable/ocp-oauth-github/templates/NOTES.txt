@@ -1,0 +1,6 @@
+OAuth configuration applied.
+
+Confirm the callback url provided to the GitHub OAuth app matches. The callback URL by running these commands:
+
+INGRESS=$(oc get ingresses.config/cluster -o json | jq -r '.spec.domain')
+echo "https://oauth-openshift.${INGRESS}/oauth2callback/${{ .Release.Name }}"

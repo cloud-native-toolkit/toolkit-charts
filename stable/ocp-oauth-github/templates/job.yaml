@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ocp-oauth-github.fullname" . }}
+  namespace: {{ include "ocp-oauth-github.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-github.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "ocp-oauth-github.fullname" . }}
+            defaultMode: 0777
+      serviceAccountName: {{ include "ocp-oauth-github.serviceAccountName" . }}
+      containers:
+        - name: patch-oauth
+          image: {{ printf "%s:%s" .Values.image (include "ocp-oauth-github.imageTag" .) | quote }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          command:
+            - /scripts/patch-oauth.sh

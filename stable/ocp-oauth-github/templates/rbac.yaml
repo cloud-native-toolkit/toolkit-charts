@@ -1,0 +1,29 @@
+{{- if .Values.rbac -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "ocp-oauth-github.fullname" . }}
+  namespace: {{ include "ocp-oauth-github.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-github.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["config.openshift.io"]
+    resources: ["oauths"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "ocp-oauth-github.fullname" . }}
+  namespace: {{ include "ocp-oauth-github.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-github.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "ocp-oauth-github.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "ocp-oauth-github.serviceAccountName" . }}
+    namespace: {{ include "ocp-oauth-github.namespace" . }}
+{{- end -}}
