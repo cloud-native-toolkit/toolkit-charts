@@ -1,0 +1,32 @@
+{{- if .Values.rbac -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "ocp-oauth-htpasswd.fullname" . }}
+  namespace: {{ include "ocp-oauth-htpasswd.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-htpasswd.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["config.openshift.io"]
+    resources: ["oauths"]
+    verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "ocp-oauth-htpasswd.fullname" . }}
+  namespace: {{ include "ocp-oauth-htpasswd.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-htpasswd.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "ocp-oauth-htpasswd.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "ocp-oauth-htpasswd.serviceAccountName" . }}
+    namespace: {{ include "ocp-oauth-htpasswd.namespace" . }}
+{{- end -}}

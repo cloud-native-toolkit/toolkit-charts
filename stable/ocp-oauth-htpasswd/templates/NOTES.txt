@@ -1,0 +1,7 @@
+OAuth configuration applied.
+
+The following users were added:
+
+{{ .Values.users | toYaml }}
+
+with a password of {{ include "ocp-oauth-htpasswd.password" . }}

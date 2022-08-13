@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ocp-oauth-htpasswd.fullname" . }}
+  namespace: {{ include "ocp-oauth-htpasswd.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-htpasswd.labels" . | nindent 4 }}
+data:
+  create-htpasswd-secret.sh: |
+    #!/usr/bin/env bash
+
+    if [[ -z "${SECRET_NAME}" ]]; then
+      echo "SECRET_NAME environment variable must be set" >&2
+      exit 1
+    fi
+
+    if [[ -z "${USERS}" ]]; then
+      echo "USERS environment variable must be set" >&2
+      exit 1
+    fi
+
+    if [[ -z "${PASSWORD}" ]]; then
+      PASSWORD="password"
+    fi
+
+    if oc get secret "${SECRET_NAME}" 1> /dev/null 2> /dev/null; then
+      echo "Extracting htpasswd file from secret"
+      oc extract "secret/${SECRET_NAME}" --to=/tmp
+    fi
+
+    echo "${USERS}" | jq -c '.[]' | while read user; do
+
+      username=$(echo "${user}" | jq -r ".name")
+      password=$(echo "${user}" | jq -r --arg DEFAULT "${PASSWORD}" '.password // $DEFAULT')
+
+      echo "Creating user: ${username}"
+
+      if [[ ! -f /tmp/htpasswd ]]; then
+        htpasswd -c -B -b /tmp/htpasswd "${username}" "${password}"
+      else
+        htpasswd -B -b /tmp/htpasswd "${username}" "${password}"
+      fi
+    done
+
+    oc create secret generic "${SECRET_NAME}" --from-file=htpasswd=/tmp/htpasswd --dry-run=client --output json |
+      oc apply -f -
+  patch-oauth.sh: |
+    #!/usr/bin/env bash
+
+    cat /scripts/oauth-patch.yaml
+
+    PROVIDER=$(yq '.' /scripts/oauth-patch.yaml -o json | jq -c '.spec.identityProviders[]')
+
+    oc get oauth cluster -o json | \
+      jq --argjson PROVIDER "${PROVIDER}" '.spec.identityProviders += [$PROVIDER]' | \
+      oc apply -f -
+  remove-patch-oauth.sh: |
+    #!/usr/bin/env bash
+
+    if [[ -z "${PROVIDER_NAME}" ]]; then
+      echo "PROVIDER_NAME is required as an environment variable" >&2
+      exit 1
+    fi
+
+    PROVIDER_INDEX=$(oc get oauth cluster --output json | jq --arg NAME "${PROVIDER_NAME}" '.spec.identityProviders | map(.name == $NAME) | index(true) // empty')
+
+    if [[ -n "${PROVIDER_INDEX}" ]]; then
+      oc patch oauth cluster --type json -p "[{\"op\": \"remove\", \"path\": \"/spec/identityProviders/${PROVIDER_INDEX}\"}]"
+    else
+      echo "Warning: Index of ${PROVIDER_NAME} not found"
+    fi
+
+    if [[ -n "${SECRET_NAME}" ]]; then
+      oc delete secret "${SECRET_NAME}"
+    fi
+  oauth-patch.yaml: |
+    {{- tpl (.Files.Get "patches/oauth-patch.yaml") . | nindent 4 }}

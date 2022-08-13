@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ocp-oauth-htpasswd.fullname" . }}
+  namespace: {{ include "ocp-oauth-htpasswd.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-htpasswd.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "ocp-oauth-htpasswd.fullname" . }}
+            defaultMode: 0777
+      serviceAccountName: {{ include "ocp-oauth-htpasswd.serviceAccountName" . }}
+      initContainers:
+        - name: create-secret
+          image: {{ printf "%s:%s" .Values.image (include "ocp-oauth-htpasswd.imageTag" .) | quote }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          env:
+            - name: SECRET_NAME
+              value: {{ include "ocp-oauth-htpasswd.fullname" . }}
+            - name: USERS
+              value: |
+                {{- .Values.users | default "[]" | toJson | nindent 16 }}
+            - name: PASSWORD
+              value: {{ include "ocp-oauth-htpasswd.password" . }}
+          command:
+            - /scripts/create-htpasswd-secret.sh
+      containers:
+        - name: patch-oauth
+          image: {{ printf "%s:%s" .Values.image (include "ocp-oauth-htpasswd.imageTag" .) | quote }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          command:
+            - /scripts/patch-oauth.sh
