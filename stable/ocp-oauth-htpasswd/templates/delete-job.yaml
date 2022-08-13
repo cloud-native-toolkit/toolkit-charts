@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-remove" (include "ocp-oauth-htpasswd.fullname" .) }}
+  namespace: {{ include "ocp-oauth-htpasswd.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-htpasswd.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "ocp-oauth-htpasswd.fullname" . }}
+            defaultMode: 0777
+      serviceAccountName: {{ include "ocp-oauth-htpasswd.serviceAccountName" . }}
+      containers:
+        - name: remove-patch-oauth
+          image: {{ printf "%s:%s" .Values.image (include "ocp-oauth-htpasswd.imageTag" .) | quote }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          env:
+            - name: PROVIDER_NAME
+              value: {{ .Release.Name }}
+            - name: SECRET_NAME
+              value: {{ include "ocp-oauth-htpasswd.fullname" . }}
+          command:
+            - /scripts/remove-patch-oauth.sh

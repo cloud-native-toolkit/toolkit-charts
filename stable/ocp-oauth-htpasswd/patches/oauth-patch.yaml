@@ -1,0 +1,8 @@
+spec:
+  identityProviders:
+    - name: {{ .Release.Name }}
+      mappingMethod: claim
+      type: HTPasswd
+      htpasswd:
+        fileData:
+          name: {{ include "ocp-oauth-htpasswd.fullname" . }}
