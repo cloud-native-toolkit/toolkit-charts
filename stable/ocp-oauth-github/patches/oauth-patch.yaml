@@ -1,0 +1,24 @@
+spec:
+  identityProviders:
+    - name: {{ .Release.Name }}
+      mappingMethod: claim
+      type: GitHub
+      github:
+        {{- if .Values.caCert }}
+        ca:
+          name: ca-config-map
+        {{- end }}
+        clientID: {{ required "The clientId for the GitHub oauth app is required" .Values.clientId }}
+        clientSecret:
+          name: {{ include "ocp-oauth-github.fullname" . }}
+        {{- if .Values.hostname }}
+        hostname: {{ .Values.hostname }}
+        {{- end }}
+        {{- if .Values.organizations }}
+        organizations:
+          {{- .Values.organizations | toYaml | nindent 10 }}
+        {{- end }}
+        {{- if .Values.teams }}
+        teams:
+          {{- .Values.teams | toYaml | nindent 10 }}
+        {{- end }}

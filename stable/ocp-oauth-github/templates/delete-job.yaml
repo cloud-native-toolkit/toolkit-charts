@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-remove" (include "ocp-oauth-github.fullname" .) }}
+  namespace: {{ include "ocp-oauth-github.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-github.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "ocp-oauth-github.fullname" . }}
+            defaultMode: 0777
+      serviceAccountName: {{ include "ocp-oauth-github.serviceAccountName" . }}
+      containers:
+        - name: remove-patch-oauth
+          image: {{ printf "%s:%s" .Values.image (include "ocp-oauth-github.imageTag" .) | quote }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          env:
+            - name: PROVIDER_NAME
+              value: {{ .Release.Name }}
+          command:
+            - /scripts/remove-patch-oauth.sh

@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ocp-oauth-github.fullname" . }}
+  namespace: {{ include "ocp-oauth-github.namespace" . }}
+  labels:
+  {{- include "ocp-oauth-github.labels" . | nindent 4 }}
+data:
+  patch-oauth.sh: |
+    #!/usr/bin/env bash
+
+    cat /scripts/oauth-patch.yaml
+
+    PROVIDER=$(yq '.' /scripts/oauth-patch.yaml -o json | jq -c '.spec.identityProviders[]')
+
+    oc get oauth cluster -o json | \
+      jq --argjson PROVIDER "${PROVIDER}" '.spec.identityProviders += [$PROVIDER]' | \
+      oc apply -f -
+  remove-patch-oauth.sh: |
+    #!/usr/bin/env bash
+
+    if [[ -z "${PROVIDER_NAME}" ]]; then
+      echo "PROVIDER_NAME is required as an environment variable" >&2
+      exit 1
+    fi
+
+    PROVIDER_INDEX=$(oc get oauth cluster --output json | jq --arg NAME "${PROVIDER_NAME}" '.spec.identityProviders | map(.name == $NAME) | index(true) // empty')
+
+    if [[ -n "${PROVIDER_INDEX}" ]]; then
+      oc patch oauth cluster --type json -p "[{\"op\": \"remove\", \"path\": \"/spec/identityProviders/${PROVIDER_INDEX}\"}]"
+    else
+      echo "Warning: Index of ${PROVIDER_NAME} not found"
+    fi
+  oauth-patch.yaml: |
+    {{- tpl (.Files.Get "patches/oauth-patch.yaml") . | nindent 4 }}

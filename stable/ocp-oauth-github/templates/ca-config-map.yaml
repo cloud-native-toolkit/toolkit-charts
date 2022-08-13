@@ -1,0 +1,10 @@
+{{- if .Values.caCert }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ca-config-map
+  namespace: {{ include "ocp-oauth-github.namespace" . }}
+data:
+  ca.crt: |
+    {{ .Values.caCert }}
+{{- end }}

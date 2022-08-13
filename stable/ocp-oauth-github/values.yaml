@@ -1,0 +1,31 @@
+## Required: The values that will be used to define the serviceAccount under which the job will run
+serviceAccount:
+  create: true
+  name: ""
+  annotations: []
+
+## Required: Flag indicating that rbac rules should be configured for the serviceAccount in order for the job to operate.
+## The value should only be changed to false if the rbac will be provided in some other way.
+rbac: true
+
+## Required: The container image the job will use
+image: quay.io/cloudnativetoolkit/cli-tools-core
+## Optional: Override that tag value that should be used for the image. If not provided, then `appVersion` in Chart.yaml
+## will be used
+imageTag: ""
+
+## Required: The GitHub OAuth app client id
+clientId: ""
+## Required: The GitHub Oauth app client secret
+clientSecret: ""
+
+## Optional: The hostname of the GitHub Enterprise server
+hostname: ""
+## Optional: Value of the ca.crt that signed the SSL certificates for the GitHub Enterprise server
+caCert: ""
+
+## Optional: The list of GitHub organizations that should be used to grant access to the cluster.
+organizations: []
+## Optional: The list of GitHub teams that should be used to grant access to the cluster. The teams are expected to
+## have the format `organization/team`
+teams: []
