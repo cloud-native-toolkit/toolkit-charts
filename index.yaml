@@ -2831,6 +2831,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-oauth-github-0.1.0/ocp-oauth-github-0.1.0.tgz
     version: 0.1.0
+  ocp-oauth-htpasswd:
+  - apiVersion: v2
+    appVersion: v1.2-v1.3.0
+    created: "2022-08-13T06:47:11.099166642Z"
+    description: A Helm chart for Kubernetes
+    digest: 168a6c7fa17d8ff7b0007a88c1c34a6dcef36d18c0c84d0c952f8c3c454585a4
+    name: ocp-oauth-htpasswd
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-oauth-htpasswd-0.1.0/ocp-oauth-htpasswd-0.1.0.tgz
+    version: 0.1.0
   ocp-route:
   - apiVersion: v2
     appVersion: 1.16.0
