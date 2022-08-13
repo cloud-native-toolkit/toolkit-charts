@@ -2820,6 +2820,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-console-notification-0.1.0/ocp-console-notification-0.1.0.tgz
     version: 0.1.0
+  ocp-oauth-github:
+  - apiVersion: v2
+    appVersion: v1.2-v1.3.0
+    created: "2022-08-13T06:45:21.832558044Z"
+    description: A Helm chart for Kubernetes
+    digest: c7d3e02784631433973ad0ad867a75da0475d2db14b6865bb5c256f8da448afa
+    name: ocp-oauth-github
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-oauth-github-0.1.0/ocp-oauth-github-0.1.0.tgz
+    version: 0.1.0
   ocp-route:
   - apiVersion: v2
     appVersion: 1.16.0
