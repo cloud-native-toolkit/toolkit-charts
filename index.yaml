@@ -2823,6 +2823,16 @@ entries:
   ocp-oauth-github:
   - apiVersion: v2
     appVersion: v1.2-v1.3.0
+    created: "2022-08-17T11:51:14.191238012Z"
+    description: A Helm chart for Kubernetes
+    digest: df50b2994f785eb8090c0d6d3b70785b6c5ced3db30e5c3b4aeaf01c6fc24e82
+    name: ocp-oauth-github
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-oauth-github-0.1.1/ocp-oauth-github-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v1.2-v1.3.0
     created: "2022-08-13T06:45:21.832558044Z"
     description: A Helm chart for Kubernetes
     digest: c7d3e02784631433973ad0ad867a75da0475d2db14b6865bb5c256f8da448afa
