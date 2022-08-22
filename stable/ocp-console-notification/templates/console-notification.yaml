@@ -6,8 +6,8 @@ metadata:
   labels:
     {{- include "ocp-console-notification.labels" . | nindent 4 }}
 spec:
-  backgroundColor: {{ .Values.backgroundColor }}
-  color: {{ .Values.color }}
+  backgroundColor: {{ .Values.backgroundColor | quote }}
+  color: {{ .Values.color | quote }}
   location: {{ include "ocp-console-notification.location" . }}
-  text: {{ .Values.text }}
+  text: {{ .Values.text | quote }}
 {{- end }}
