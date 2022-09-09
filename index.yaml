@@ -2672,6 +2672,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/kiali-operator-0.1.0.tgz
     version: 0.1.0
+  namespace:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-09-09T20:18:33.01394248Z"
+    description: A Helm chart for Kubernetes
+    digest: 0c7c31cd4da528d33377d08b320cdeb145b60ea349abe458af8b37924df2a64d
+    name: namespace
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/namespace-0.1.0/namespace-0.1.0.tgz
+    version: 0.1.0
   namespace-rbac-cronjob:
   - apiVersion: v2
     appVersion: v0.1.0
