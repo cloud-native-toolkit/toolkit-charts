@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "namespace.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-30"
