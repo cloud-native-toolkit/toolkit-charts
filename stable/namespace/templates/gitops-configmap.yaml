@@ -1,0 +1,15 @@
+{{- if and (.Values.gitopsConfig) (.Values.gitopsConfig.create) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitops-repo
+  labels:
+    {{- include "namespace.labels" . | nindent 4 }}
+data:
+  parentdir: {{ .Values.gitopsConfig.applicationBasePath }}
+  protocol: https
+  host: {{ required "A value for gitopsConfig.host must be provided if gitopsConfig.create is set to true." .Values.gitopsConfig.host }}
+  org: {{ required "A value for gitopsConfig.org must be provided if gitopsConfig.create is set to true." .Values.gitopsConfig.org }}
+  repo: {{ required "A value for gitopsConfig.repo must be provided if gitopsConfig.create is set to true." .Values.gitopsConfig.repo }}
+  branch: {{ .Values.gitopsConfig.branch | default "main" }}
+{{- end }}
