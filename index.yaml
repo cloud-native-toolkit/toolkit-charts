@@ -3411,6 +3411,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/paw-1.0.0/paw-1.0.0.tgz
     version: 1.0.0
+  rbac:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-09-13T21:18:12.526098886Z"
+    description: A Helm chart for Kubernetes
+    digest: 3daed304e1a0c145a33b281c5f017dcbbbe2e6a4ef633f83410096d5654c66bd
+    name: rbac
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/rbac-0.1.0/rbac-0.1.0.tgz
+    version: 0.1.0
   refarch-infraconfig:
   - apiVersion: v2
     appVersion: 0.1.0
