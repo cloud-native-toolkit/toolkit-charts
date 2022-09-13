@@ -1,0 +1,19 @@
+# Default values for rbac.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+clusterScope: "false"
+
+rules: []
+# - apiGroups = list(string)
+#   resources = list(string)
+#   resourceNames = optional(list(string))
+#   verbs     = list(string)
+
+roles: []
+# - name: test
+# - name: test2
+
+serviceAccount:
+  name: ""
+  namespace: ""
