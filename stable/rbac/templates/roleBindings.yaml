@@ -1,7 +1,7 @@
 {{- $kind := ternary "ClusterRole" "Role" (eq .Values.clusterScope "true") }}
 {{- $releaseName := .Release.Name }}
-{{- $serviceAccountName := required "The serviceAccount.name is required" .Values.serviceAccount.name }}
-{{- $serviceAccountNamespace := required "The serviceAccount.namespace is required" .Values.serviceAccount.namespace }}
+{{- $serviceAccountName := .Values.serviceAccount.name }}
+{{- $serviceAccountNamespace := .Values.serviceAccount.namespace | default .Release.Namespace }}
 {{- $root := . }}
 {{- range .Values.roles }}
 apiVersion: rbac.authorization.k8s.io/v1
@@ -17,8 +17,14 @@ roleRef:
   kind: ClusterRole
   name: {{ .name }}
 subjects:
+  {{- if $serviceAccountName }}
   - kind: ServiceAccount
     name: {{ $serviceAccountName }}
     namespace: {{ $serviceAccountNamespace }}
+  {{- else }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: {{ printf "system:serviceaccounts:%s" $serviceAccountNamespace }}
+  {{- end }}
 ---
 {{- end }}
