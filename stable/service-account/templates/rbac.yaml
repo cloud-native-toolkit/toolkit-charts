@@ -1,25 +1,41 @@
-{{- if .Values.roles -}}
+{{- if gt (len .Values.rules) 0 }}
+{{- $allServiceAccounts := .Values.allServiceAccounts }}
+{{- $kind := ternary "ClusterRole" "Role" (eq .Values.clusterScope "true") }}
+{{- $serviceAccountName := include "service-account.name" . }}
+{{- $serviceAccountNamespace := include "service-account.namespace" . }}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: {{ $kind }}
 metadata:
-  name: {{ include "service-account.name" . }}
+  name: {{ .Release.Name }}
+  namespace: {{ include "service-account.rbac-namespace" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-80"
   labels:
-{{ include "service-account.labels" . | indent 4 }}
+    {{- include "service-account.labels" . | nindent 4 }}
 rules:
-{{ .Values.roles | toYaml | indent 2 }}
+  {{- .Values.rules | toYaml | nindent 2 }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: {{ printf "%sBinding" $kind }}
 metadata:
-  name: {{ include "service-account.name" . }}
+  name: {{ .Release.Name }}
+  namespace: {{ include "service-account.rbac-namespace" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-80"
   labels:
-{{ include "service-account.labels" . | indent 4 }}
+    {{- include "service-account.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ include "service-account.name" . }}
+  kind: {{ $kind }}
+  name: {{ .Release.Name }}
 subjects:
+  {{- if $allServiceAccounts }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: {{ printf "system:serviceaccounts:%s" $serviceAccountNamespace }}
+  {{- else }}
   - kind: ServiceAccount
-    name: {{ include "service-account.name" . }}
-    namespace: {{ .Release.Namespace }}
-{{- end -}}
+    name: {{ $serviceAccountName }}
+    namespace: {{ $serviceAccountNamespace }}
+  {{- end }}
+{{- end }}

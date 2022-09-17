@@ -1,5 +1,5 @@
 {{- if eq (include "service-account.isOpenShift" .) "true" -}}
-{{ $namespace := .Release.Namespace }}
+{{ $namespace := include "service-account.namespace" . }}
 {{ $serviceAccount := include "service-account.name" . }}
 {{ $saName := printf "system:serviceaccount:%s:%s" $namespace $serviceAccount }}
 {{ $labels := include "service-account.labels" . }}
@@ -12,6 +12,7 @@ metadata:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-3"
     argocd.argoproj.io/sync-options: Validate=false
+    argocd.argoproj.io/sync-wave: "-90"
     kubernetes.io/description: 'privileged allows access to all privileged and host
       features and the ability to run as any user, any group, any fsGroup, and with
       any SELinux context.  WARNING: this is the most relaxed SCC and should be used

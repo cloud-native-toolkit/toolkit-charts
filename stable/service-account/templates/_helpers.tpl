@@ -62,3 +62,11 @@ true
 false
 {{- end -}}
 {{- end -}}
+
+{{- define "service-account.namespace" -}}
+{{ .Release.Namespace }}
+{{- end -}}
+
+{{- define "service-account.rbac-namespace" -}}
+{{ .Values.rbacNamespace | default .Release.Namespace }}
+{{- end -}}

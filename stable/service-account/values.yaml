@@ -4,13 +4,38 @@
 global:
   clusterType: "openshift"
 
+clusterType: ""
+
+## name - the name of the service account that will be used. If not provided the release name will be used
 name: ""
 
-create: true
-clusterType: ""
-sccs: []
-roles: []
+## allServiceAccounts - flag indicating the rbac rules should be applied to all services accounts in the namespace
+allServiceAccounts: false
 
-#  - apiGroups: []
-#    resources: []
-#    verbs: []
+## create - flag indicating the service account should be created. If set to false the
+##          service account is expected to already exist
+create: true
+
+## clusterScope - flag indicating that cluster roles and cluster role bindings should be created
+clusterScope: false
+
+## sccs - the sccs that should be associated with the service account
+sccs: []
+# - anyuid
+# - privileged
+
+## rules - the rbac rules that should be added to the service account
+rules: []
+# - apiGroups = list(string)
+#   resources = list(string)
+#   resourceNames = optional(list(string))
+#   verbs     = list(string)
+
+## roles - the list of cluster roles that should be associated with the service account
+roles: []
+# - name: test
+# - name: test2
+
+## rbacNamespace - the namespace where the rbac roles and role bindings will be created. If
+##                 the value is empty the rbacNamespace defaults to the release namespace
+rbacNamespace: ""
