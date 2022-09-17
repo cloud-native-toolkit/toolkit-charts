@@ -1,5 +1,5 @@
 {{- if eq (include "service-account.isOpenShift" .) "true" -}}
-{{ $namespace := .Release.Namespace }}
+{{ $namespace := include "service-account.namespace" . }}
 {{ $serviceAccount := include "service-account.name" . }}
 {{ $saName := printf "system:serviceaccount:%s:%s" $namespace $serviceAccount }}
 {{ $labels := include "service-account.labels" . }}
@@ -9,9 +9,10 @@ apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-3"
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-3"
     argocd.argoproj.io/sync-options: Validate=false
+    argocd.argoproj.io/sync-wave: "-90"
     kubernetes.io/description: anyuid provides all features of the restricted SCC
       but allows users to run with any UID and any GID.
   name: {{ printf "%s-%s-%s" $namespace $serviceAccount . }}
