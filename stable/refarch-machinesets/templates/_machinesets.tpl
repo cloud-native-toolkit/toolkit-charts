@@ -32,14 +32,22 @@ spec:
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+      {{- if eq $.Values.cloudProvider.name "vsphere" }}
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}
+      {{- else }}
       machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-{{ $.Name }}-{{ $.Values.cloud.region }}{{ $.Zone }}
+      {{- end }}
   template:
     metadata:
       labels:
         machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
         machine.openshift.io/cluster-api-machine-role: {{ include "machineset.clusterrole" . }}
         machine.openshift.io/cluster-api-machine-type: {{ include "machineset.clusterrole" . }}
+        {{- if eq $.Values.cloudProvider.name "vsphere" }}
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}
+        {{- else }}
         machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-{{ $.Name }}-{{ $.Values.cloud.region }}{{ $.Zone }}
+        {{- end }}
     spec:
       {{- if and (eq .Name "storage") (or $.Values.cloud.storageNodes.taints $.Values.global.storageNodes.taints) }}
       taints:
