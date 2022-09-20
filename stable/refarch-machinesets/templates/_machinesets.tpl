@@ -25,7 +25,11 @@ metadata:
     machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
     machine.openshift.io/cluster-api-machine-role: {{ .Name }}
     machine.openshift.io/cluster-api-machine-type: {{ .Name }}
+  {{- if eq $.Values.cloudProvider.name "vsphere" }}
+  name: {{ $.Values.infrastructureId }}-{{ .Name }}
+  {{- else }}
   name: {{ $.Values.infrastructureId }}-{{ .Name }}-{{ include "cloud.region" . }}{{ .Zone }}
+  {{- end }}
   namespace: openshift-machine-api
 spec:
   replicas: {{ include "machineset.defaultReplicaCount" $params }}
