@@ -201,8 +201,16 @@ providerSpec:
     workspace:
       datacenter: {{ $datacenter }}
       datastore: {{ $.Values.vsphere.datastore }}
+      {{- if .Values.vsphere.folder }}
+      folder: {{ .Values.vsphere.folder }}
+      {{- else }}
       folder: /{{ .Values.vsphere.datacenter }}/vm/{{ .Values.infrastructureId }}
+      {{- end }}
+      {{- if .Values.vsphere.resourcePool }}
+      folder: {{ .Values.vsphere.resourcePool }}
+      {{- else }}
       resourcePool: /{{ .Values.vsphere.datacenter }}/host/{{ .Values.vsphere.cluster }}/Resources
+      {{- end }}
       server: {{ $.Values.vsphere.server }}
 {{- end -}}
 
