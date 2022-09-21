@@ -219,7 +219,7 @@ providerSpec:
       folder: /{{ .Values.vsphere.datacenter }}/vm/{{ .Values.infrastructureId }}
       {{- end }}
       {{- if .Values.vsphere.resourcePool }}
-      folder: {{ .Values.vsphere.resourcePool }}
+      resourcePool: {{ .Values.vsphere.resourcePool }}
       {{- else }}
       resourcePool: /{{ .Values.vsphere.datacenter }}/host/{{ .Values.vsphere.cluster }}/Resources
       {{- end }}
