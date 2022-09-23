@@ -3676,6 +3676,16 @@ entries:
   service-account:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-09-23T00:36:00.117271156Z"
+    description: A Helm chart for Kubernetes
+    digest: 1d552cab0cd35d4152267661dbe913ef62e65aa4331ca14822c89ad60ab51382
+    name: service-account
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/service-account-1.0.1/service-account-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-09-17T05:13:56.97333812Z"
     description: A Helm chart for Kubernetes
     digest: 8217c9b7a058039149c5bd4061f65544981398518a89f1e888aff6cba8a5b1bf
