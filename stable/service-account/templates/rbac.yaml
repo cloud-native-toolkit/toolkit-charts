@@ -1,6 +1,6 @@
 {{- if gt (len .Values.rules) 0 }}
 {{- $allServiceAccounts := .Values.allServiceAccounts }}
-{{- $kind := ternary "ClusterRole" "Role" (eq .Values.clusterScope "true") }}
+{{- $kind := ternary "ClusterRole" "Role" .Values.clusterScope }}
 {{- $serviceAccountName := include "service-account.name" . }}
 {{- $serviceAccountNamespace := include "service-account.namespace" . }}
 apiVersion: rbac.authorization.k8s.io/v1
