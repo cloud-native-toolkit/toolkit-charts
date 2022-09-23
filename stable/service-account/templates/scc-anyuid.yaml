@@ -2,6 +2,8 @@
 {{ $namespace := include "service-account.namespace" . }}
 {{ $serviceAccount := include "service-account.name" . }}
 {{ $saName := printf "system:serviceaccount:%s:%s" $namespace $serviceAccount }}
+{{ $saGroup := printf "system:serviceaccounts:%s" $namespace }}
+{{ $allServiceAccounts := .Values.allServiceAccounts }}
 {{ $labels := include "service-account.labels" . }}
 {{- range .Values.sccs }}
 {{- if eq "anyuid" . }}
@@ -41,8 +43,13 @@ seLinuxContext:
   type: MustRunAs
 supplementalGroups:
   type: RunAsAny
+{{- if $allServiceAccounts }}
+groups:
+  - {{ $saGroup }}
+{{- else }}
 users:
   - {{ $saName }}
+{{- end }}
 volumes:
   - configMap
   - downwardAPI
