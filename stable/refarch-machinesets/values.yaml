@@ -30,6 +30,8 @@ vsphere:
     memoryMiB:
     numCPUs:
     numCoresPerSocket:
+  folder:
+  resourcePool:
 
 cloud:
   region: 

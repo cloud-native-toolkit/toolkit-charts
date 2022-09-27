@@ -25,21 +25,33 @@ metadata:
     machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
     machine.openshift.io/cluster-api-machine-role: {{ .Name }}
     machine.openshift.io/cluster-api-machine-type: {{ .Name }}
+  {{- if eq $.Values.cloudProvider.name "vsphere" }}
+  name: {{ $.Values.infrastructureId }}-{{ .Name }}
+  {{- else }}
   name: {{ $.Values.infrastructureId }}-{{ .Name }}-{{ include "cloud.region" . }}{{ .Zone }}
+  {{- end }}
   namespace: openshift-machine-api
 spec:
   replicas: {{ include "machineset.defaultReplicaCount" $params }}
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
+      {{- if eq $.Values.cloudProvider.name "vsphere" }}
+      machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-{{ $.Name }}
+      {{- else }}
       machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-{{ $.Name }}-{{ $.Values.cloud.region }}{{ $.Zone }}
+      {{- end }}
   template:
     metadata:
       labels:
         machine.openshift.io/cluster-api-cluster: {{ $.Values.infrastructureId }}
         machine.openshift.io/cluster-api-machine-role: {{ include "machineset.clusterrole" . }}
         machine.openshift.io/cluster-api-machine-type: {{ include "machineset.clusterrole" . }}
+        {{- if eq $.Values.cloudProvider.name "vsphere" }}
+        machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-{{ $.Name }}
+        {{- else }}
         machine.openshift.io/cluster-api-machineset: {{ $.Values.infrastructureId }}-{{ $.Name }}-{{ $.Values.cloud.region }}{{ $.Zone }}
+        {{- end }}
     spec:
       {{- if and (eq .Name "storage") (or $.Values.cloud.storageNodes.taints $.Values.global.storageNodes.taints) }}
       taints:
@@ -201,8 +213,16 @@ providerSpec:
     workspace:
       datacenter: {{ $datacenter }}
       datastore: {{ $.Values.vsphere.datastore }}
+      {{- if .Values.vsphere.folder }}
+      folder: {{ .Values.vsphere.folder }}
+      {{- else }}
       folder: /{{ .Values.vsphere.datacenter }}/vm/{{ .Values.infrastructureId }}
+      {{- end }}
+      {{- if .Values.vsphere.resourcePool }}
+      resourcePool: {{ .Values.vsphere.resourcePool }}
+      {{- else }}
       resourcePool: /{{ .Values.vsphere.datacenter }}/host/{{ .Values.vsphere.cluster }}/Resources
+      {{- end }}
       server: {{ $.Values.vsphere.server }}
 {{- end -}}
 
