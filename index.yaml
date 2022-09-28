@@ -2274,6 +2274,25 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-process-mining-operator-0.1.0/ibm-process-mining-operator-0.1.0.tgz
     version: 0.1.0
+  ibm-sch:
+  - apiVersion: v1
+    appVersion: 1.2.19
+    created: "2022-09-28T20:28:54.106037013Z"
+    description: Shared Configurable Helpers (SCH)
+    digest: d21a36550e8803ceed713eb7bbbf6252dbfb0a7c52dd3568da7d5f1ccd627d1d
+    keywords:
+    - Commercial
+    - Limited
+    - utility
+    - ibm-samples
+    - amd64
+    - ppc64le
+    - s390x
+    kubeVersion: '>=1.11.0'
+    name: ibm-sch
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-sch-1.2.19/ibm-sch-1.2.19.tgz
+    version: 1.2.19
   ibm-toolkit-install:
   - apiVersion: v2
     appVersion: v0.15
