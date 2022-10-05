@@ -1,0 +1,8 @@
+aiops_instance:
+  name_instance:
+  name_infra:
+  namespace:
+  size:
+  storage_class:
+  storage_class_large:
+  infra: 

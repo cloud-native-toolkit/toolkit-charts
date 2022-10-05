@@ -1,0 +1,21 @@
+apiVersion: orchestrator.aiops.ibm.com/v1alpha1
+kind: Installation
+metadata:
+  name: {{ .Values.aiops_instance.name_infra }} 
+  namespace: {{ .Values.aiops_instance.namespace }} 
+spec:
+  imagePullSecret: ibm-entitlement-key
+  license:
+    accept: true
+  pakModules:
+    - enabled: true
+      name: aiManager
+    - enabled: true
+      name: aiopsFoundation
+    - enabled: true
+      name: applicationManager
+    - enabled: false
+      name: connection
+  size: {{ .Values.aiops_instance.size }} 
+  storageClass: {{ .Values.aiops_instance.storage_class }} 
+  storageClassLargeBlock: {{ .Values.aiops_instance.storage_class_large }} 
