@@ -39,3 +39,6 @@ roles: []
 ## rbacNamespace - the namespace where the rbac roles and role bindings will be created. If
 ##                 the value is empty the rbacNamespace defaults to the release namespace
 rbacNamespace: ""
+
+## pullSecrets - list of image pull secrets to add to the service account
+pullSecrets: []
