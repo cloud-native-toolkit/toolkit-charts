@@ -5,4 +5,4 @@ metadata:
   labels:
     {{- include "namespace.labels" . | nindent 4 }}
   annotations:
-    argocd.argoproj.io/sync-wave: "-30"
+    argocd.argoproj.io/sync-wave: "-200"

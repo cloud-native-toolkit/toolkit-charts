@@ -5,6 +5,8 @@ metadata:
   name: gitops-repo
   labels:
     {{- include "namespace.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-100"
 data:
   parentdir: {{ .Values.gitopsConfig.applicationBasePath }}
   protocol: https
