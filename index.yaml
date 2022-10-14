@@ -2694,6 +2694,16 @@ entries:
   namespace:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-10-14T02:54:27.083021421Z"
+    description: A Helm chart for Kubernetes
+    digest: 31a9064c2a11ed4fa668a7eee1aa6069c69460a980f7ddfb9659e658ff2c28a2
+    name: namespace
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/namespace-0.2.0/namespace-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-09-09T20:18:33.01394248Z"
     description: A Helm chart for Kubernetes
     digest: 0c7c31cd4da528d33377d08b320cdeb145b60ea349abe458af8b37924df2a64d
