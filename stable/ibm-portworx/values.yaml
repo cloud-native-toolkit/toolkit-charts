@@ -26,6 +26,7 @@ rbac: true
 apikey: ""
 
 clusterConfigSecretName: ibmcloud-config
+portworxVersion: "Portworx: 2.11.4, Stork: 2.11.0"
 
 resourceGroupId: ""
 region: ""
