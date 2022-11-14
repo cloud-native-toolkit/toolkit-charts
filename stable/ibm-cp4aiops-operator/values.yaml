@@ -1,13 +1,13 @@
 subscriptions:
+  namespace:
   subscription:
     channel: v3.5
-    config:
-      resources: {}
     installPlanApproval: Automatic
     name: ibm-aiops-orchestrator
     source: ibm-operator-catalog
     sourceNamespace: openshift-marketplace
 infra:
+  namespace:
   subscription:
     channel: v3.5
     config:
@@ -16,3 +16,15 @@ infra:
     name: ibm-infrastructure-automation-operator
     source: ibm-operator-catalog
     sourceNamespace: openshift-marketplace
+event:
+  namespace:
+  subscription:
+    channel: v1.10
+    installPlanApproval: Automatic
+    name: noi
+    source: ibm-operator-catalog
+    sourceNamespace: openshift-marketplace
+
+
+
+
