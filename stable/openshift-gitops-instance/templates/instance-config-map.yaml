@@ -1,4 +1,4 @@
-{{- if eq .Release.Namespace "openshift-gitops" }}
+{{- if and (eq .Release.Namespace "openshift-gitops") (not .Values.disableDefaultInstance) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

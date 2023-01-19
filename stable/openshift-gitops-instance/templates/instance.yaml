@@ -1,4 +1,4 @@
-{{- if ne .Release.Namespace "openshift-gitops" }}
+{{- if or (ne .Release.Namespace "openshift-gitops") .Values.disableDefaultInstance }}
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
