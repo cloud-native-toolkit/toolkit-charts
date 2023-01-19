@@ -3314,14 +3314,14 @@ entries:
   openshift-gitops-instance:
   - apiVersion: v2
     appVersion: 1.22.9
-    created: "2023-01-19T16:55:29.414173984Z"
+    created: "2023-01-19T17:17:02.447025543Z"
     description: A Helm chart for Kubernetes
-    digest: e2dccbd7a0c0532f7a1125dfc4d8504555a5a5e57a85b7cd39dc05825029a602
+    digest: 82ff6573540c1c59f80c2d1073180a20f3192138f712951e153422dc6c18eefb
     name: openshift-gitops-instance
     type: application
     urls:
-    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openshift-gitops-instance-0.6.0/openshift-gitops-instance-0.6.0.tgz
-    version: 0.6.0
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/openshift-gitops-instance-0.7.0/openshift-gitops-instance-0.7.0.tgz
+    version: 0.7.0
   - apiVersion: v2
     appVersion: 1.22.9
     created: "2022-05-06T22:01:12.553285279Z"
