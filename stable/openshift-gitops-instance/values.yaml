@@ -4,6 +4,8 @@
 
 controllerRbac: true
 
+disableDefaultInstance: false
+
 openshiftgitops:
   argocd:
     spec:
