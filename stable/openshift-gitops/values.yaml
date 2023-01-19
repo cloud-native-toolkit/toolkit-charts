@@ -25,3 +25,5 @@ subscription:
   name: openshift-gitops-operator
 
 createdBy: ""
+
+disableDefaultInstance: false

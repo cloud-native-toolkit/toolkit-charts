@@ -14,4 +14,8 @@ spec:
   config:
     env:
       - name: DISABLE_DEX
-        value: "false"
+        value: 'false'
+      {{- if .Values.disableDefaultInstance }}
+      - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
+        value: 'TRUE'
+      {{- end }}
