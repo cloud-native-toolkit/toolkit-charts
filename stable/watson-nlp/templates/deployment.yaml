@@ -1,4 +1,5 @@
 {{- $compName := .Values.componentName -}}
+{{- $kubeMinor := (int .Capabilities.KubeVersion.Minor) -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -54,9 +55,7 @@ spec:
           - name: ACCEPT_LICENSE
             value: "true"
       {{- end }}
-      {{- end }}
-      {{- end }}
-      {{- if ge (int .Capabilities.KubeVersion.Minor) 24 }}
+      {{- if ge $kubeMinor 24 }}
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
@@ -65,6 +64,8 @@ spec:
             - ALL
           seccompProfile:
             type: RuntimeDefault
+      {{- end }}
+      {{- end }}
       {{- end }}
       containers:
       - name: watson-nlp
@@ -131,7 +132,7 @@ spec:
             command: ["/bin/grpc_health_probe", "-addr=:8085"]
             {{- end }}
           initialDelaySeconds: 20
-      {{- if ge (int .Capabilities.KubeVersion.Minor) 24 }}
+      {{- if ge $kubeMinor 24 }}
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
@@ -141,6 +142,3 @@ spec:
           seccompProfile:
             type: RuntimeDefault
       {{- end }}
-
-
-
