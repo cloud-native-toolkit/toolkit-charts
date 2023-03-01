@@ -1,0 +1,62 @@
+# Default values for cp4d-deployer
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deployer_namespace: cloud-pak-deployer
+instance_namespace: cpd-instance
+cluster_name: amt-cpd-dev
+cluster_ingress: "cluster_ingress"
+infrastructure_type: "detect"
+
+cpd_version: 4.6.1
+
+# this should be replaced with the actual entitlement key
+entitlement_key: "entitlement_key"
+
+license_accept: true
+license: Enterprise
+deployer_storage_class: ocs-storagecluster-cephfs
+
+# setting to true will deploy in sequence, taking more time. the default is to deploy in parallel
+sequential_install: false
+
+#cartridges
+scheduler: false
+analyticsengine: false
+bigsql: false
+ca: false
+cde: false
+datagate: false
+datastage_ent_plus: false
+db2: false
+db2u: false
+db2wh: false
+dmc: false
+dods: false
+dp: false
+dv: false
+hadoop: false
+mdm: false
+openpages: false
+planning_analytics: false
+rstudio: false
+spss: false
+voice_gateway: false
+watson_assistant: false
+watson_discovery: false
+watson_ks: false
+watson_openscale: false
+watson_speech: false
+wkc: false
+wml: false
+wml_accelerator: false
+wsl: false
+
+
+service-account:
+  name: cloud-pak-deployer-sa
+  sccs: [ "privileged" ]
+  create: true
+  roles: 
+  - name: "cluster-admin"
+  "clusterScope": true
