@@ -5000,4 +5000,16 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/tool-test-0.1.0.tgz
     version: 0.1.0
+  watson-nlp:
+  - apiVersion: v2
+    appVersion: 1.1.0
+    created: "2023-03-01T13:56:27.419520164Z"
+    description: Chart to deploy watson runtime and models using init containers for
+      the models
+    digest: 1095085b2cd02d7ae9937db168cb29a6668a68dc301c3841d4dd4562d3d8eabf
+    name: watson-nlp
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/watson-nlp-0.1.1/watson-nlp-0.1.1.tgz
+    version: 0.1.1
 generated: "2020-10-28T17:25:17.796875692Z"
