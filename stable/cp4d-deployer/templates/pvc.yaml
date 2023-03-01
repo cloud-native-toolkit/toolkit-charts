@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cloud-pak-deployer-status
+  namespace: {{ .Values.deployer_namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: {{ .Values.deployer_storage_class }}
