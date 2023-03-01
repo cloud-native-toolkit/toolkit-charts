@@ -1,0 +1,146 @@
+{{- $compName := .Values.componentName -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ $compName }}
+  labels:
+    {{- include "watsonnlp.labels" (list . $compName) | nindent 4 }}
+spec:
+  #replicas: 1 is the default, let's not use it and scale manually, so that kubectl apply does not overwrite this
+  selector:
+    matchLabels:
+      {{- include "watsonnlp.selectorLabels" (list . $compName) | nindent 6 }}
+  progressDeadlineSeconds: 1800
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 1
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "watsonnlp.selectorLabels" (list . $compName) | nindent 8 }}
+    spec:
+      volumes:  
+        - name: models
+          emptyDir: {}
+        {{- if .Values.tls.enable }}
+        - name: watson-runtime-cert
+          secret:
+            secretName: {{ .Values.tls.secret | quote }}
+        {{- end }}
+      imagePullSecrets:
+      {{- range .Values.imagePullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- if .Values.models }}
+      initContainers:
+      {{- $acceptLicense := .Values.acceptLicense }}
+      {{- range $index, $model := .Values.models }}  
+      {{- $registryName := $model.registry }}
+      {{- $image := $model.image }}
+      - name: model-{{ $index }}
+        image: {{- include "watsonnlp.registries" (list $ $registryName $image) | trim | indent 1}}
+        volumeMounts:
+          - name: models
+            mountPath: /app/models      
+      {{- if (default $acceptLicense false)}}
+        env:
+          - name: ACCEPT_LICENSE
+            value: "true"
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- if ge (int .Capabilities.KubeVersion.Minor) 24 }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
+      {{- end }}
+      containers:
+      - name: watson-nlp
+        {{- $registryName := .Values.runtime.registry }}
+        {{- $image := .Values.runtime.image }}
+        image: {{- include "watsonnlp.registries" (list $ $registryName $image) | trim | indent 1}}
+        ports:
+          - containerPort: 8080
+          - containerPort: 8085
+        volumeMounts:
+          - name: models
+            mountPath: /app/models
+          {{- if .Values.tls.enable }}
+          - name: watson-runtime-cert
+            mountPath: "/app/tls"
+          {{- end }}
+        env:
+          - name: LOCAL_MODELS_DIR
+            value: /app/models
+          - name: LOG_LEVEL
+            value: debug
+          {{- if (default .Values.acceptLicense false)}}
+          - name: ACCEPT_LICENSE
+            value: "true"
+          {{- end }}
+          {{- if .Values.tls.enable }}
+          - name: TLS_SERVER_KEY
+            value: "/app/tls/tls.key"
+          - name: TLS_SERVER_CERT
+            value: "/app/tls/tls.crt"
+          - name: SERVE_KEY
+            value: "/app/tls/tls.key"
+          - name: SERVE_CERT
+            value: "/app/tls/tls.crt"
+          - name: PROXY_CERT
+            value: "/app/tls/tls.crt"
+          {{- if .Values.tls.enableMTLS }}
+          - name: TLS_CLIENT_CERT
+            value: "/app/tls/ca.crt"
+          - name: PROXY_MTLS_CERT
+            value: "/app/tls/tls.crt"
+          - name: PROXY_MTLS_KEY
+            value: "/app/tls/tls.key"
+          - name: MTLS_CLIENT_CA
+            value: "/app/tls/ca.crt"
+          {{- end }}
+          {{- end }}
+        readinessProbe:
+          exec:
+            {{- if ( and .Values.tls.enable ( not .Values.tls.enableMTLS )) }}
+            command: ["/bin/grpc_health_probe", "-addr=:8085", "-tls", "-tls-ca-cert=/app/tls/ca.crt"]
+            {{- else if ( and .Values.tls.enable .Values.tls.enableMTLS ) }}
+            command: ["/bin/grpc_health_probe", "-addr=:8085", "-tls", "-tls-ca-cert=/app/tls/ca.crt", "-tls-client-cert=/app/tls/tls.crt", "-tls-client-key=/app/tls/tls.key"]
+            {{- else }}
+            command: ["/bin/grpc_health_probe", "-addr=:8085"]
+            {{- end }}
+          initialDelaySeconds: 10
+          exec:
+            {{- if ( and .Values.tls.enable ( not .Values.tls.enableMTLS )) }}
+            command: ["/bin/grpc_health_probe", "-addr=:8085", "-tls", "-tls-ca-cert=/app/tls/ca.crt"]
+            {{- else if ( and .Values.tls.enable .Values.tls.enableMTLS ) }}
+            command: ["/bin/grpc_health_probe", "-addr=:8085", "-tls", "-tls-ca-cert=/app/tls/ca.crt", "-tls-client-cert=/app/tls/tls.crt", "-tls-client-key=/app/tls/tls.key"]
+            {{- else }}
+            command: ["/bin/grpc_health_probe", "-addr=:8085"]
+            {{- end }}
+          initialDelaySeconds: 20
+      {{- if ge (int .Capabilities.KubeVersion.Minor) 24 }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
+      {{- end }}
+
+
+

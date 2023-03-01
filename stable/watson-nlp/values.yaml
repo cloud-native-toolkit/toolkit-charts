@@ -1,0 +1,36 @@
+componentName: watson-nlp
+
+# This must be set to true to indicate acceptance of the Watson Libraries license terms
+acceptLicense: false
+
+# Service type for the REST and gRPC endpoint
+serviceType: ClusterIP
+
+# Pull secrets and registries to use for runtime and model
+imagePullSecrets:
+  - ibm-entitlement-key
+registries:
+  - name: watson
+    url: cp.icr.io/cp/ai
+
+# Image to use for runtime
+runtime:
+  registry: watson
+  image: watson-nlp-runtime:1.1.0
+
+# Models to make available for the runtime stock module catalog:
+#    https://www.ibm.com/docs/en/watson-libraries?topic=models-catalog
+models:
+  - registry: watson
+    image: watson-nlp_syntax_izumo_lang_en_stock:1.0.9
+
+# Configuring TLS for gRPC and REST endpoint requires a cert-manager format certificate secret:
+#  tls.key contains the pem-encoded private key
+#  tls.crt contains the pem-encoded certificate
+#  ca.crt contains the certificate sigining CA public certificate used to verify client certificates
+# when enabling mTLS the REST gateway uses a localhost endpoint, requiring a SAN 
+# in tls.crt to include DNS:localhost
+tls:
+  enable: false
+  secret: watson-runtime-cert
+  enableMTLS: false
