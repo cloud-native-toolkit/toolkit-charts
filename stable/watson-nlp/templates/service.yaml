@@ -1,0 +1,18 @@
+{{- $compName := .Values.componentName -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-{{ $compName }}
+spec:
+  type: {{ .Values.serviceType }}
+  selector: {{- include "watsonnlp.selectorLabels" (list . $compName) | nindent 4 }}
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: rest
+  - port: 8085
+    protocol: TCP
+    targetPort: 8085
+    name: grcp
