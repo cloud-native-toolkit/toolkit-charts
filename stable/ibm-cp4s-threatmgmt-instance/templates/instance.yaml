@@ -1,0 +1,25 @@
+apiVersion: isc.ibm.com/v1
+kind: CP4SThreatManagement
+metadata:
+  name: {{ .Values.metadata.name }}
+  namespace: {{ .Values.metadata.namespace }}
+spec:
+  acceptLicense: {{ .Values.spec.acceptLicense }}
+  basicDeploymentConfiguration:
+    adminUser: {{ .Values.spec.basicDeploymentConfiguration.adminUser }}
+    {{- if .Values.spec.startingCSV }}
+    domain: {{ .Values.spec.basicDeploymentConfiguration.domain }}
+    {{- end }}
+    storageClass: {{ .Values.spec.basicDeploymentConfiguration.storageClass }}
+  extendedDeploymentConfiguration:
+    airgapInstall: {{ .Values.spec.extendedDeploymentConfiguration.airgapInstall }}
+    backupStorageClass: {{ .Values.spec.extendedDeploymentConfiguration.backupStorageClass }}
+    backupStorageSize: {{ .Values.spec.extendedDeploymentConfiguration.backupStorageSize }}
+    imagePullPolicy: {{ .Values.spec.extendedDeploymentConfiguration.imagePullPolicy }}
+    repository: {{ .Values.spec.extendedDeploymentConfiguration.repository }}
+    repositoryType: {{ .Values.spec.extendedDeploymentConfiguration.repositoryType }}
+    roksAuthentication: {{ .Values.spec.extendedDeploymentConfiguration.roksAuthentication }}
+  threatManagementCapabilities:
+    deployDRC: {{ .Values.spec.threatManagementCapabilities.deployDRC }}
+    deployRiskManager: {{ .Values.spec.threatManagementCapabilities.deployRiskManager }}
+    deployThreatInvestigator: {{ .Values.spec.threatManagementCapabilities.deployThreatInvestigator }}

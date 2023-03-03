@@ -1,0 +1,25 @@
+# Default values for ibm-cp4sthreatmanagements-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+metadata:
+  name: threatmgmt
+  namespace: cp4s
+spec:
+  acceptLicense: true
+  basicDeploymentConfiguration:
+    adminUser: admin
+    domain: ''
+    storageClass: managed-nfs-storage
+  extendedDeploymentConfiguration:
+    airgapInstall: false
+    backupStorageClass: managed-nfs-storage
+    backupStorageSize: ''
+    imagePullPolicy: IfNotPresent
+    repository: cp.icr.io/cp/cp4s
+    repositoryType: entitled
+    roksAuthentication: false
+  threatManagementCapabilities:
+    deployDRC: true
+    deployRiskManager: true
+    deployThreatInvestigator: true

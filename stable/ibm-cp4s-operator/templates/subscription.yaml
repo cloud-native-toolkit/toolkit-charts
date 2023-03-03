@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+     name: ibm-cp-security-operator
+     namespace: {{ .Values.cp4s.cp4s_namespace }} 
+spec:
+     channel: {{ .Values.cp4s.cp4s_platform_channel }}
+     installPlanApproval: Automatic
+     name: ibm-cp-security-operator
+     source: {{ .Values.cp4s.catalogsource }}
+     sourceNamespace: {{ .Values.cp4s.catalogsource_namespace }}
