@@ -1711,7 +1711,29 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4i-operators-0.2.0/ibm-cp4i-operators-0.2.0.tgz
     version: 0.2.0
+  ibm-cp4s-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-03T15:17:27.284495795Z"
+    description: A Helm chart to deploy the IBM Cloud Pak for Security operator
+    digest: 29b0f8b1885ee75233897bdf0242ee3f72db7c9993183dbb05cadb0294712989
+    name: ibm-cp4s-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4s-operator-1.0.0/ibm-cp4s-operator-1.0.0.tgz
+    version: 1.0.0
   ibm-cp4sthreatmanagements-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-03T15:17:27.509261834Z"
+    description: A Helm chart to deploy a IBM Cloud Pak for Security Threat Management
+      service instance
+    digest: aa09164e8b282451ccc844ad2598b6d885a66bf8b56e1d2b62a5ba54d9b562f4
+    name: ibm-cp4sthreatmanagements-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-cp4sthreatmanagements-instance-1.0.0/ibm-cp4sthreatmanagements-instance-1.0.0.tgz
+    version: 1.0.0
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-05-13T13:26:06.778002937Z"
@@ -2746,6 +2768,17 @@ entries:
     urls:
     - https://cloud-native-toolkit.github.io/toolkit-charts/stable/kiali-operator-0.1.0.tgz
     version: 0.1.0
+  knative-serving:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-03T15:17:27.754338959Z"
+    description: A Helm chart for Kubernetes
+    digest: 3c82c7883d8858102b92b23c7d88f11a53958168ea1ed84ff3a5d5f9c61f8cc4
+    name: knative-serving
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/knative-serving-1.0.0/knative-serving-1.0.0.tgz
+    version: 1.0.0
   namespace:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -3788,6 +3821,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/sealed-secrets-operator-0.1.0/sealed-secrets-operator-0.1.0.tgz
     version: 0.1.0
+  serverless-operator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-03T15:17:28.041150553Z"
+    description: A Helm chart to deploy the Knative Serverless operator
+    digest: 116ad893d9e9f7cb1d6c963fea35fb7d706d61d0c828cb88bd6708543c2ba24a
+    name: serverless-operator
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/serverless-operator-1.0.0/serverless-operator-1.0.0.tgz
+    version: 1.0.0
   service-account:
   - apiVersion: v2
     appVersion: 1.16.0
