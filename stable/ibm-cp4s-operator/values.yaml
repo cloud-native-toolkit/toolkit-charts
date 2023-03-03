@@ -1,0 +1,9 @@
+# Default values for ibm-cp4s-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global: {}
+cp4s:
+  cp4s_namespace: cp4s
+  cp4s_platform_channel: v1.9
+  catalogsource: ibm-operator-catalog
+  catalogsource_namespace: openshift-marketplace
