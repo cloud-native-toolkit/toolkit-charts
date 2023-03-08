@@ -142,3 +142,12 @@ spec:
           seccompProfile:
             type: RuntimeDefault
       {{- end }}
+      # when running on OpenShift do not set a pod security context
+      {{- if .Capabilities.APIVersions.Has "config.openshift.io/v1/APIServer" }}
+      securityContext: {}
+      {{- else }}
+      # workaround Watson NLP not setting USER with a UID in container image ( app = 2000 )
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 0
+      {{- end }}
