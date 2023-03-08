@@ -5074,6 +5074,17 @@ entries:
   watson-nlp:
   - apiVersion: v2
     appVersion: 1.1.0
+    created: "2023-03-08T05:03:12.473066815Z"
+    description: Chart to deploy watson runtime and models using init containers for
+      the models
+    digest: a03d5fff73a1b7876398701c972cf8eee0a30d5435b3de12211d7fba9b32ed8e
+    name: watson-nlp
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/watson-nlp-0.1.3/watson-nlp-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.1.0
     created: "2023-03-01T16:55:46.950836303Z"
     description: Chart to deploy watson runtime and models using init containers for
       the models
