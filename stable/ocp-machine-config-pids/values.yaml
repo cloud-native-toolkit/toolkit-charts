@@ -1,0 +1,5 @@
+# Default values for ocp-machine-config-pids.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+pidsLimit: 4096

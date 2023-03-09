@@ -1,0 +1,5 @@
+
+The KubletConfig and ContainerRuntimeConfig objects have been installed. Run the following to activate them:
+
+oc label machineconfigpool worker custom-crio=high-pid-limit custom-kubelet=small-pods
+
