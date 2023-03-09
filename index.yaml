@@ -2970,6 +2970,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-console-notification-0.1.0/ocp-console-notification-0.1.0.tgz
     version: 0.1.0
+  ocp-machine-config-pids:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-09T12:29:09.802873948Z"
+    description: A Helm chart for Kubernetes
+    digest: e0cdfc0e7fdc4d89965ed7d7d0479ecbde5616b9c421724ac6f495b735a7b23d
+    name: ocp-machine-config-pids
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ocp-machine-config-pids-0.1.0/ocp-machine-config-pids-0.1.0.tgz
+    version: 0.1.0
   ocp-oauth-github:
   - apiVersion: v2
     appVersion: v1.2-v1.3.0
