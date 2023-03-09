@@ -1,0 +1,10 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: worker-kubeconfig-fix
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      custom-kubelet: small-pods
+  kubeletConfig:
+      podPidsLimit: {{ .Values.pidsLimit }}
