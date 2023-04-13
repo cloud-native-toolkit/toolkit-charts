@@ -570,6 +570,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/argocd-hook-job-0.1.0/argocd-hook-job-0.1.0.tgz
     version: 0.1.0
+  argocd-instance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-04-13T04:25:57.20841712Z"
+    description: A Helm chart for Kubernetes
+    digest: 1d3c02d167ebbc599e9485a86599c7de895e5b6692042318582fb6077907d2d2
+    name: argocd-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/argocd-instance-0.1.0/argocd-instance-0.1.0.tgz
+    version: 0.1.0
   argocd-operator:
   - apiVersion: v2
     appVersion: 0.4.0
