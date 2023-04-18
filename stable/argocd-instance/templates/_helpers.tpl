@@ -62,5 +62,9 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "argocd-instance.argocd-name" -}}
+{{- if eq .Release.Namespace "gitops" }}
+{{- printf "gitops" }}
+{{- else }}
 {{- printf "%s-gitops" .Release.Namespace }}
+{{- end }}
 {{- end -}}
