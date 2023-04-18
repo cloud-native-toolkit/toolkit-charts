@@ -13,6 +13,7 @@ argocd:
       grpc:
         ingress:
           enabled: false
+      host: ""
       ingress:
         enabled: false
       resources:
