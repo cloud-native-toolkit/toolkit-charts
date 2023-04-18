@@ -24,7 +24,7 @@ argocd:
           cpu: 125m
           memory: 128Mi
       route:
-        enabled: true
+        enabled: false
       service:
         type: ''
     grafana:
