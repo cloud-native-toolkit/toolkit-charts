@@ -1,0 +1,30 @@
+{{- if .Values.ingress.host }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  name: {{ printf "%s-server-tls" (include "argocd-instance.argocd-name" .) }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "argocd-instance.labels" . | nindent 4 }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ printf "%s-server" (include "argocd-instance.argocd-name" .) }}
+                port:
+                  name: http
+            path: /
+            pathType: ImplementationSpecific
+  {{- if .Values.ingress.tls_secret }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.tls_secret }}
+  {{- end }}
+{{- end }}

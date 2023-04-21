@@ -4,6 +4,10 @@
 
 controllerRbac: true
 
+ingress:
+  host: ""
+  tls_secret: ""
+
 argocd:
   spec:
     applicationInstanceLabelKey: argo.cntk/instance
