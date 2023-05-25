@@ -573,6 +573,16 @@ entries:
   argocd-instance:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2023-05-25T02:20:27.644192443Z"
+    description: A Helm chart for Kubernetes
+    digest: 7f1d226c55dcb650c636153779e36a27ca74303a06a728fba64e96d5ec0cb59b
+    name: argocd-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/argocd-instance-0.3.1/argocd-instance-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2023-05-24T22:24:45.361367444Z"
     description: A Helm chart for Kubernetes
     digest: 6602520ef581cf9b7312359f642a4bed5e072732c51d456cd711638cec6c0251
