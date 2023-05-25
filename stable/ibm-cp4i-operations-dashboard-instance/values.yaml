@@ -1,0 +1,18 @@
+# Default values for ibm-eventsteams-instance.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ibmcp4ioperationsdashboard:
+  name: cp4i-od-dev
+  spec:
+    license:
+      accept: true
+      license: CP4I
+    storage:
+      configDbVolume:
+        class: ibmc-file-gold-gid
+      sharedVolume:
+        class: ibmc-file-gold-gid
+      tracingVolume:
+        class: ibmc-block-gold
+    version: 2022.2.1-lts

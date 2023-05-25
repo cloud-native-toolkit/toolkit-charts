@@ -1,0 +1,6 @@
+kind: OperationsDashboard
+apiVersion: integration.ibm.com/v1beta2
+metadata:
+  name: {{ .Values.ibmcp4ioperationsdashboard.name }}
+spec:
+  {{- toYaml .Values.ibmcp4ioperationsdashboard.spec | nindent 2 }}
