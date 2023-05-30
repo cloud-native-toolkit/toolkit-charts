@@ -27,3 +27,4 @@ subscription:
 createdBy: ""
 
 disableDefaultInstance: false
+disableDex: false
