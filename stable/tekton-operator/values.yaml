@@ -24,4 +24,5 @@ operatorHub:
 
 createdBy: ""
 
+webhookName: "tekton-pipelines-webhook"
 tektonNamespace: "openshift-pipelines"

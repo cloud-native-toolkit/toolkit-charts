@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: URL
-              value: {{ printf "http://tekton-pipelines-webhook.%s.svc:8080" .Values.tektonNamespace }}
+              value: {{ printf "http://%s.%s.svc:8080" (.Values.webhookName | default "tekton-pipelines-webhook") .Values.tektonNamespace }}
           command: ["sh"]
           args:
             - "-c"
