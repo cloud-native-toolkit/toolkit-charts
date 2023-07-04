@@ -3908,6 +3908,16 @@ entries:
   resource-owner-job:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2023-07-04T21:44:23.13614172Z"
+    description: A Helm chart for Kubernetes
+    digest: c6c5caad0db8a76b2bd21aad104595eeca4eec6635550bcb996f229059f6530d
+    name: resource-owner-job
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/resource-owner-job-0.2.0/resource-owner-job-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2023-07-04T21:08:51.64532086Z"
     description: A Helm chart for Kubernetes
     digest: 22c537dd6bc272424e80efa99d3a60f801523cadd96dcc02240a3db0accf94f8
