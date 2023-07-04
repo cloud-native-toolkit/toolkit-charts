@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "resource-owner-job.fullname" . }}
+  labels:
+  {{- include "resource-owner-job.labels" . | nindent 4 }}
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "resource-owner-job.fullname" . }}
+            defaultMode: 0777
+      serviceAccountName: {{ include "resource-owner-job.serviceAccountName" . }}
+      containers:
+        - name: job
+          image: {{ printf "%s:%s" .Values.image (include "resource-owner-job.imageTag" .) | quote }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          env:
+            - name: OWNER_KIND
+              value: {{ required "owner.kind is required" .Values.owner.kind | quote }}
+            - name: OWNER_NAME
+              value: {{ required "owner.name is required" .Values.owner.name | quote }}
+            - name: TARGET_KIND
+              value: {{ required "target.kind is required" .Values.target.kind | quote }}
+            - name: TARGET_NAME
+              value: {{ .Values.target.name | quote }}
+          command:
+            - /bin/sh
+          args:
+            - -c
+            - /scripts/create-owner-reference.sh
