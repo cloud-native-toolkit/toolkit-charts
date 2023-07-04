@@ -3905,6 +3905,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/refarch-machinesets-0.1.0/refarch-machinesets-0.1.0.tgz
     version: 0.1.0
+  resource-owner-job:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2023-07-04T21:08:51.64532086Z"
+    description: A Helm chart for Kubernetes
+    digest: 22c537dd6bc272424e80efa99d3a60f801523cadd96dcc02240a3db0accf94f8
+    name: resource-owner-job
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/resource-owner-job-0.1.0/resource-owner-job-0.1.0.tgz
+    version: 0.1.0
   robot-shop:
   - apiVersion: v1
     created: "2021-11-29T16:33:02.130206Z"
