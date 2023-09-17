@@ -5,5 +5,6 @@ metadata:
   namespace: openshift-marketplace
   annotations:
     argocd.argoproj.io/sync-wave: {{ .Values.syncWave | default "-10" | quote }}
+    olm.catalogImageTemplate: "icr.io/cpopen/ibm-operator-catalog:v{kube_major_version}.{kube_minor_version}"
 spec:
   {{- toYaml .Values.catalogs.ibmoperators.catalog | nindent 2 }}
