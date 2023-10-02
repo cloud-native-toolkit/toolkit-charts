@@ -2906,6 +2906,17 @@ entries:
   namespace-rbac-cronjob:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2023-10-02T20:06:05.601501005Z"
+    description: A Helm chart to generate a cron job that watches Namespaces and grants
+      rbac permissions for the given service account
+    digest: 44a02582f24caed8a572a597c979b08b68b8415a2050a0e5a3d183d74c4080e7
+    name: namespace-rbac-cronjob
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/namespace-rbac-cronjob-0.2.1/namespace-rbac-cronjob-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2021-09-22T03:15:47.951521881Z"
     description: A Helm chart to generate a cron job that watches Namespaces and grants
       rbac permissions for the given service account
