@@ -755,6 +755,16 @@ entries:
   assign-group-cronjob:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2023-10-02T20:03:52.147824364Z"
+    description: A Helm chart to generate a cron job that adds all users to a group
+    digest: 0f4bdcab16e14992222d2c6e079ad72fb68ed7b875372addad90016eed36fd5d
+    name: assign-group-cronjob
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/assign-group-cronjob-0.2.2/assign-group-cronjob-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2021-10-20T19:33:37.209024838Z"
     description: A Helm chart to generate a cron job that adds all users to a group
     digest: 7b79025f4d59eb725ff997fa94cfb2743f17723cc43ab8258c9474bf766b2e0e
