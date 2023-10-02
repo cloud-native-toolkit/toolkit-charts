@@ -1,4 +1,10 @@
+{{- if .Capabilities.APIVersions.Has "batch/v1/cronjob" -}}
+apiVersion: batch/v1
+{{- else if .Capabilities.APIVersions.Has "batch/v1beta1/cronjob" -}}
 apiVersion: batch/v1beta1
+{{- else -}}
+apiVersion: batch/v1
+{{- end -}}
 kind: CronJob
 metadata:
   name: {{ include "console-link-cronjob.fullname" . }}
