@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cp4aiops-instance
+description: A Helm chart for deploying CloudPak for AIops operator
+type: application
+version: 0.2.3
+appVersion: 0.2.3

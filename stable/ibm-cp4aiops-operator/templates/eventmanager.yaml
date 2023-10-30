@@ -1,0 +1,7 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.event.subscription.name }}
+  namespace: {{ .Values.event.namespace }}
+spec:
+  {{- toYaml .Values.event.subscription | nindent 2 }}
