@@ -1958,6 +1958,16 @@ entries:
   ibm-eventstreams-instance:
   - apiVersion: v2
     appVersion: 11.0.0
+    created: "2023-11-22T14:00:49.262258823Z"
+    description: A Helm chart for Kubernetes
+    digest: cf947395f4612cef78d5e2878baa6fdb65e43b7a04354cca65d0a3e97dda9f8d
+    name: ibm-eventstreams-instance
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/toolkit-charts/releases/download/ibm-eventstreams-instance-6.0.0/ibm-eventstreams-instance-6.0.0.tgz
+    version: 6.0.0
+  - apiVersion: v2
+    appVersion: 11.0.0
     created: "2023-11-18T19:37:01.808540658Z"
     description: A Helm chart for Kubernetes
     digest: 70b95074287973e432396843824c9044dbbf96eafe6dd62539a38585e36e6433
